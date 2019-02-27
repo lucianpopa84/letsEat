@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Let's eat</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="row">
+            <div class="col-4 menu">
+                <nav id="topMenu">
+                    <ul>
+                        <li><i class="fas fa-home"></i> Home</li>
+                        <li><i class="far fa-question-circle"></i> About</li>
+                        <li><i class="far fa-address-card"></i> Contact</li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-8 myAccount">
+                <form id="myAccount">
+                    <button class="userLogin"> <i class="fas fa-user-circle"> </i> </button>
+                    <button class="goToCart"> <i class="fas fa-shopping-cart"></i> </button>
+                    <label for="EN" id="languageSelectorEN">
+                        <input type="radio" id='radioEN' name="languageRadio" value="EN" /> EN
+                    </label>
+                    <label for="RO" id="languageSelectorRO">
+                        <input type="radio" id='radioRO' name="languageRadio" value="RO" /> RO
+                    </label>
+                </form>
+            </div>
+        </div>
+        <div class="letsEatLogo">
+        </div>
+    </header>
+
+    <section>
+        <form>
+            <div class="addresForm">
+                <div class="row">
+                    <div class="col-6">
+                        <p> <i class="fas fa-map-marker-alt"><span id="detectedPlace"> Detected place: <br> <span id="detectedAddress">
+                                Craiova  </span></i></span> </p>
+                    </div>
+                    <div class="col-6">
+                        <i class="fas fa-city"></i>
+                        <input list="cityDeliveryList" name="City" placeholder="Change address">
+                        <datalist id="cityDeliveryList">
+                            <option value="Craiova">
+                            <option value="Bucuresti">
+                            <option value="Cluj">
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="foodSearchFilter">
+                <i class="fas fa-search"></i>
+                <input list="foodTypeList" placeholder="What do you want to eat today?">
+                <datalist id="foodTypeList">
+                    <option value="pizza">
+                    <option value="daily menu">
+                    <option value="pasta">
+                    <option value="romanian">
+                    <option value="fast-food">
+                    <option value="sea-food">
+                    <option value="steaks">
+                    <option value="desert">
+                    <option value="chinese">
+                    <option value="salads">
+                    <option value="vegetarian">
+                    <option value="greek">
+                </datalist>
+            </div>
+        </form>
+
+        <div class="quickSearchGrid">
+            <div class="flex-container">
+                <a href="#pizza">
+                    <img src="/images/foodType/pizza.jpg" alt="Pizza">
+                </a>
+                <a href="#dailyMenu">
+                    <img src="/images/foodType/dailyMenu.jpg" alt="Daily menu">
+                </a>
+                <a href="#romanian">
+                    <img src="/images/foodType/romanian.jpg" alt="Romanian">
+                </a>
+                <a href="#fastFood">
+                    <img src="/images/foodType/fastFood.jpg" alt="Fast-food">
+                </a>
+                <a href="#salads">
+                    <img src="/images/foodType/salads.jpg" alt="Salads">
+                </a>
+                <a href="#desert">
+                    <img src="/images/foodType/desert.jpg" alt="Desert">
+                </a>
+            </div>
+        </div>
+
+        <div class="restaurantsList">
+            <div class="flex-container">
+                <div class="restaurantCard" id="pizzaForum">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="card-image">
+                                <img src="/images/restaurants/pizzaForum.png" alt="Pizza Forum">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-delivery">
+                                <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> 35 min.</span> </p>
+                            </div>
+                            <div class="card-rating">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-pricing">
+                                <p> From: </span> <span class="price-min"> 18 </span> RON </p>
+                                <p> To: </span> <span class="price-max"> 25 </span> RON </p>
+                                <p> Min: </span> <span class="order-min"> 20 </span> RON </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restaurantCard" id="pizzaPeters">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="card-image">
+                                <img src="/images/restaurants/pizzaPeters.png" alt="Pizza Peter's">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-delivery">
+                                <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> closed </span> </p>
+                            </div>
+                            <div class="card-rating">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-pricing">
+                                <p> From: </span> <span class="price-min"> 19 </span> RON </p>
+                                <p> To: </span> <span class="price-max"> 28 </span> RON </p>
+                                <p> Min: </span> <span class="order-min"> 25 </span> RON </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <form id="selectedFoodSearchFilter">
+            <div class="row">
+                <div class="col-8">
+                    <i class="fas fa-search"></i>
+                    <input list="foodNameList" placeholder="What pizza do you want?">
+                    <datalist id="foodNameList">
+                        <option value="coppa">
+                        <option value="margueritta">
+                        <option value="quatro-formaggi">
+                        <option value="calzone">
+                    </datalist>
+                </div>
+                <div class="col-4">
+                       <input list="sortFoodList" placeholder="Sort by">
+                        <datalist id="sortFoodList">
+                            <option value="popularity">
+                            <option value="rating">
+                        </datalist>
+                </div>
+            </div>
+        </form>
+
+    </section>
+
+    <footer>
+        <ul>
+            <li>Add a restaurant</li>
+            <li>How it works</li>
+            <li>Terms</li>
+            <li>Report bug</li>
+        </ul>
+    </footer>
+
+</body>
+
+</html>
