@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Let's eat</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <header>
-        <div class="row">
-            <div class="col-4 menu">
+        <div class="topnav">
+            <a href="#menu" id="topMenu" class="dropdown"><i class="fas fa-bars"></i> </a>
+            <div class="dropdown-content">
                 <nav id="topMenu">
                     <ul>
                         <li><i class="fas fa-home"></i> Home</li>
@@ -21,17 +22,20 @@
                     </ul>
                 </nav>
             </div>
-            <div class="col-8 myAccount">
-                <form id="myAccount">
-                    <button class="userLogin"> <i class="fas fa-user-circle"> </i> </button>
-                    <button class="goToCart"> <i class="fas fa-shopping-cart"></i> </button>
-                    <label for="EN" id="languageSelectorEN">
-                        <input type="radio" id='radioEN' name="languageRadio" value="EN" /> EN
-                    </label>
-                    <label for="RO" id="languageSelectorRO">
-                        <input type="radio" id='radioRO' name="languageRadio" value="RO" /> RO
-                    </label>
-                </form>
+
+            <div class="topnav-right">
+                <a href="#language" id="language">
+                    <form id="languageForm">
+                        <label for="EN" id="languageSelectorEN">
+                            <input type="radio" id='radioEN' name="languageRadio" value="EN" />
+                        </label>
+                        <label for="RO" id="languageSelectorRO">
+                            <input type="radio" id='radioRO' name="languageRadio" value="RO" />
+                        </label>
+                    </form>
+                </a>
+                <a href="#userLogin"> <i class="fas fa-user-circle"> </i></a>
+                <a href="#cart"> <i class="fas fa-shopping-cart"></i></a>
             </div>
         </div>
         <div class="letsEatLogo">
@@ -80,22 +84,22 @@
         <div class="quickSearchGrid">
             <div class="flex-container">
                 <a href="#pizza">
-                    <img src="/images/foodType/pizza.jpg" alt="Pizza">
+                    <img src="images/foodType/pizza.jpg" alt="Pizza">
                 </a>
                 <a href="#dailyMenu">
-                    <img src="/images/foodType/dailyMenu.jpg" alt="Daily menu">
+                    <img src="images/foodType/dailyMenu.jpg" alt="Daily menu">
                 </a>
                 <a href="#romanian">
-                    <img src="/images/foodType/romanian.jpg" alt="Romanian">
+                    <img src="images/foodType/romanian.jpg" alt="Romanian">
                 </a>
                 <a href="#fastFood">
-                    <img src="/images/foodType/fastFood.jpg" alt="Fast-food">
+                    <img src="images/foodType/fastFood.jpg" alt="Fast-food">
                 </a>
                 <a href="#salads">
-                    <img src="/images/foodType/salads.jpg" alt="Salads">
+                    <img src="images/foodType/salads.jpg" alt="Salads">
                 </a>
                 <a href="#desert">
-                    <img src="/images/foodType/desert.jpg" alt="Desert">
+                    <img src="images/foodType/desert.jpg" alt="Desert">
                 </a>
             </div>
         </div>
@@ -106,7 +110,7 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="card-image">
-                                <img src="/images/restaurants/pizzaForum.png" alt="Pizza Forum">
+                                <img src="images/restaurants/pizzaForum.png" alt="Pizza Forum">
                             </div>
                         </div>
                         <div class="col-5">
@@ -135,7 +139,7 @@
                     <div class="row">
                         <div class="col-3">
                             <div class="card-image">
-                                <img src="/images/restaurants/pizzaPeters.png" alt="Pizza Peter's">
+                                <img src="images/restaurants/pizzaPeters.png" alt="Pizza Peter's">
                             </div>
                         </div>
                         <div class="col-5">
@@ -175,11 +179,11 @@
                     </datalist>
                 </div>
                 <div class="col-4">
-                    <input list="sortFoodList" placeholder="Sort by">
-                    <datalist id="sortFoodList">
-                        <option value="popularity">
-                        <option value="rating">
-                    </datalist>
+                    <span>Order by:</span>
+                    <select id="sortFoodList">
+                        <option value="popularity">popularity</option>
+                        <option value="rating">rating</option>
+                    </select>
                 </div>
             </div>
         </form>
@@ -187,12 +191,12 @@
     </section>
 
     <footer>
-        <ul>
-            <li>Add a restaurant</li>
-            <li>How it works</li>
-            <li>Terms</li>
-            <li>Report bug</li>
-        </ul>
+        <div class="footerNavbar">
+            <a href="#">Add a restaurant</a>
+            <a href="#">How it works</a>
+            <a href="#">Terms</a>
+            <a href="#">Report bug</a>
+        </div>
     </footer>
 
 </body>
