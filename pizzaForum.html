@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Let's eat</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="topnav">
+            <a href="#menu" id="topMenu" class="dropdown"><i class="fas fa-bars"></i> </a>
+            <div class="dropdown-content">
+                <nav id="topMenu">
+                    <ul>
+                        <li><i class="fas fa-home"></i> Home</li>
+                        <li><i class="far fa-question-circle"></i> About</li>
+                        <li><i class="far fa-address-card"></i> Contact</li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="topnav-right">
+                <a href="#language" id="language">
+                    <form id="languageForm">
+                        <label for="EN" id="languageSelectorEN">
+                            <input type="radio" id='radioEN' name="languageRadio" value="EN" />
+                        </label>
+                        <label for="RO" id="languageSelectorRO">
+                            <input type="radio" id='radioRO' name="languageRadio" value="RO" />
+                        </label>
+                    </form>
+                </a>
+                <a href="#userLogin"> <i class="fas fa-user-circle"> </i></a>
+                <a href="#cart"> <i class="fas fa-shopping-cart"></i></a>
+            </div>
+        </div>
+        <div class="letsEatLogo">
+        </div>
+    </header>
+
+    <section>
+            <div class="restaurantsList">
+                    <div class="flex-container">
+                        <div class="restaurantCard" id="pizzaForum">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="card-image">
+                                        <img src="images/restaurants/pizzaForum.png" alt="Pizza Forum">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-delivery">
+                                        <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> 35 min.</span> </p>
+                                    </div>
+                                    <div class="card-rating">
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                    </div>
+                                </div>
+                                <div class="col-5">
+                                    <div class="card-pricing">
+                                        <p> From: 18 RON </p>
+                                        <p> To: 25 RON </p>
+                                        <p> Min: 20 RON </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                
+                <form id="selectedFoodSearchFilter">
+                        <div class="row">
+                            <div class="col-8">
+                                <i class="fas fa-search"></i>
+                                <input list="foodNameList" placeholder="What pizza do you want?">
+                                <datalist id="foodNameList">
+                                    <option value="coppa">
+                                    <option value="margueritta">
+                                    <option value="quatro-formaggi">
+                                    <option value="calzone">
+                                </datalist>
+                            </div>
+                            <div class="col-4">
+                                <span>Order by:</span>
+                                <select id="sortFoodList">
+                                    <option value="popularity">popularity</option>
+                                    <option value="rating">rating</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+    </section>
+
+    <footer>
+        <div class="footerNavbar">
+            <a href="#">Add a restaurant</a>
+            <a href="#">How it works</a>
+            <a href="#">Terms</a>
+            <a href="#">Report bug</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

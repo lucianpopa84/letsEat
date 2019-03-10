@@ -44,26 +44,22 @@
 
     <section>
         <form id="FoodSearchFilter">
-            <div class="addresForm">
-                <div class="row">
-                    <div class="col-6">
-                        <p> <i class="fas fa-map-marker-alt"><span id="detectedPlace"> Detected place: <br> <span id="detectedAddress">
-                                        Craiova </span></i></span> </p>
-                    </div>
-                    <div class="col-6">
-                        <i class="fas fa-city"></i>
-                        <input list="cityDeliveryList" name="City" placeholder="Change address">
-                        <datalist id="cityDeliveryList">
-                            <option value="Craiova">
-                            <option value="Bucuresti">
-                            <option value="Cluj">
-                        </datalist>
-                    </div>
+            <div class="addressForm">
+                <div class="flex-container">
+                    <i class="fas fa-map-marker-alt"> </i>
+                    <p id="detectedPlace"> Detected place: <br> Craiova </p>
+                    <input list="cityDeliveryList" name="City" placeholder="Change address">
+                    <datalist id="cityDeliveryList">
+                        <option value="Craiova">
+                        <option value="Bucuresti">
+                        <option value="Cluj">
+                    </datalist>
                 </div>
             </div>
+
             <div class="foodSearchFilter">
                 <i class="fas fa-search"></i>
-                <input list="foodTypeList" placeholder="What do you want to eat today?">
+                <input list="foodTypeList" id="foodTypeListInput" placeholder="What do you want to eat today?">
                 <datalist id="foodTypeList">
                     <option value="pizza">
                     <option value="daily menu">
@@ -84,21 +80,39 @@
         <div class="quickSearchGrid">
             <div class="flex-container">
                 <a href="#pizza">
-                    <img src="images/foodType/pizza.jpg" alt="Pizza">
+                    <div class="foodTitle">
+                        <p>Pizza</p>
+                    </div>
+                    <img src="images/foodType/pizza.png" alt="Pizza">
                 </a>
                 <a href="#dailyMenu">
+                    <div class="foodTitle">
+                        <p>Daily menu</p>
+                    </div>
                     <img src="images/foodType/dailyMenu.jpg" alt="Daily menu">
                 </a>
                 <a href="#romanian">
+                    <div class="foodTitle">
+                        <p>Romanian</p>
+                    </div>
                     <img src="images/foodType/romanian.jpg" alt="Romanian">
                 </a>
                 <a href="#fastFood">
+                    <div class="foodTitle">
+                        <p>Fast-food</p>
+                    </div>
                     <img src="images/foodType/fastFood.jpg" alt="Fast-food">
                 </a>
                 <a href="#salads">
+                    <div class="foodTitle">
+                        <p>Salads</p>
+                    </div>
                     <img src="images/foodType/salads.jpg" alt="Salads">
                 </a>
                 <a href="#desert">
+                    <div class="foodTitle">
+                        <p>Desert</p>
+                    </div>
                     <img src="images/foodType/desert.jpg" alt="Desert">
                 </a>
             </div>
@@ -113,8 +127,9 @@
                                 <img src="images/restaurants/pizzaForum.png" alt="Pizza Forum">
                             </div>
                         </div>
-                        <div class="col-5">
-                            <div class="card-delivery">
+                        <div class="col-4">
+                                <div class="card-delivery" style="margin-top: -12px; margin-bottom: 0px;">
+                                        <h4>Pizza Forum</h4>
                                 <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> 35 min.</span> </p>
                             </div>
                             <div class="card-rating">
@@ -127,9 +142,39 @@
                         </div>
                         <div class="col-4">
                             <div class="card-pricing">
-                                <p> From: </span> <span class="price-min"> 18 </span> RON </p>
-                                <p> To: </span> <span class="price-max"> 25 </span> RON </p>
-                                <p> Min: </span> <span class="order-min"> 20 </span> RON </p>
+                                <p> From: 18 RON </p>
+                                <p> To: 25 RON </p>
+                                <p> Min: 20 RON </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="restaurantCard" id="pizzaCharlie">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="card-image">
+                                <img src="images/restaurants/pizzaCharlie.png" alt="Pizza Charlie">
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-delivery" style="margin-top: -12px; margin-bottom: 0px;">
+                                <h4>Pizza Charlie</h4>
+                                <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> 35 min.</span> </p>
+                            </div>
+                            <div class="card-rating">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card-pricing">
+                                <p> From: 18 RON </p>
+                                <p> To: 25 RON </p>
+                                <p> Min: 20 RON </p>
                             </div>
                         </div>
                     </div>
@@ -142,8 +187,9 @@
                                 <img src="images/restaurants/pizzaPeters.png" alt="Pizza Peter's">
                             </div>
                         </div>
-                        <div class="col-5">
-                            <div class="card-delivery">
+                        <div class="col-4">
+                                <div class="card-delivery" style="margin-top: -12px; margin-bottom: 0px;">
+                                        <h4>Pizza Peter's</h4>
                                 <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> closed </span> </p>
                             </div>
                             <div class="card-rating">
@@ -154,39 +200,17 @@
                                 <span class="fa fa-star"></span>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-5">
                             <div class="card-pricing">
-                                <p> From: </span> <span class="price-min"> 19 </span> RON </p>
-                                <p> To: </span> <span class="price-max"> 28 </span> RON </p>
-                                <p> Min: </span> <span class="order-min"> 25 </span> RON </p>
+                                <p> From: 19 RON </p>
+                                <p> To: 28 RON </p>
+                                <p> Min: 25 RON </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <form id="selectedFoodSearchFilter">
-            <div class="row">
-                <div class="col-8">
-                    <i class="fas fa-search"></i>
-                    <input list="foodNameList" placeholder="What pizza do you want?">
-                    <datalist id="foodNameList">
-                        <option value="coppa">
-                        <option value="margueritta">
-                        <option value="quatro-formaggi">
-                        <option value="calzone">
-                    </datalist>
-                </div>
-                <div class="col-4">
-                    <span>Order by:</span>
-                    <select id="sortFoodList">
-                        <option value="popularity">popularity</option>
-                        <option value="rating">rating</option>
-                    </select>
-                </div>
-            </div>
-        </form>
 
     </section>
 
