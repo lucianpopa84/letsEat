@@ -45,6 +45,12 @@ float: right;
   z-index: 1;
 }
 
+/* change defalut 40px padding-inline-start of list */
+ul{
+  padding-inline-start: 10px;
+}
+
+/* remove bullets from dropdown-content list*/
 .dropdown-content li{
   list-style: none;
 }
@@ -104,13 +110,13 @@ float: right;
    opacity: 0;  /* radio check hide*/
 }
 
-
 .row::after {
   content: "";
   clear: both;
   display: table;
 }
-  
+ 
+/* set padding and floating of columns */
 [class*="col-"] {
   float: left;
   padding: 5px;
@@ -135,6 +141,7 @@ header {
   color: #ffffff;
 }
 
+/* hero style logo */
 .letsEatLogo {
   background-size: cover;
   background-image: url("../images/LetsEatLogo.jpg");
@@ -148,7 +155,6 @@ header {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  /* background-color: lightgrey; */
 }
   
 .flex-container > a {
@@ -172,7 +178,7 @@ header {
   
 .flex-container > .restaurantCard {
   background-color: #f1f1f1;
-  height: 100px;
+  height: 90px;
   margin: 10px;
   text-align: left;
   margin: 5px;
@@ -214,26 +220,28 @@ a:link, a:visited {
   color: orange;
 }
   
-.card-pricing{
-  line-height: 8px;
+.card-pricing p{
+  margin: 5px 0 5px 0;
 }
 
-.card-pricing{
-  line-height: 8px;
+.card-delivery h4,p {
+  margin: 5px 0 5px 0;
 }
 
-.card-delivery{
-  line-height: 1px;
-}
-  
 .card-image img {
   object-fit: contain;  
-  max-height: 80px;
+  max-height: 70px;
   width: 100%;
 }
 
 .card-image {
   padding: 4px 8px 4px 8px;
+}
+
+
+.card-rating{
+  font-size: 0.8em;
+  margin: 5px 0 5px 0;
 }
 
 .footerNavbar{
@@ -248,8 +256,8 @@ a:link, a:visited {
   color: white;
   text-decoration: none;
   font-size: 14px;
-  width: 25%; /* Four equal-width links. If you have two links, use 50%, and 33.33% for three links, etc.. */
-  text-align: center; /* If you want the text to be centered */
+  width: 25%; 
+  text-align: center;
 }
 
 /* Add a background color on mouse-over */
@@ -257,7 +265,7 @@ a:link, a:visited {
   background-color: #000;
 }
 
-/* Add responsiveness - on screens less than 500px, make the navigation links appear on top of each other, instead of next to each other */
+/* Add responsiveness */
 @media screen and (max-width: 480px) {
   .footerNavbar a {
     float: none;
@@ -271,13 +279,13 @@ a:link, a:visited {
 @media screen and (max-width: 480px) {
   .restaurantCard {
     width: 100%;
-  }   
+  }  
 }
 
 @media screen and (min-width: 840px) {
   .restaurantCard {
     width: 45%;
-  }   
+  } 
 }
 
 @media screen and (min-width: 1280px) {
@@ -285,6 +293,7 @@ a:link, a:visited {
     width: 30%;
   }   
 }
+
 input{
   border-radius: 10px;
   line-height: 1.8em;
@@ -313,7 +322,6 @@ input{
 .addressForm input{
   min-width: 50%;
   float: right;
-  margin-left: 10px;
 }
 
 #detectedPlace{
@@ -330,6 +338,7 @@ input{
   border-bottom: gray solid 1px;
   border-left: gray solid 1px;
   border-right: gray solid 1px;
+  margin-bottom: 5px;
 }
 
 .quickSearchGrid a{
