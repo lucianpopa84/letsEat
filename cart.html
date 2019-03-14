@@ -123,19 +123,19 @@
                     <form>
                         <i class="fas fa-map-marker-alt"> </i>
                         <p id="detectedPlace"> <strong> Deliver to: </strong> <br> Craiova, <br> Carol str. no.7 </p>
-                        <input name="address" placeholder="Change address">
+                        <input name="address" autocomplete="address-level2" placeholder="Change address">
                     </form>
                 </div>
                 <div class="row">
-                    <label for="formPhoneNum">Phone
+                    <label for="formPhoneNum">Phone </label>
                         <input type="tel" name="phone" id="formPhoneNum" placeholder="Enter phone number" required
                             autocomplete="tel">
-                    </label>
+                    
                 </div>
                 <div class="row">
-                    <label for="deliveryTime">Preferred delivery time:
+                    <label for="deliveryTime">Preferred delivery time: </label>
                         <input type=time id="deliveryTime" min="11:00" max="21:00" step="900" value="13:30" name="delivery">
-                    </label>
+                    
                 </div>
                 <div class="row">
                     <textarea name="comments" maxlength=1000 placeholder="Delivery instructions:"></textarea>
