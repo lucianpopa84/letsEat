@@ -44,7 +44,7 @@
 
     <section>
         <div class="checkout">
-            <h2>Checkout</h2>
+            <h2>Cart</h2>
         </div>
         <div class="foodList">
             <div class="flex-container">
@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-4">
                             <div class="card-image">
-                                <img src="images/foodType/pizza.png" alt="Pizza Coppa">
+                                <img src="images/foodType/pizza.png " alt="Pizza Coppa">
                             </div>
                         </div>
                         <div class="col-5">
@@ -80,49 +80,70 @@
                 </div>
 
                 <div class="foodCard">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="card-image">
-                                    <img src="images/foodType/pizza.png" alt="Pizza Margherita">
-                                </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="card-image">
+                                <img src="images/foodType/pizza.png" alt="Pizza Margherita">
                             </div>
-                            <div class="col-5">
-                                <div class="card-delivery">
-                                    <h4>Pizza Margherita</h4>
-                                    <p>tomato souce 90g, mozzarella 135g, olive oil 2g </p>
-                                </div>
-                                <div class="card-rating">
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star checked"></span>
-                                    <span class="fa fa-star"></span>
-                                    <span class="fa fa-star"></span>
-                                </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-delivery">
+                                <h4>Pizza Margherita</h4>
+                                <p>tomato souce 90g, mozzarella 135g, olive oil 2g </p>
                             </div>
-                            <div class="col-3">
-                                <div class="card-pricing">
-                                    <form id="priceForm">
-                                        <input type="number" name="quantity" min="0" max="10" value="1">
-                                        <p class="price">20 RON</p>
-                                    </form>
-                                </div>
+                            <div class="card-rating">
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star checked"></span>
+                                <span class="fa fa-star"></span>
+                                <span class="fa fa-star"></span>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="card-pricing">
+                                <form id="priceForm">
+                                    <input type="number" name="quantity" min="0" max="10" value="1">
+                                    <p class="price">20 RON</p>
+                                </form>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
 
         <div class="total">
-                <h2>Total = 43 RON</h2>
+            <h2>Total = 43 RON</h2>
         </div>
 
-        <div class="addressForm">
-                <div class="flex-container">
-                    <i class="fas fa-map-marker-alt"> </i>
-                    <p id="detectedPlace"> <strong> Deliver to: </strong> <br> Craiova, <br> Carol str. no.7 </p>
-                    <input name="address" placeholder="Change address">
+        <div class="flex-container">
+
+            <div class="addressForm">
+                <div class="row">
+                    <form>
+                        <i class="fas fa-map-marker-alt"> </i>
+                        <p id="detectedPlace"> <strong> Deliver to: </strong> <br> Craiova, <br> Carol str. no.7 </p>
+                        <input name="address" placeholder="Change address">
+                    </form>
                 </div>
+                <div class="row">
+                    <label for="formPhoneNum">Phone
+                        <input type="tel" name="phone" id="formPhoneNum" placeholder="Enter phone number" required
+                            autocomplete="tel">
+                    </label>
+                </div>
+                <div class="row">
+                    <label for="deliveryTime">Preferred delivery time:
+                        <input type=time id="deliveryTime" min="11:00" max="21:00" step="900" value="13:30" name="delivery">
+                    </label>
+                </div>
+                <div class="row">
+                    <textarea name="comments" maxlength=1000 placeholder="Delivery instructions:"></textarea>
+                    <button>Submit order</button>
+                </div>
+            </div>
         </div>
+
     </section>
 
     <footer>

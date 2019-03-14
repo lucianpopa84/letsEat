@@ -148,6 +148,7 @@ header {
   height: 120px;
   background-position: center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
   
 .flex-container {
@@ -161,9 +162,7 @@ header {
   background-color: #f1f1f1;
   width: 100px;
   height: 110px;
-  margin: 10px;
   text-align: center;
-
   margin: 5px;
   border: gray solid 1px;
   border-radius: 10px;
@@ -178,20 +177,19 @@ header {
   
 .flex-container > .restaurantCard {
   background-color: #f1f1f1;
+  /* background-color: beige; */
   height: 90px;
-  margin: 10px;
   text-align: left;
-  margin: 5px;
   border: gray solid 1px;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .flex-container > .foodCard {
   background-color: #f1f1f1;
+  /* background-color: beige; */
   height: 130px;
-  margin: 10px;
   text-align: left;
-  margin: 5px;
   border: gray solid 1px;
   border-radius: 10px;
 }
@@ -212,6 +210,7 @@ header {
 
 .foodSearchFilter{
   background-color: #f1f1f1;
+  /* background-color: beige; */
   text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
@@ -285,6 +284,7 @@ a:link, a:visited {
 @media screen and (max-width: 480px) {
   .restaurantCard, .foodCard {
     width: 100%;
+    margin: 5px 0 5px 0;
   }  
 
   .footerNavbar a {
@@ -298,17 +298,29 @@ a:link, a:visited {
   .card-delivery h4, p {
     font-size: 14px;
   }
+
+  .foodCard .card-delivery p {
+    font-size: 13px;
+  }
+}
+
+@media screen and (min-width: 480px) {
+  .restaurantCard, .foodCard {
+    margin: 5px 0 5px 0;
+  } 
 }
 
 @media screen and (min-width: 840px) {
   .restaurantCard, .foodCard {
-    width: 45%;
+    width: 48%;
+    margin: 5px;
   } 
 }
 
 @media screen and (min-width: 1280px) {
   .restaurantCard, .foodCard {
-    width: 30%;
+    width: 32%;
+    margin: 5px;
   }   
 }
 
@@ -323,23 +335,49 @@ input{
   width: 90%;
 }
 
+.foodList{
+  margin-bottom: 5px;
+}
+
 .addressForm, .total{
-  margin: 5px 0 5px 0;
   border: gray solid 1px;
   border-radius: 10px;
   background-color: #f1f1f1;
+  /* background-color: beige; */
+}
+
+.addressForm{
+  margin: 10px 0 10px 0;
+  width: 100%;
 }
 
 .addressForm i{
   float: left;
   line-height: 78px;
-  margin: 0 10px 0 10px;
   font-size: 28px;
+  margin: 0 10px 0 10px;
 }
 
 .addressForm input{
   min-width: 50%;
   float: right;
+  margin-top: 20px;
+  line-height: 30px;
+}
+
+.addressForm label{
+  min-width: 50%;
+  margin: 10px 5px 10px 10px;
+}
+.addressForm textarea{
+  min-width: 80%;
+  margin: 10px 5px 10px 10px;
+}
+
+.addressForm button{
+  min-width: 40%;
+  margin: 10px 5px 10px 10px;
+  text-align: center;
 }
 
 #detectedPlace{
@@ -350,6 +388,7 @@ input{
 
 .quickSearchGrid{
   background-color: #f1f1f1;
+  /* background-color: beige; */
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   padding: 5px;
@@ -369,13 +408,14 @@ input{
 
 #selectedFoodSearchFilter{
   background-color: #f1f1f1;
-  margin: 5px;
+  /* background-color: beige; */
+  margin: 5px 0 5px 0;
   border: gray solid 1px;
   border-radius: 10px;
 }
 
 .foodNameList{
-  width: 90%;
+  width: 85%;
 }
 
 /* always show up/down arrows for input "number" field */
@@ -388,9 +428,13 @@ input[type=number]::-webkit-outer-spin-button {
 
 #priceForm input, button{
   height: 50px;
-  margin-bottom: 5px;
-  max-width: 66px;
+  max-width: 65px;
   display: block;
+}
+
+.priceButton{
+  height: 30px;
+  margin-top: 8px;
 }
 
 .cartItems{
@@ -401,6 +445,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .checkout, .total{
   text-align: center;
+  max-width: 400px;
+  margin: auto;
 }
 
 .price{
@@ -408,4 +454,5 @@ input[type=number]::-webkit-outer-spin-button {
   max-width: 66px;
   line-height: 50px;
 }
+
 
