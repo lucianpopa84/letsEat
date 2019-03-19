@@ -77,10 +77,7 @@
             </div>
         </div>
 
-        <form id="selectedFoodSearchFilter">
-            <div class="row">
-                <div class="col-8">
-                    <i class="fas fa-search"></i>
+        <form class="foodSearchFilter" id="selectedFoodSearchFilter">
                     <input list="foodNameList" class="foodNameList" placeholder="What pizza do you want?">
                     <datalist id="foodNameList">
                         <option value="coppa">
@@ -88,15 +85,7 @@
                         <option value="quatro-formaggi">
                         <option value="calzone">
                     </datalist>
-                </div>
-                <div class="col-4">
-                    <span>Order by:</span>
-                    <select id="sortFoodList">
-                        <option value="popularity">popularity</option>
-                        <option value="rating">rating</option>
-                    </select>
-                </div>
-            </div>
+                    <i class="fas fa-search"></i>
         </form>
 
         <div class="foodList">

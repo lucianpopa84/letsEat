@@ -116,32 +116,25 @@
             <h2>Total = 43 RON</h2>
         </div>
 
-        <div class="flex-container">
+        <div class="checkoutForm">
+            <form>
+                <div class="checkoutAddress">
+                    <i class="fas fa-map-marker-alt"> </i>
+                    <p id="detectedDeliveryPlace"> </p>
+                    <input name="address" autocomplete="address-level2" placeholder="Change address">
+                </div>
 
-            <div class="addressForm">
-                <div class="row">
-                    <form>
-                        <i class="fas fa-map-marker-alt"> </i>
-                        <p id="detectedPlace"> <strong> Deliver to: </strong> <br> Craiova, <br> Carol str. no.7 </p>
-                        <input name="address" autocomplete="address-level2" placeholder="Change address">
-                    </form>
-                </div>
-                <div class="row">
-                    <label for="formPhoneNum">Phone </label>
-                        <input type="tel" name="phone" id="formPhoneNum" placeholder="Enter phone number" required
-                            autocomplete="tel">
-                    
-                </div>
-                <div class="row">
-                    <label for="deliveryTime">Preferred delivery time: </label>
-                        <input type=time id="deliveryTime" min="11:00" max="21:00" step="900" value="13:30" name="delivery">
-                    
-                </div>
-                <div class="row">
-                    <textarea name="comments" style="height:100px" maxlength=1000 placeholder="Delivery instructions:"></textarea>
-                    <button>Submit order</button>
-                </div>
-            </div>
+                <label for="clientPhone">Phone </label>
+                <input type="tel" id="clientPhone" name="phone" placeholder="Enter phone number" autocomplete="tel" required>
+
+                <label for="deliveryTime">Preferred delivery time:</label>
+                <input type=time id="deliveryTime" min="11:00" max="21:00" step="900" value="13:30" name="delivery">
+
+                <label for="comments">Comments</label>
+                <textarea id="comments" name="comments" style="height:100px" maxlength=1000 placeholder="Delivery instructions:"></textarea>
+
+                <input type="submit" value="Submit order">
+            </form>
         </div>
 
     </section>
@@ -156,5 +149,7 @@
     </footer>
 
 </body>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM"></script>
+<script src="js/cart.js"></script>
 
 </html>

@@ -4,7 +4,7 @@
 
 /* Add a dark background color to the top navigation */
 .topnav{
-  background-color: #333;
+  background-color: #444;
   overflow: hidden;
 }
 
@@ -39,7 +39,7 @@ float: right;
   display: none;
   position: absolute;
   top: 55px;
-  background-color: #333;
+  background-color: #444;
   min-width: 140px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -57,7 +57,7 @@ ul{
 
 .dropdown-content li:hover {
   background-color: #f1f1f1;
-  color: #333;
+  color: #444;
 }
 
 /* Style the language selection icons */
@@ -137,7 +137,7 @@ ul{
 .col-12 {width: 100%;}
   
 header {
-  background-color:#333;
+  background-color:#444;
   color: #ffffff;
 }
 
@@ -149,6 +149,7 @@ header {
   background-position: center;
   background-repeat: no-repeat;
   cursor: pointer;
+  margin-bottom: 5px;
 }
   
 .flex-container {
@@ -178,7 +179,7 @@ header {
 .flex-container > .restaurantCard {
   background-color: #f1f1f1;
   /* background-color: beige; */
-  height: 90px;
+  /* height: 90px; */
   text-align: left;
   border: gray solid 1px;
   border-radius: 10px;
@@ -188,7 +189,7 @@ header {
 .flex-container > .foodCard {
   background-color: #f1f1f1;
   /* background-color: beige; */
-  height: 130px;
+  /* height: 130px; */
   text-align: left;
   border: gray solid 1px;
   border-radius: 10px;
@@ -204,7 +205,7 @@ header {
 .foodTitle > p{
   margin: 0px; 
   padding: 2px 0 2px 0;
-  color: #333;
+  color: #444;
   color: #FFFFFF;
 }
 
@@ -218,6 +219,11 @@ header {
   border-top: gray solid 1px;
   border-left: gray solid 1px;
   border-right: gray solid 1px;
+}
+
+.foodSearchFilter i{
+  line-height: 32px;
+  margin-top: 4px;
 }
 
 a:link, a:visited {
@@ -261,8 +267,9 @@ a:link, a:visited {
 
 .footerNavbar{
   width: 100%;
-  background-color: #333;
+  background-color: #444;
   overflow: auto;
+  margin-top: 5px;
 }
 
 .footerNavbar a {
@@ -337,7 +344,8 @@ a:link, a:visited {
 }
 
 input{
-  border-radius: 10px;
+  border-radius: 6px;
+  border: solid 1px lightgray;
   line-height: 1.8em;
   padding: 4px;
   margin: 2px;
@@ -355,7 +363,6 @@ input{
   border: gray solid 1px;
   border-radius: 10px;
   background-color: #f1f1f1;
-  /* background-color: beige; */
 }
 
 .addressForm{
@@ -363,18 +370,16 @@ input{
   width: 100%;
 }
 
-.addressForm i{
+.addressForm i, .checkoutForm i{
   float: left;
-  line-height: 60px;
+  line-height: 50px;
   font-size: 28px;
-  margin: 2px 10px 0 10px;
+  margin: 0 10px 0 10px;
 }
 
-.addressForm input{
+.addressForm input, .checkoutForm input{
   max-width: 90%;
   float: left;
-  margin-top: 14px;
-  line-height: 36px;
 }
 
 .addressForm label{
@@ -399,8 +404,8 @@ input{
   text-align: center;
 }
 
-#detectedPlace{
-  margin: 12px 8px 4px 2px;
+#detectedPlace, #detectedDeliveryPlace{
+  margin: 4px 8px 0 2px;
   float: left;
   text-align: center;
 }
@@ -426,15 +431,13 @@ input{
 }
 
 #selectedFoodSearchFilter{
-  background-color: #f1f1f1;
-  /* background-color: beige; */
   margin: 5px 0 5px 0;
-  border: gray solid 1px;
-  border-radius: 10px;
+  border-bottom: gray solid 1px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
-
-.foodNameList{
-  width: 85%;
+#selectedFoodSearchFilter input{
+  width: 90%;
 }
 
 /* always show up/down arrows for input "number" field */
@@ -442,18 +445,28 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {  
    opacity: 1;
    padding: 8px 4px 8px 4px;
-   height: 20px;
+   height: 18px;
+   border: solid gray 2px;
 }
 
 #priceForm input, button{
-  height: 50px;
+  height: 42px;
   max-width: 65px;
-  display: block;
+}
+
+#priceForm input{
+  margin-top: 8px;
 }
 
 .priceButton{
   height: 30px;
   margin-top: 8px;
+  background-color: #444;
+  color: white;
+  /* padding: 10px 20px; */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .cartItems{
@@ -464,8 +477,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .checkout, .total{
   text-align: center;
-  max-width: 400px;
-  margin: auto;
+  margin: 5px 0 5px 0;
 }
 
 .price{
@@ -474,32 +486,59 @@ input[type=number]::-webkit-outer-spin-button {
   line-height: 50px;
 }
 
-.contactForm{
-  border-radius: 5px;
+.contactForm {
+  border: gray solid 1px;
+  border-radius: 10px;
   background-color: #f2f2f2;
-  padding: 20px;
+  padding: 15px;
+  margin-bottom: 10px;
 }
 
-.contactForm input[type=text], select, textarea {
+.checkoutForm{
+  border: gray solid 1px;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 15px 15px 70px 15px;
+  margin-bottom: 10px;
+}
+
+.checkoutForm input{
+  margin-top: 12px;
+}
+
+.contactForm input[type=text], .checkoutForm input[type=text], .checkoutForm input[type=tel], .checkoutForm input[type=time], select, textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-top: 6px;
-  margin-bottom: 16px;
-  resize: vertical;
+  border-radius: 6px;
+  border: solid 1px lightgray;
+  line-height: 1.8em;
+  padding: 4px;
+  margin: 2px;
+  height: 34px;
 }
 
-.contactForm input[type=submit] {
-  background-color: #4CAF50;
+.contactForm input[type=submit], .checkoutForm input[type=submit] {
+  background-color: #444;
   color: white;
-  padding: 12px 20px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  margin: 8px 0 8px 2px;
+}
+
+.contactForm p, .checkoutForm p{
+  margin-top: 20px;
 }
 
 .contactForm input[type=submit]:hover {
-  background-color: #45a049;
+  background-color: darkblue;
+}
+
+.contactForm label, .checkoutForm label{
+  margin: 10px 0 2px 2px;
+  float: left;
+}
+
+.checkoutAddress{
+  min-height: 70px;
 }
