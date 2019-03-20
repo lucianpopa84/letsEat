@@ -310,8 +310,14 @@ a:link, a:visited {
     font-size: 13px;
   }
 
-  .addressForm input{
-    min-width: 25%;
+  .addressForm input {
+    width: 90%;
+    margin-bottom: 10px;
+  }
+
+  .checkoutForm input, .contactForm input {
+    width: 100%;
+    margin-bottom: 10px;
   }
 }
 
@@ -320,8 +326,8 @@ a:link, a:visited {
     margin: 5px 0 5px 0;
   } 
 
-  .addressForm input{
-    min-width: 50%;
+  .addressForm input, .checkoutForm input, .contactForm input {
+    min-width: 35%;
   }
 }
 
@@ -331,8 +337,8 @@ a:link, a:visited {
     margin: 5px;
   } 
 
-  .addressForm input{
-    min-width: 60%;
+  .addressForm input, .checkoutForm input {
+    min-width: 45%;
   }
 }
 
@@ -375,11 +381,6 @@ input{
   line-height: 50px;
   font-size: 28px;
   margin: 0 10px 0 10px;
-}
-
-.addressForm input, .checkoutForm input{
-  max-width: 90%;
-  float: left;
 }
 
 .addressForm label{
@@ -499,7 +500,7 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 10px;
   background-color: #f2f2f2;
   padding: 15px 15px 70px 15px;
-  margin-bottom: 10px;
+  margin: 10px 0 10px 0;
 }
 
 .checkoutForm input{

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body onload="initialize()">
     <header>
         <div class="topnav">
             <a href="#menu" id="topMenu" class="dropdown"><i class="fas fa-bars"></i> </a>
@@ -118,7 +118,7 @@
 
         <div class="checkoutForm">
             <form>
-                <div class="checkoutAddress">
+                <div class="checkoutAddress flex-container">
                     <i class="fas fa-map-marker-alt"> </i>
                     <p id="detectedDeliveryPlace"> </p>
                     <input name="address" autocomplete="address-level2" placeholder="Change address">
@@ -150,7 +150,7 @@
 
 </body>
 <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM&callback=initMap">
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM">
 </script>
 <script src="js/cart.js"></script>
 

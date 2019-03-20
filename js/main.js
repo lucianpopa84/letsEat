@@ -1,5 +1,10 @@
 var detectedPlaceText = document.getElementById("detectedPlace");
 
+function initialize() {
+    geocoder = new google.maps.Geocoder();
+    getLocation();
+}
+
 function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.watchPosition(showPosition, showError);
@@ -32,12 +37,26 @@ function showError(error) {
 function codeLatLng(lat, lng) {
 
     var latlng = new google.maps.LatLng(lat, lng);
-    geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-            // console.log(results)
+            // console.log(results);
             if (results) {
-                detectedPlaceText.innerHTML = "Detected location:<br>" + results[0].address_components[2].long_name;
+                if (results[0].address_components[0].types[0] == "street_number"
+                    && results[0].address_components[2].types[0] == "locality"
+                    && results[0].address_components[1].types[0] == "route") {
+                    var streetNumber = results[0].address_components[0].long_name;
+                    var locality = results[0].address_components[2].long_name;
+                    var street = results[0].address_components[1].long_name;
+                    if (street.startsWith("Strada")) {
+                        street = `${street.substring(6, street.length)} street`;
+                    }
+                    detectedPlaceText.innerHTML = `Detected location:<br>
+                    ${streetNumber} ${street}, ${locality}`;
+                } else {
+                    detectedPlaceText.innerHTML = `Detected location:<br>
+                    ${results[0].formatted_address.split(",")[0]}, ${results[0].formatted_address.split(",")[1]}`;
+                }
+
             } else {
                 console.log("No results found");
             }
@@ -46,5 +65,3 @@ function codeLatLng(lat, lng) {
         }
     });
 }
-
-getLocation();
