@@ -1,3 +1,4 @@
+// ======= geolocation =======
 var detectedPlaceText = document.getElementById("detectedPlace");
 
 function initialize() {
@@ -35,7 +36,6 @@ function showError(error) {
 }
 
 function codeLatLng(lat, lng) {
-
     var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
@@ -56,7 +56,6 @@ function codeLatLng(lat, lng) {
                     detectedPlaceText.innerHTML = `Detected location:<br>
                     ${results[0].formatted_address.split(",")[0]}, ${results[0].formatted_address.split(",")[1]}`;
                 }
-
             } else {
                 console.log("No results found");
             }
@@ -65,3 +64,26 @@ function codeLatLng(lat, lng) {
         }
     });
 }
+
+// ======= quick search grid =======
+var quickGrid = document.getElementById("foodQuickSearchGrid");
+var quickLink = quickGrid.getElementsByClassName("quickSearchLink");
+for (var i = 0; i < quickLink.length; i++) {
+    quickLink[i].addEventListener("click", function () {
+        var current = document.getElementsByClassName("active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+        this.className += " active";
+        console.log(this.id);
+    });
+}
+
+// ======= fetch restaurants json =======
+fetch('https://lucianpopa84.github.io/letsEat/data/restaurants.json')
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (restaurantsJson) {
+        console.log(JSON.stringify(restaurantsJson));
+    });

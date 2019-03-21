@@ -1,0 +1,39 @@
+
+[
+    {
+        "name": "Pizza Forum",
+        "id": "pizzaForum",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaForum.png",
+        "imageAlt": "Pizza Forum",
+        "deliveryTime": 35,
+        "rating": 3,
+        "pricingFrom": 18,
+        "pricingTo": 25,
+        "pricingMin": 20
+    },
+    {
+        "name": "Pizza Charlie",
+        "id": "pizzaCharlie",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaCharlie.png",
+        "imageAlt": "Pizza Charlie",
+        "deliveryTime": 35,
+        "rating": 3,
+        "pricingFrom": 18,
+        "pricingTo": 25,
+        "pricingMin": 20
+    },
+    {
+        "name": "Pizza Peter's",
+        "id": "pizzaPeters",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaPeters.png",
+        "imageAlt": "Pizza Peter's",
+        "deliveryTime": 35,
+        "rating": 4,
+        "pricingFrom": 19,
+        "pricingTo": 28,
+        "pricingMin": 25
+    }
+]

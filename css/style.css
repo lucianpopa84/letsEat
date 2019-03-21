@@ -427,8 +427,8 @@ input{
   background-color:  white;
 }
 
-.quickSearchGrid a:active .foodTitle{ 
-  background-color:  darkblue;
+.quickSearchGrid a:active .foodTitle, .quickSearchGrid a.active .foodTitle{ 
+  background-color:  navy;
 }
 
 #selectedFoodSearchFilter{
