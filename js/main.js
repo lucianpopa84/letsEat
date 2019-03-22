@@ -1,5 +1,5 @@
 // ======= geolocation =======
-var detectedPlaceText = document.getElementById("detectedPlace");
+const detectedPlaceText = document.getElementById("detectedPlace");
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -39,11 +39,10 @@ function codeLatLng(lat, lng) {
     var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-            // console.log(results);
             if (results) {
-                if (results[0].address_components[0].types[0] == "street_number"
-                    && results[0].address_components[2].types[0] == "locality"
-                    && results[0].address_components[1].types[0] == "route") {
+                if (results[0].address_components[0].types.includes("street_number") 
+                    && results[0].address_components[2].types.includes("locality")
+                    && results[0].address_components[1].types.includes("route")) {
                     var streetNumber = results[0].address_components[0].long_name;
                     var locality = results[0].address_components[2].long_name;
                     var street = results[0].address_components[1].long_name;
@@ -75,15 +74,98 @@ for (var i = 0; i < quickLink.length; i++) {
             current[0].className = current[0].className.replace(" active", "");
         }
         this.className += " active";
-        console.log(this.id);
+        // console.log(this.id);
+        renderRestaurantsHtml(this.id);
     });
 }
 
 // ======= fetch restaurants json =======
-fetch('https://lucianpopa84.github.io/letsEat/data/restaurants.json')
+const jsonDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
+fetch(jsonDataUrl)
     .then(function (response) {
         return response.json();
     })
-    .then(function (restaurantsJson) {
-        console.log(JSON.stringify(restaurantsJson));
+    .then(function (data) {
+        // console.log(JSON.stringify(data));
+        // console.log(data);
+        // localStorage.setItem("restaurantsData", JSON.stringify(data));
+        window.restaurantsData = data;
     });
+
+// ======= render restaurants html =======
+const restaurantList = document.getElementsByClassName("restaurantList");
+function renderRestaurantsHtml(data) {
+    // remove previous restaurant cards
+    if (document.getElementsByClassName("restaurantCard").length > 0) {
+        // console.log(restaurantList[0].firstChild);
+        while (restaurantList[0].firstChild) {
+            restaurantList[0].removeChild(restaurantList[0].firstChild);
+        }
+    }
+    // generate restaurant cards based on selection
+    switch (data) {
+        case "quickSearchPizza":
+            console.log("Pizza restaurants selected");
+            if (restaurantsData) {
+                let htmlContent = `<div class="flex-container restaurantList"> `;
+                for (var i = 0; i < restaurantsData.length; i++) {
+                    if (restaurantsData[i].foodType.includes("pizza")) {
+                        htmlContent += `<div class="restaurantCard" id="${restaurantsData[i].id}"> 
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="card-image">
+                                        <img src="${restaurantsData[i].imageSrc}" alt="${restaurantsData[i].imageAlt}">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-delivery">
+                                        <h4>${restaurantsData[i].name}</h4>
+                                        <p> <i class="fas fa-truck"></i> <span class="deliveryTime"> ${restaurantsData[i].deliveryTime} min.</span> </p>
+                                    </div>
+                                    <div class="card-rating">
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star checked"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="card-pricing">
+                                        <p> From: ${restaurantsData[i].pricingFrom} RON </p>
+                                        <p> To: ${restaurantsData[i].pricingTo} RON </p>
+                                        <p> Min: ${restaurantsData[i].pricingMin} RON </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> `;
+                    }
+                }
+                htmlContent += `</div>`;
+                // console.log(htmlContent);
+                // var newDiv = document.createElement("div");
+                // var htmlTextContent = document.createTextNode(htmlContent);
+                // newDiv.appendChild(htmlTextContent);
+                // var currentDiv = document.getElementById("restaurantList"); 
+                // document.body.insertBefore(newDiv, currentDiv); 
+            }
+            break;
+        case "quickSearchDailyMenu":
+            console.log("Daily menu restaurants selected");
+            break;
+        case "quickSearchRomanian":
+            console.log("Romanian food restaurants selected");
+            break;
+        case "quickSearchFastFood":
+            console.log("Fast food restaurants selected");
+            break;
+        case "quickSearchSalads":
+            console.log("Salads restaurants selected");
+            break;
+        case "quickSearchDesert":
+            console.log("Desert restaurants selected");
+            break;
+    }
+
+}
+
