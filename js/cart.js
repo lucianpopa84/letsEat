@@ -1,3 +1,4 @@
+// ======= geolocation =======
 var detectedDeliveryPlaceText = document.getElementById("detectedDeliveryPlace");
 
 function initialize() {
@@ -17,7 +18,6 @@ function showPosition(position) {
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
     codeLatLng(lat, lng);
-
 }
 
 function showError(error) {
@@ -35,17 +35,17 @@ function showError(error) {
 }
 
 function codeLatLng(lat, lng) {
-
     var latlng = new google.maps.LatLng(lat, lng);
     geocoder.geocode({ 'latLng': latlng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             // console.log(results)
             if (results) {
-                if (results[0].address_components[0].types[0] == "street_number"
-                    && results[0].address_components[2].types[0] == "locality"
-                    && results[0].address_components[1].types[0] == "route") {
+                if (results[0].address_components[0].types.includes("street_number")
+                    && results[0].address_components[2].types.includes("locality")
+                    && results[0].address_components[1].types.includes("route")) {
                     var streetNumber = results[0].address_components[0].long_name;
                     var locality = results[0].address_components[2].long_name;
+                    localStorage.setItem("locality", locality);
                     var street = results[0].address_components[1].long_name;
                     if (street.startsWith("Strada")) {
                         street = `${street.substring(6, street.length)} street`;
@@ -57,7 +57,6 @@ function codeLatLng(lat, lng) {
                     ${results[0].formatted_address.split(",")[0]}, ${results[0].formatted_address.split(",")[1]}`;
                 }
 
-
             } else {
                 console.log("No results found");
             }
@@ -66,3 +65,17 @@ function codeLatLng(lat, lng) {
         }
     });
 }
+
+// ======= add links to logo and menus =======
+document.querySelector(".letsEatLogo").addEventListener("click", function(){
+    window.location = 'index.html';
+});
+
+const topDropdownMenu = document.querySelector(".dropdown-content");
+document.querySelector("#topMenu").addEventListener("click", function(){
+    if (topDropdownMenu.style.display === "block") {
+        topDropdownMenu.style.display = "none";
+      } else {
+            topDropdownMenu.style.display = "block";
+      }
+});
