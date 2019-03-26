@@ -44,5 +44,35 @@
         "pricingFrom": 19,
         "pricingTo": 28,
         "pricingMin": 25
+    },
+    {
+        "name": "El Greco",
+        "id": "elGreco",
+        "foodType": ["pizza","desert","salads"],
+        "imageSrc": "images/restaurants/ElGreco.png",
+        "imageAlt": "El Greco",
+        "location": "Craiova",
+        "deliveryTime": 40,
+        "operHour": 10,
+        "closeHour": 23,
+        "rating": 5,
+        "pricingFrom": 15,
+        "pricingTo": 35,
+        "pricingMin": 20
+    },
+    {
+        "name": "Spartan",
+        "id": "spartan",
+        "foodType": ["fast food","greek","turkish"],
+        "imageSrc": "images/restaurants/Spartan.png",
+        "imageAlt": "Spartan",
+        "location": "Craiova",
+        "deliveryTime": 30,
+        "operHour": 10,
+        "closeHour": 21,
+        "rating": 4,
+        "pricingFrom": 12,
+        "pricingTo": 24,
+        "pricingMin": 20
     }
 ]

@@ -1,5 +1,5 @@
-// ======= geolocation =======
-const detectedPlaceText = document.getElementById("detectedPlace");
+// ======= google geolocation =======
+const detectedPlaceText = document.querySelector("#detectedPlace");
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -54,6 +54,8 @@ function codeLatLng(lat, lng) {
                 } else {
                     detectedPlaceText.innerHTML = `Detected location:<br>
                     ${results[0].formatted_address.split(",")[0]}, ${results[0].formatted_address.split(",")[1]}`;
+                    var locality = results[0].formatted_address.split(",")[1];
+                    localStorage.setItem("locality", locality);
                 }
             } else {
                 console.log("No results found");
@@ -65,16 +67,15 @@ function codeLatLng(lat, lng) {
 }
 
 // ======= quick search grid =======
-var quickGrid = document.getElementById("foodQuickSearchGrid");
-var quickLink = quickGrid.getElementsByClassName("quickSearchLink");
+var quickGrid = document.querySelector("#foodQuickSearchGrid")
+var quickLink = quickGrid.querySelectorAll(".quickSearchLink")
 for (var i = 0; i < quickLink.length; i++) {
     quickLink[i].addEventListener("click", function () {
-        var current = document.getElementsByClassName("active");
+        var current = document.querySelectorAll(".active");
         if (current.length > 0) {
             current[0].className = current[0].className.replace(" active", "");
         }
         this.className += " active";
-        // console.log(this.id);
         renderRestaurantsHtml(this.id);
     });
 }
@@ -88,51 +89,68 @@ fetch(jsonDataUrl)
     .then(function (data) {
         // console.log(data);
         // localStorage.setItem("restaurantsData", JSON.stringify(data));
-        window.restaurantsData = data;
+        restaurantsData = data;
     });
 
 // ======= render restaurants html =======
-const restaurantList = document.getElementsByClassName("restaurantList");
+const restaurantList = document.querySelector(".restaurantList");
 function renderRestaurantsHtml(data) {
     // remove previous restaurant cards
-    if (document.getElementsByClassName("restaurantCard").length > 0) {
-        // console.log(restaurantList[0].firstChild);
-        while (restaurantList[0].firstChild) {
-            restaurantList[0].removeChild(restaurantList[0].firstChild);
+    if (restaurantList.hasChildNodes()) {
+        while (restaurantList.firstChild) {
+            restaurantList.removeChild(restaurantList.firstChild);
         }
     }
-    // generate restaurant cards based on selection
+    // generate restaurant cards based on selected restaurant food type on quick search grid
     switch (data) {
         case "quickSearchPizza":
             console.log("Pizza restaurants selected");
-            generateRestaurantCards();
+            generateRestaurantCards("pizza");
             break;
         case "quickSearchDailyMenu":
             console.log("Daily menu restaurants selected");
+            generateRestaurantCards("daily menu");
             break;
         case "quickSearchRomanian":
             console.log("Romanian food restaurants selected");
+            generateRestaurantCards("romanian");
             break;
         case "quickSearchFastFood":
             console.log("Fast food restaurants selected");
+            generateRestaurantCards("fast food");
             break;
         case "quickSearchSalads":
             console.log("Salads restaurants selected");
+            generateRestaurantCards("salads");
             break;
         case "quickSearchDesert":
             console.log("Desert restaurants selected");
+            generateRestaurantCards("desert");
             break;
     }
 }
 
-function generateRestaurantCards() {
+// generate restaurant cards based on selected restaurant food type on food list input
+var foodTypeListInput = document.querySelector("#foodTypeListInput");
+foodTypeListInput.onchange = function(){
+    console.log("foodTypeListInput",foodTypeListInput.value);
+    food = foodTypeListInput.value;
+    generateRestaurantCards(food);
+};
+
+foodTypeListInput.onclick = function(){
+    foodTypeListInput.value = "";
+};
+
+// generate restaurant cards based on selected/detected city
+function generateRestaurantCards(food) {
     if (restaurantsData) {
         let htmlContent = `<div class="flex-container restaurantList"> `;
         // retrieve city from local storage
         let city = localStorage.getItem("locality");
         console.log("city = ", city);
         for (let i = 0; i < restaurantsData.length; i++) {
-            if (restaurantsData[i].foodType.includes("pizza")) {
+            if (restaurantsData[i].foodType.includes(food)) {
                 if (restaurantsData[i].location == city) {
                     htmlContent += `
                     <div class="restaurantCard" id="${restaurantsData[i].id}"> 
@@ -147,7 +165,7 @@ function generateRestaurantCards() {
                                     <h4>${restaurantsData[i].name}</h4>`;
                     let currentDate = new Date();
                     let currentHour = currentDate.getHours();
-                    if (currentHour < restaurantsData[i].closeHour && currentHour > restaurantsData[i].operHour) {
+                    if (currentHour < restaurantsData[i].closeHour && currentHour >= restaurantsData[i].operHour) {
                         htmlContent += `<p> <i class="fas fa-truck"></i> <span class="deliveryTime"> ${restaurantsData[i].deliveryTime} min.</span> </p>`;
                     } else {
                         htmlContent += `<p> <i class="fas fa-truck"></i> <span class="deliveryTime"> closed </span> </p>`;
@@ -176,7 +194,7 @@ function generateRestaurantCards() {
 
         }
         htmlContent += `</div>`;
-        restaurantList[0].innerHTML = htmlContent;
+        restaurantList.innerHTML = htmlContent;
     }
 }
 
