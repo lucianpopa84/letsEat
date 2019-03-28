@@ -67,8 +67,8 @@ function codeLatLng(lat, lng) {
 }
 
 // ======= quick search grid =======
-var quickGrid = document.querySelector("#foodQuickSearchGrid")
-var quickLink = quickGrid.querySelectorAll(".quickSearchLink")
+var quickGrid = document.querySelector("#foodQuickSearchGrid");
+var quickLink = quickGrid.querySelectorAll(".quickSearchLink");
 for (var i = 0; i < quickLink.length; i++) {
     quickLink[i].addEventListener("click", function () {
         var current = document.querySelectorAll(".active");
@@ -79,6 +79,23 @@ for (var i = 0; i < quickLink.length; i++) {
         renderRestaurantsHtml(this.id);
     });
 }
+
+// set location manually, on input
+var cityDelivery = document.querySelector("#cityDeliveryListInput");
+cityDelivery.onchange = function () {
+    console.log("cityDelivery", cityDelivery.value);
+    locality = cityDelivery.value;
+    localStorage.setItem("locality", locality);
+    // clear restaurant results
+    renderRestaurantsHtml("");
+    // remove selected food quick link
+    removeSelectedQuickLink();
+};
+
+// empty manual location input on click
+cityDelivery.onclick = function () {
+    cityDelivery.value = "";
+};
 
 // ======= fetch restaurants json =======
 const jsonDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
@@ -132,20 +149,21 @@ function renderRestaurantsHtml(data) {
 
 // generate restaurant cards based on selected restaurant food type on food list input
 var foodTypeListInput = document.querySelector("#foodTypeListInput");
-foodTypeListInput.onchange = function(){
-    console.log("foodTypeListInput",foodTypeListInput.value);
+foodTypeListInput.onchange = function () {
+    console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
     generateRestaurantCards(food);
 };
 
-foodTypeListInput.onclick = function(){
+// empty food type input on click
+foodTypeListInput.onclick = function () {
     foodTypeListInput.value = "";
 };
 
 // generate restaurant cards based on selected/detected city
 function generateRestaurantCards(food) {
     if (restaurantsData) {
-        let htmlContent = `<div class="flex-container restaurantList"> `;
+        let htmlContent = "";
         // retrieve city from local storage
         let city = localStorage.getItem("locality");
         console.log("city = ", city);
@@ -193,21 +211,30 @@ function generateRestaurantCards(food) {
             }
 
         }
-        htmlContent += `</div>`;
         restaurantList.innerHTML = htmlContent;
     }
 }
 
 // ======= add links to logo and menus =======
-document.querySelector(".letsEatLogo").addEventListener("click", function(){
+document.querySelector(".letsEatLogo").addEventListener("click", function () {
     window.location = 'index.html';
 });
 
 const topDropdownMenu = document.querySelector(".dropdown-content");
-document.querySelector("#topMenu").addEventListener("click", function(){
+document.querySelector("#topMenu").addEventListener("click", function () {
     if (topDropdownMenu.style.display === "block") {
         topDropdownMenu.style.display = "none";
-      } else {
-            topDropdownMenu.style.display = "block";
-      }
+    } else {
+        topDropdownMenu.style.display = "block";
+    }
 });
+
+// remove selected food quick link
+function removeSelectedQuickLink() {
+    for (var i = 0; i < quickLink.length; i++) {
+        var current = document.querySelectorAll(".active");
+        if (current.length > 0) {
+            current[0].className = current[0].className.replace(" active", "");
+        }
+    }
+}

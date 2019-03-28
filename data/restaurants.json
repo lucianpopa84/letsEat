@@ -61,6 +61,21 @@
         "pricingMin": 20
     },
     {
+        "name": "L'altra idea",
+        "id": "lAltraIdea",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/lAltraIdea.png",
+        "imageAlt": "L'altra idea",
+        "location": "Brasov",
+        "deliveryTime": 40,
+        "operHour": 10,
+        "closeHour": 23,
+        "rating": 5,
+        "pricingFrom": 20,
+        "pricingTo": 30,
+        "pricingMin": 20
+    },
+    {
         "name": "Spartan",
         "id": "spartan",
         "foodType": ["fast food","greek","turkish"],

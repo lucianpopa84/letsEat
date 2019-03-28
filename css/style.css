@@ -332,6 +332,7 @@ a:link, a:visited {
 
 @media screen and (min-width: 480px) {
   .restaurantCard, .foodCard {
+    width: 100%;
     margin: 5px 0 5px 0;
   } 
 
