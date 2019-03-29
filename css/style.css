@@ -195,7 +195,7 @@ header {
   cursor: pointer;
 }
 
-.flex-container > .foodCard {
+.foodList > .foodCard {
   background-color: #f1f1f1;
   /* background-color: beige; */
   /* height: 130px; */

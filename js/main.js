@@ -85,7 +85,7 @@ var cityDelivery = document.querySelector("#cityDeliveryListInput");
 cityDelivery.onchange = function () {
     console.log("cityDelivery", cityDelivery.value);
     locality = cityDelivery.value;
-    localStorage.setItem("locality", locality);
+    localStorage.setItem("localityManual", locality);
     // clear restaurant results
     renderRestaurantsHtml("");
     // remove selected food quick link
@@ -95,6 +95,8 @@ cityDelivery.onchange = function () {
 // empty manual location input on click
 cityDelivery.onclick = function () {
     cityDelivery.value = "";
+    // clear manual location from local storage
+    localStorage.setItem("localityManual", "");
 };
 
 // ======= fetch restaurants json =======
@@ -152,6 +154,7 @@ var foodTypeListInput = document.querySelector("#foodTypeListInput");
 foodTypeListInput.onchange = function () {
     console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
+    removeSelectedQuickLink();
     generateRestaurantCards(food);
 };
 
@@ -164,14 +167,20 @@ foodTypeListInput.onclick = function () {
 function generateRestaurantCards(food) {
     if (restaurantsData) {
         let htmlContent = "";
-        // retrieve city from local storage
-        let city = localStorage.getItem("locality");
+        // retrieve city from local storage or city input
+        let city = "";
+        let cityManual = localStorage.getItem("localityManual");
+        if (cityManual) {
+            city = cityManual;
+        } else {
+            city = localStorage.getItem("locality");
+        }
         console.log("city = ", city);
         for (let i = 0; i < restaurantsData.length; i++) {
             if (restaurantsData[i].foodType.includes(food)) {
                 if (restaurantsData[i].location == city) {
                     htmlContent += `
-                    <div class="restaurantCard" id="${restaurantsData[i].id}"> 
+                    <div class="restaurantCard" id="${restaurantsData[i].id}" onclick="displayFood(this)"> 
                         <div class="row">
                             <div class="col-3">
                                 <div class="card-image">
@@ -209,7 +218,6 @@ function generateRestaurantCards(food) {
                     </div> `;
                 }
             }
-
         }
         restaurantList.innerHTML = htmlContent;
     }
@@ -238,3 +246,23 @@ function removeSelectedQuickLink() {
         }
     }
 }
+
+//display restaurant's food on click
+function displayFood(restaurant) {
+    console.log("selected restaurant: ", restaurant.id);
+    // remove other restaurant cards
+    if (restaurantList.hasChildNodes()) {
+        let restaurantCard = restaurantList.querySelectorAll(".restaurantCard");
+        for (let i = 0; i < restaurantCard.length; i++) {
+            if (restaurantCard[i].id != restaurant.id) {
+                restaurantList.removeChild(restaurantCard[i]);
+            }
+        }
+    }
+    // remove quick grid
+}
+
+
+
+
+
