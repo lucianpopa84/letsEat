@@ -131,14 +131,24 @@ cityDelivery.onclick = function () {
 };
 
 // ======= fetch restaurants json =======
-const jsonDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
-fetch(jsonDataUrl)
+const jsonRestaurantsDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
+fetch(jsonRestaurantsDataUrl)
     .then(function (response) {
         return response.json();
     })
     .then(function (data) {
         // localStorage.setItem("restaurantsData", JSON.stringify(data));
         restaurantsData = data;
+    });
+
+    // ======= fetch food json =======
+const jsonFoodDataUrl = 'https://lucianpopa84.github.io/letsEat/data/food.json';
+fetch(jsonFoodDataUrl)
+    .then(function (response) {
+        return response.json();
+    })
+    .then(function (data) {
+        foodData = data;
     });
 
 // ======= render restaurants html =======
