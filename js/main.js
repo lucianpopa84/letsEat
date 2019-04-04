@@ -8,7 +8,8 @@ function initialize() {
 
 function getLocation() {
     if (navigator.geolocation) {
-        navigator.geolocation.watchPosition(showPosition, showError);
+        // navigator.geolocation.watchPosition(showPosition, showError);
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
     } else {
         detectedPlaceText.innerHTML = "Geolocation <br> not supported.";
     }
@@ -46,7 +47,7 @@ function codeLatLng(lat, lng) {
                     for (let address of result.address_components) {
                         if (address.types.includes("street_number")) {
                             console.log("Street number results:", address.long_name);
-                            var streetNumber = address.long_name;
+                            streetNumber = address.long_name;
                             break;
                         }
                     }
@@ -54,7 +55,7 @@ function codeLatLng(lat, lng) {
                     for (let address of result.address_components) {
                         if (address.types.includes("locality")) {
                             console.log("Locality results:", address.long_name);
-                            var locality = address.long_name;
+                            locality = address.long_name;
                             localStorage.setItem("locality", locality);
                             break;
                         }
@@ -63,8 +64,8 @@ function codeLatLng(lat, lng) {
                     for (let address of result.address_components) {
                         if (address.types.includes("route")) {
                             console.log("Route results:", address.long_name);
-                            var street = address.long_name;
-                            if ( document.documentElement.lang.toLowerCase() === "en-us" ) {
+                            street = address.long_name;
+                            if (document.documentElement.lang.toLowerCase() === "en-us") {
                                 // cut "Strada" from street and add "street" in the end, if language is english
                                 if (street.startsWith("Strada")) {
                                     street = `${street.substring(6, street.length)} street`;
@@ -141,7 +142,7 @@ fetch(jsonRestaurantsDataUrl)
         restaurantsData = data;
     });
 
-    // ======= fetch food json =======
+// ======= fetch food json =======
 const jsonFoodDataUrl = 'https://lucianpopa84.github.io/letsEat/data/food.json';
 fetch(jsonFoodDataUrl)
     .then(function (response) {
@@ -165,26 +166,32 @@ function renderRestaurantsHtml(data) {
         case "quickSearchPizza":
             console.log("Pizza restaurants selected");
             generateRestaurantCards("pizza");
+            localStorage.setItem("foodType", "pizza");
             break;
         case "quickSearchDailyMenu":
             console.log("Daily menu restaurants selected");
             generateRestaurantCards("daily menu");
+            localStorage.setItem("foodType", "daily menu");
             break;
         case "quickSearchRomanian":
             console.log("Romanian food restaurants selected");
             generateRestaurantCards("romanian");
+            localStorage.setItem("foodType", "romanian");
             break;
         case "quickSearchFastFood":
             console.log("Fast food restaurants selected");
             generateRestaurantCards("fast food");
+            localStorage.setItem("foodType", "fast food");
             break;
         case "quickSearchSalads":
             console.log("Salads restaurants selected");
             generateRestaurantCards("salads");
+            localStorage.setItem("foodType", "salads");
             break;
         case "quickSearchDesert":
             console.log("Desert restaurants selected");
             generateRestaurantCards("desert");
+            localStorage.setItem("foodType", "desert");
             break;
     }
 }
@@ -194,6 +201,7 @@ var foodTypeListInput = document.querySelector("#foodTypeListInput");
 foodTypeListInput.onchange = function () {
     console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
+    localStorage.setItem("foodType", food);
     removeSelectedQuickLink();
     generateRestaurantCards(food);
 };
@@ -201,6 +209,7 @@ foodTypeListInput.onchange = function () {
 // empty food type input on click
 foodTypeListInput.onclick = function () {
     foodTypeListInput.value = "";
+    localStorage.setItem("foodType", "");
 };
 
 // generate restaurant cards based on selected/detected city
@@ -303,6 +312,90 @@ function displayFood(restaurant) {
     removeElementById("foodQuickSearchGrid");
     removeElementByClass("foodSearchFilter");
     // display food - work in progress
+    let foodType = localStorage.getItem("foodType");
+    console.log("Selected food type", foodType);
+    // filter data from food json based on selected restaurant and food type
+    const restaurantFood = foodData.filter(food => (food.restaurantId == restaurant.id && food.foodType == foodType));
+    // console.log("restaurantFood: ", restaurantFood);
+    let htmlContent = "";
+    for (let foodItem of restaurantFood) {
+        htmlContent += `
+        <div class="foodCard">
+        <div class="row">
+            <div class="col-4">
+                <div class="card-image">
+                    <img src="${foodItem.imageSrc}" alt="${foodItem.imageAlt}">
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="card-delivery">
+                    <h4>${foodItem.name}</h4>
+                    <p>${foodItem.ingredients}</p>
+                </div>
+                `;
+        htmlContent += `<div class="card-rating">`;
+        for (let j = 0; j < foodItem.rating; j++) {
+            htmlContent += `<span class="fa fa-star checked"></span>`;
+        };
+        for (let j = 0; j < 5 - foodItem.rating; j++) {
+            htmlContent += `<span class="fa fa-star"></span>`;
+        };
+        htmlContent += `
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="card-pricing" id="${foodItem.name.split(" ").join("-")}">
+                    <form id="${foodItem.restaurantId}PriceForm" class="priceForm">
+                        <input type="number" name="quantity" min="1" max="10" value="1">
+                        <button onclick="addItemToCart(this)" class="priceButton">${foodItem.price} RON</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+        `;
+    }
+
+    // render restaurant's food list html 
+    const foodList = document.querySelector(".foodList");
+    foodList.innerHTML = htmlContent;
+
+    var priceFormButtons = document.querySelectorAll(".priceForm > button");
+    console.log("priceFormButtons", priceFormButtons)
+    // prevent default refresh action on click
+    for (let priceFormButton of priceFormButtons) {
+        priceFormButton.addEventListener("click", function (e) {
+            e.preventDefault();
+        });
+    }
+
+    // update add to cart price button on quantity change
+    updateCartPrices();
+}
+
+// update add to cart price button on quantity change
+function updateCartPrices(){
+    var priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
+    console.log("priceFormQuantityInputs", priceFormQuantityInputs)
+    for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
+        priceFormQuantity.addEventListener("change", function () {
+            console.log("priceFormQuantity.value: ", priceFormQuantity.value);
+            if (document.querySelectorAll(".price")[index]){
+                var priceButtonText = document.querySelectorAll(".price")[index];
+                console.log("priceButtonText: ", priceButtonText);
+            } else {
+                var priceButtonText = priceFormQuantity.nextElementSibling;
+                console.log("priceButtonText: ", priceButtonText);
+            }
+            // get price for 1 piece
+            if (typeof (foodItemPrice) == 'undefined') {
+                foodItemPrice = parseFloat(priceButtonText.innerHTML.trim(" RON"));
+            }
+            console.log("foodItemPrice", foodItemPrice);
+            priceButtonText.innerHTML = `${priceFormQuantity.value * foodItemPrice} RON`;
+            console.log("priceButtonText.innerHTML: ", priceButtonText.innerHTML);
+        });
+    }
 }
 
 // remove element by id
@@ -323,6 +416,198 @@ function removeElementByClass(className) {
     return false;
 }
 
+var cartItems = [];
+// add item to cart
+function addItemToCart(foodItem) {
+    // check if item is already added in cart
+    let cartItemsNames = [];
+    if (localStorage.getItem('cartItems')){
+        let cartItemsObject = localStorage.getItem('cartItems');
+        let cartItems = JSON.parse(cartItemsObject);
+        for (let i in cartItems){
+            cartItemsNames.push(cartItems[i].foodName);
+        }
+    } 
+    let foodName = foodItem.parentElement.parentElement.id.split("-").join(" ");
+    if (cartItemsNames.includes(foodName)){
+        alert("item already added!");
+    } else {
+        let itemPrice = parseFloat(foodItem.innerHTML.trim(" RON"));
+        let restaurantId = foodItem.parentElement.id.split("PriceForm")[0];
+        let foodType = localStorage.getItem("foodType");
+        let quantity = foodItem.previousElementSibling.value;
+        updateCartIconQuantity(quantity);
+        let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
+        cartItems.push(cartItemElements);
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }
+}
+
+// update cart icon quantity number
+const cartIconQuantity = document.querySelector(".cartItems");
+var cartItemsNumber = 0;
+localStorage.setItem("cartItemsNumber", cartItemsNumber);
+
+function updateCartIconQuantity(quantity) {
+    let cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
+    cartItemsNumber += parseFloat(quantity);
+    if (cartItemsNumber > 0){
+        cartIconQuantity.innerHTML = cartItemsNumber;
+    }
+    localStorage.setItem("cartItemsNumber", cartItemsNumber);
+}
+
+const cart = document.querySelector("#cart");
+const cartButton = document.querySelector("#cartButton");
+cartButton.addEventListener("click", renderCartHtml);
+
+// render cart html
+function renderCartHtml() {
+    // remove elements
+    removeElementByClass("addressForm");
+    removeElementById("foodQuickSearchGrid");
+    removeElementByClass("foodSearchFilter");
+    removeElementByClass("restaurantCard");
+    removeElementByClass("foodList");
+
+    let htmlContent = "";
+    htmlContent += `
+    <div class="checkout">
+    <h2>Cart</h2>
+    </div>
+
+    <div class="foodList">
+    <div class="flex-container">
+    `;
+
+    let cartItemsObject = localStorage.getItem('cartItems');
+    let cartItems = JSON.parse(cartItemsObject);
+    totalPrice = 0;
+    let quantity = 0;
+    // loop through cart items
+    for (let i in cartItems){
+        console.log(cartItems[i]);
+        htmlContent += `
+            <div class="foodCard">
+            <div class="row">
+                <div class="col-3">
+                    <div class="card-image">
+                        <img src="images/foodType/pizza.png " alt="${cartItems[i].foodName}">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card-delivery">
+                        <h4 class="foodName">${cartItems[i].foodName}</h4>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card-pricing">
+                        <form class="priceForm">
+                            <input type="number" name="quantity" min="1" max="10" value="${cartItems[i].quantity}" onchange="updateCart()">
+                            <input type="button" value="&#x1F5D1" onclick="removeItem()">
+                        </form>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <p class="price">${cartItems[i].itemPrice} RON</p>
+                </div>
+            </div>
+        </div>
+        `;
+        totalPrice += cartItems[i].itemPrice;
+        quantity += parseFloat(cartItems[i].quantity);
+    }
+
+    htmlContent += `
+        </div>
+    </div>
+
+    <div class="total">
+    <h2 id="totalPrice">Total = ${totalPrice} RON</h2>
+    </div>
+
+    <div class="checkoutForm">
+    <form id="checkoutForm" onsubmit="submitOrder()">
+        <div class="checkoutAddress flex-container">
+            <i class="fas fa-map-marker-alt"> </i>
+            <p id="detectedDeliveryPlace"> </p>
+            <input name="address" id="manualAddress" onkeyup="setManualDeliveryAddress(this)" autocomplete="address-level2" placeholder="Change address">
+        </div>
+
+        <label for="clientName">Name </label>
+        <input type="text" id="clientName" name="name" placeholder="Enter your name" autocomplete="name" required>
+
+        <label for="clientPhone">Phone </label>
+        <input type="tel" id="clientPhone" name="phone" placeholder="Enter phone number" autocomplete="tel" required>
+
+        <label for="deliveryTime">Preferred delivery time:</label>
+        <input type=time id="deliveryTime" min="11:00" max="21:00" step="900" value="12:30" name="delivery">
+
+        <label for="comments">Comments</label>
+        <textarea id="comments" name="comments" style="height:100px" maxlength=1000 placeholder="Delivery instructions:"></textarea>
+
+        <input type="submit" value="Submit order">
+    </form>
+    </div>
+    `;
+    localStorage.setItem("cartItemsNumber", 0);
+    updateCartIconQuantity(quantity);
+    cart.innerHTML = htmlContent;
+    detectedDeliveryPlaceText = document.querySelector("#detectedDeliveryPlace");
+    detectedDeliveryPlaceText.innerHTML = `Deliver to:<br>
+    ${streetNumber} ${street}, ${locality}`;
+    checkoutForm=document.querySelector("#checkoutForm")
+    updateCartPrices();
+};
 
 
+// remove item from cart
+function removeItem(){
+    let foodNames = document.querySelectorAll(".foodName");
+    console.log(foodNames[0].innerHTML);
+        // remove item from localstorage
+        let cartItemsNames = [];
+        if (localStorage.getItem('cartItems')){
+            let cartItemsObject = localStorage.getItem('cartItems');
+            var cartItemsLocal = JSON.parse(cartItemsObject);
+            for (let i in cartItemsLocal){
+                cartItemsNames.push(cartItemsLocal[i].foodName);
+            }
+        } 
+        let foodName = foodNames[0].innerHTML;
+        // update local storage cart items
+        if (cartItemsNames.includes(foodName)){
+            cartItemsLocal = cartItemsLocal.filter(item => (item.foodName != foodName));
+            localStorage.setItem("cartItems", JSON.stringify(cartItemsLocal));
+        }
+    renderCartHtml();
+}
+
+// set manual delivery address
+function setManualDeliveryAddress(element) {
+    detectedDeliveryPlaceText.innerHTML = `Deliver to:<br>
+    ${element.value}`;
+}
+
+// submit order
+function submitOrder(){
+    let clientName = document.querySelector("#clientName");
+    alert(`Order for ${clientName.value} is placed`);
+}
+
+// update total and cart icon quantity
+function updateCart(){
+    // updateCartIconQuantity(quantity);
+    let foodNames = document.querySelectorAll(".foodName");
+    let foodName = foodNames[0].innerHTML;
+    console.log("modified quantity food:",foodName);
+        // update item from localstorage
+}
+
+
+
+
+
+
+    
 

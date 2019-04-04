@@ -5,7 +5,7 @@
         "restaurantId": "pizzaForum",
         "foodType": "pizza",
         "imageSrc": "images/foodType/pizza.png",
-        "imageAlt": "Pizza Margherita",
+        "imageAlt": "Pizza Coppa",
         "ingredients": "mozzarella 135g, coppa 63g, tomato souce 90g, olive oil 2g",
         "rating": 5,
         "price": 23
@@ -38,7 +38,7 @@
         "imageAlt": "Pizza Formaggio",
         "ingredients": "mozzarella 120g, tomato souce 50g, gorgonzola, cheese, olive oil 2g",
         "rating": 5,
-        "price": 23
+        "price": 25
     },
     {
         "name": "Pizza Roma",
@@ -58,7 +58,7 @@
         "imageAlt": "Pizza Margherita",
         "ingredients": "mozzarella 135g, coppa 63g, tomato souce 90g, olive oil 2g",
         "rating": 5,
-        "price": 23
+        "price": 21
     },
     {
         "name": "Pizza Margherita",
