@@ -311,7 +311,7 @@ function displayFood(restaurant) {
     // remove quick grid and food search filter
     removeElementById("foodQuickSearchGrid");
     removeElementByClass("foodSearchFilter");
-    // display food - work in progress
+    // display food 
     let foodType = localStorage.getItem("foodType");
     console.log("Selected food type", foodType);
     // filter data from food json based on selected restaurant and food type
@@ -380,16 +380,13 @@ function updateCartPrices(){
     for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
         priceFormQuantity.addEventListener("change", function () {
             console.log("priceFormQuantity.value: ", priceFormQuantity.value);
-            if (document.querySelectorAll(".price")[index]){
-                var priceButtonText = document.querySelectorAll(".price")[index];
-                console.log("priceButtonText: ", priceButtonText);
-            } else {
-                var priceButtonText = priceFormQuantity.nextElementSibling;
-                console.log("priceButtonText: ", priceButtonText);
-            }
+            //    var priceButtonText = document.querySelectorAll(".price")[index];
+            //    console.log("priceButtonText: ", priceButtonText);
+            var priceButtonText = priceFormQuantity.nextElementSibling;
+            console.log("priceButtonText: ", priceButtonText);
             // get price for 1 piece
             if (typeof (foodItemPrice) == 'undefined') {
-                foodItemPrice = parseFloat(priceButtonText.innerHTML.trim(" RON"));
+                var foodItemPrice = parseFloat(priceButtonText.innerHTML.trim(" RON"));
             }
             console.log("foodItemPrice", foodItemPrice);
             priceButtonText.innerHTML = `${priceFormQuantity.value * foodItemPrice} RON`;
@@ -445,14 +442,18 @@ function addItemToCart(foodItem) {
 
 // update cart icon quantity number
 const cartIconQuantity = document.querySelector(".cartItems");
-var cartItemsNumber = 0;
-localStorage.setItem("cartItemsNumber", cartItemsNumber);
 
 function updateCartIconQuantity(quantity) {
-    let cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
+    if(localStorage.getItem("cartItemsNumber")!= 'undefined'){
+        var cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
+    } else {
+        var cartItemsNumber = 0;
+    }
     cartItemsNumber += parseFloat(quantity);
     if (cartItemsNumber > 0){
         cartIconQuantity.innerHTML = cartItemsNumber;
+    } else {
+        cartIconQuantity.innerHTML = ""; 
     }
     localStorage.setItem("cartItemsNumber", cartItemsNumber);
 }
@@ -467,7 +468,7 @@ function renderCartHtml() {
     removeElementByClass("addressForm");
     removeElementById("foodQuickSearchGrid");
     removeElementByClass("foodSearchFilter");
-    removeElementByClass("restaurantCard");
+    removeElementByClass("restaurantList");
     removeElementByClass("foodList");
 
     let htmlContent = "";
@@ -596,12 +597,12 @@ function submitOrder(){
 }
 
 // update total and cart icon quantity
+// =======  work in progress =======
 function updateCart(){
     // updateCartIconQuantity(quantity);
     let foodNames = document.querySelectorAll(".foodName");
     let foodName = foodNames[0].innerHTML;
     console.log("modified quantity food:",foodName);
-        // update item from localstorage
 }
 
 
