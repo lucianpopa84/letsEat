@@ -22,6 +22,8 @@ font-size: 20px;
 .topnav a:hover {
 background-color: #ddd;
 color: black;
+transform: scale(1.1);
+transition: 0.3s;
 }
 
 /* Add a color/change opacity to the active/current link */
@@ -103,7 +105,7 @@ float: right;
   background-position: center;
   background-size: cover;
   line-height: 20px;
-  opacity: 0.5;
+  opacity: 0.4;
   transition: opacity .6s ease-out;
   display: inline-block;
 }
@@ -184,6 +186,11 @@ header {
   width: 90%;
   margin-top: -6px;
 }
+
+.flex-container a:hover {
+  transform: scale(1.1);
+  transition: 0.2s;
+}
   
 .flex-container > .restaurantCard {
   background-color: #f1f1f1;
@@ -195,6 +202,11 @@ header {
   cursor: pointer;
 }
 
+.flex-container > .restaurantCard:hover {
+  background-color: lightgoldenrodyellow;
+  transition: 0.3s;
+}
+
 .flex-container > .foodCard {
   background-color: #f1f1f1;
   /* background-color: beige; */
@@ -202,6 +214,11 @@ header {
   text-align: left;
   border: gray solid 1px;
   border-radius: 10px;
+}
+
+.flex-container > .foodCard:hover {
+  background-color: lightgoldenrodyellow;
+  transition: 0.3s;
 }
 
 .foodTitle{
@@ -294,6 +311,7 @@ a:link, a:visited {
 /* Add a background color on mouse-over */
 .footerNavbar a:hover {
   background-color: #000;
+  transition: 0.3s;
 }
 
 /* Add responsiveness */
@@ -364,7 +382,6 @@ input{
   border: solid 1px lightgray;
   line-height: 1.8em;
   padding: 4px;
-  /* margin: 2px; */
 }
 
 #foodTypeListInput{
@@ -455,7 +472,8 @@ input{
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  
    opacity: 1;
-   padding: 8px 4px 8px 4px;
+   padding-top: 8px;
+   padding-bottom: 8px;
    height: 18px;
    border: solid gray 2px;
 }
@@ -468,7 +486,6 @@ input[type=number]::-webkit-outer-spin-button {
 .priceForm input[type=number]{
   height: 42px;
   margin-top: 8px;
-  max-width: 60px;
 }
 
 .priceForm input[type=button]{
@@ -477,8 +494,7 @@ input[type=number]::-webkit-outer-spin-button {
   background-color: tomato;
   color: white;
   min-width: 25px;
-  font-size: 22px;
-  line-height: 22px;
+  font-family:"Segoe UI Symbol";
 }
 
 .priceButton{
@@ -507,7 +523,12 @@ input[type=number]::-webkit-outer-spin-button {
   height: 50px;
   max-width: 66px;
   line-height: 50px;
-  margin-left: -15px;
+  font-size: 14px;
+  margin-left: -18px;
+}
+
+.priceInput{
+  max-width: 44px;
 }
 
 .contactForm {

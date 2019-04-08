@@ -51,16 +51,6 @@
         "price": 23
     },
     {
-        "name": "Pizza Coppa",
-        "restaurantId": "pizzaForum",
-        "foodType": "pizza",
-        "imageSrc": "images/foodType/pizza.png",
-        "imageAlt": "Pizza Margherita",
-        "ingredients": "mozzarella 135g, coppa 63g, tomato souce 90g, olive oil 2g",
-        "rating": 5,
-        "price": 21
-    },
-    {
         "name": "Pizza Margherita",
         "restaurantId": "pizzaCharlie",
         "foodType": "pizza",

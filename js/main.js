@@ -4,6 +4,7 @@ const detectedPlaceText = document.querySelector("#detectedPlace");
 function initialize() {
     geocoder = new google.maps.Geocoder();
     getLocation();
+    updateCartIconQuantity();
 }
 
 function getLocation() {
@@ -344,10 +345,10 @@ function displayFood(restaurant) {
                 </div>
             </div>
             <div class="col-3">
-                <div class="card-pricing" id="${foodItem.name.split(" ").join("-")}">
-                    <form id="${foodItem.restaurantId}PriceForm" class="priceForm">
+                <div class="card-pricing">
+                    <form class="priceForm ${foodItem.restaurantId}">
                         <input type="number" name="quantity" min="1" max="10" value="1">
-                        <button onclick="addItemToCart(this)" class="priceButton">${foodItem.price} RON</button>
+                        <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
                     </form>
                 </div>
             </div>
@@ -360,42 +361,37 @@ function displayFood(restaurant) {
     const foodList = document.querySelector(".foodList");
     foodList.innerHTML = htmlContent;
 
-    var priceFormButtons = document.querySelectorAll(".priceForm > button");
-    console.log("priceFormButtons", priceFormButtons)
-    // prevent default refresh action on click
+    // get price button elements and prevent default refresh action on click - OK
+    const priceFormButtons = document.querySelectorAll(".priceForm > button");
     for (let priceFormButton of priceFormButtons) {
-        priceFormButton.addEventListener("click", function (e) {
-            e.preventDefault();
+        priceFormButton.addEventListener("click", function (event) {
+            event.preventDefault();
         });
     }
+    for (let [index,priceFormButton] of priceFormButtons.entries()) {
+        priceFormButton.addEventListener("click", addItemToCart);
+        priceFormButton.index = index;
+    }
 
-    // update add to cart price button on quantity change
-    updateCartPrices();
-}
-
-// update add to cart price button on quantity change
-function updateCartPrices(){
-    var priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
-    console.log("priceFormQuantityInputs", priceFormQuantityInputs)
+    // add event listners to quantity inputs - OK
+    const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
     for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
-        priceFormQuantity.addEventListener("change", function () {
-            console.log("priceFormQuantity.value: ", priceFormQuantity.value);
-            //    var priceButtonText = document.querySelectorAll(".price")[index];
-            //    console.log("priceButtonText: ", priceButtonText);
-            var priceButtonText = priceFormQuantity.nextElementSibling;
-            console.log("priceButtonText: ", priceButtonText);
-            // get price for 1 piece
-            if (typeof (foodItemPrice) == 'undefined') {
-                var foodItemPrice = parseFloat(priceButtonText.innerHTML.trim(" RON"));
-            }
-            console.log("foodItemPrice", foodItemPrice);
-            priceButtonText.innerHTML = `${priceFormQuantity.value * foodItemPrice} RON`;
-            console.log("priceButtonText.innerHTML: ", priceButtonText.innerHTML);
-        });
+            priceFormQuantity.addEventListener("change", updateFoodPrices);
+            priceFormQuantity.index = index;
     }
 }
 
-// remove element by id
+// update add to cart price button on quantity change - OK
+function updateFoodPrices(event){
+    let index = event.target.index;
+    let newQuantity = event.target.value;
+    let priceButton = document.querySelectorAll(".priceButton")[index];
+    // get price for 1 piece
+    let foodItemPrice = priceButton.dataset.price;
+    priceButton.innerHTML = `${newQuantity * foodItemPrice} RON`;
+}
+
+// remove element by id - OK
 function removeElementById(id) {
     let element = document.querySelector(`#${id}`);
     if (element) {
@@ -404,7 +400,7 @@ function removeElementById(id) {
     return false;
 }
 
-// remove element by class name
+// remove element by class name - OK
 function removeElementByClass(className) {
     let element = document.querySelector(`.${className}`);
     if (element) {
@@ -414,48 +410,62 @@ function removeElementByClass(className) {
 }
 
 var cartItems = [];
-// add item to cart
-function addItemToCart(foodItem) {
-    // check if item is already added in cart
-    let cartItemsNames = [];
+// add item to cart -OK
+function addItemToCart(event) {
+    // let index = event.target.index;
+    let priceButton = event.target;
+    let foodName = priceButton.dataset.name;
+    console.log("foodName: ", foodName);
+    // check if localstorage contains items
     if (localStorage.getItem('cartItems')){
         let cartItemsObject = localStorage.getItem('cartItems');
         let cartItems = JSON.parse(cartItemsObject);
-        for (let i in cartItems){
-            cartItemsNames.push(cartItems[i].foodName);
+        // check if item is already added in cart
+        const result = cartItems.find( cartItem => cartItem.foodName == foodName);
+        if(result) {
+            alert("item already added!");
+        } else {
+            let itemPrice = parseFloat(priceButton.dataset.price);
+            let restaurantId = priceButton.parentElement.className.split(" ")[1];
+            let foodType = localStorage.getItem("foodType");
+            let quantity = priceButton.previousElementSibling.value;
+            let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
+            cartItems.push(cartItemElements);
+            localStorage.setItem("cartItems", JSON.stringify(cartItems));
         }
-    } 
-    let foodName = foodItem.parentElement.parentElement.id.split("-").join(" ");
-    if (cartItemsNames.includes(foodName)){
-        alert("item already added!");
     } else {
-        let itemPrice = parseFloat(foodItem.innerHTML.trim(" RON"));
-        let restaurantId = foodItem.parentElement.id.split("PriceForm")[0];
+        let itemPrice = parseFloat(priceButton.dataset.price);
+        let restaurantId = priceButton.parentElement.className.split(" ")[1];
         let foodType = localStorage.getItem("foodType");
-        let quantity = foodItem.previousElementSibling.value;
-        updateCartIconQuantity(quantity);
+        let quantity = priceButton.previousElementSibling.value;
         let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
         cartItems.push(cartItemElements);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
+    // update cart icon quantity
+    let newCartItemsObject = localStorage.getItem('cartItems');
+    let newCartItems = JSON.parse(newCartItemsObject);
+    let cartItemsNumber = newCartItems.reduce((total, cartItem) => {
+        return total + (parseFloat(cartItem.quantity));
+    }, 0);
+    // update cart icon quantity number
+    localStorage.setItem("cartItemsNumber", cartItemsNumber);
+    updateCartIconQuantity();
 }
 
-// update cart icon quantity number
+// update cart icon quantity number - OK
 const cartIconQuantity = document.querySelector(".cartItems");
-
-function updateCartIconQuantity(quantity) {
-    if(localStorage.getItem("cartItemsNumber")!= 'undefined'){
+function updateCartIconQuantity() {
+    if(localStorage.getItem("cartItemsNumber") != "undefined"){
         var cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
     } else {
         var cartItemsNumber = 0;
     }
-    cartItemsNumber += parseFloat(quantity);
     if (cartItemsNumber > 0){
         cartIconQuantity.innerHTML = cartItemsNumber;
     } else {
         cartIconQuantity.innerHTML = ""; 
     }
-    localStorage.setItem("cartItemsNumber", cartItemsNumber);
 }
 
 const cart = document.querySelector("#cart");
@@ -481,15 +491,14 @@ function renderCartHtml() {
     <div class="flex-container">
     `;
 
+    // get food items from localstorage
     let cartItemsObject = localStorage.getItem('cartItems');
     let cartItems = JSON.parse(cartItemsObject);
-    totalPrice = 0;
-    let quantity = 0;
+
     // loop through cart items
     for (let i in cartItems){
-        console.log(cartItems[i]);
         htmlContent += `
-            <div class="foodCard">
+            <div class="foodCard" data-name="${cartItems[i].foodName}" data-price="${cartItems[i].itemPrice}">
             <div class="row">
                 <div class="col-3">
                     <div class="card-image">
@@ -504,20 +513,23 @@ function renderCartHtml() {
                 <div class="col-4">
                     <div class="card-pricing">
                         <form class="priceForm">
-                            <input type="number" name="quantity" min="1" max="10" value="${cartItems[i].quantity}" onchange="updateCart()">
-                            <input type="button" value="&#x1F5D1" onclick="removeItem()">
+                            <input type="number" name="quantity" min="1" max="10" value="${cartItems[i].quantity}" class="priceInput">
+                            <input type="button" value="&#xe107;">
                         </form>
                     </div>
                 </div>
                 <div class="col-2">
-                    <p class="price">${cartItems[i].itemPrice} RON</p>
+                    <p class="price">${cartItems[i].itemPrice*cartItems[i].quantity} RON</p>
                 </div>
             </div>
         </div>
         `;
-        totalPrice += cartItems[i].itemPrice;
-        quantity += parseFloat(cartItems[i].quantity);
     }
+
+    // compute total price 
+    let totalPrice = cartItems.reduce((total, cartItem) => {
+        return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
+    }, 0);
 
     htmlContent += `
         </div>
@@ -551,37 +563,53 @@ function renderCartHtml() {
     </form>
     </div>
     `;
-    localStorage.setItem("cartItemsNumber", 0);
-    updateCartIconQuantity(quantity);
+
     cart.innerHTML = htmlContent;
-    detectedDeliveryPlaceText = document.querySelector("#detectedDeliveryPlace");
+    const detectedDeliveryPlaceText = document.querySelector("#detectedDeliveryPlace");
     detectedDeliveryPlaceText.innerHTML = `Deliver to:<br>
     ${streetNumber} ${street}, ${locality}`;
-    checkoutForm=document.querySelector("#checkoutForm")
-    updateCartPrices();
+
+    // add event listener to delete buttons - OK
+    const cartDeleteButtons = document.querySelectorAll(".priceForm > input[type=button]");
+    for (let [index,cartDeleteButton] of cartDeleteButtons.entries()) {
+        cartDeleteButton.addEventListener("click", removeItem);
+        cartDeleteButton.index = index;
+    }
+
+    // add event listners to quantity inputs - OK
+    const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
+    for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
+            priceFormQuantity.addEventListener("change", updateCart);
+            priceFormQuantity.index = index;
+    }
+
+    // get all food cards
+    foodItems = document.querySelectorAll(".foodCard");
+    // get all price display paragraphs
+    itemPrice = document.querySelectorAll(".price");
+    // get total amount display
+    totalPrice = document.querySelector("#totalPrice");
 };
 
 
 // remove item from cart
-function removeItem(){
-    let foodNames = document.querySelectorAll(".foodName");
-    console.log(foodNames[0].innerHTML);
-        // remove item from localstorage
-        let cartItemsNames = [];
-        if (localStorage.getItem('cartItems')){
-            let cartItemsObject = localStorage.getItem('cartItems');
-            var cartItemsLocal = JSON.parse(cartItemsObject);
-            for (let i in cartItemsLocal){
-                cartItemsNames.push(cartItemsLocal[i].foodName);
-            }
-        } 
-        let foodName = foodNames[0].innerHTML;
-        // update local storage cart items
-        if (cartItemsNames.includes(foodName)){
-            cartItemsLocal = cartItemsLocal.filter(item => (item.foodName != foodName));
-            localStorage.setItem("cartItems", JSON.stringify(cartItemsLocal));
-        }
-    renderCartHtml();
+function removeItem(event){
+    let index = event.target.index;
+    console.log("index: ",index);
+    // remove items from view
+    foodItems[index].remove();
+    // remove item from localstorage
+    let cartItemsObject = localStorage.getItem('cartItems');
+    let cartItems = JSON.parse(cartItemsObject);
+    cartItems.splice(index, 1);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    // update cart icon quantity
+    let cartItemsNumber = cartItems.reduce((total, cartItem) => {
+        return total + (parseFloat(cartItem.quantity));
+    }, 0);
+    // update cart icon quantity number in localstorage
+    localStorage.setItem("cartItemsNumber", cartItemsNumber);
+    updateCartIconQuantity();
 }
 
 // set manual delivery address
@@ -596,19 +624,41 @@ function submitOrder(){
     alert(`Order for ${clientName.value} is placed`);
 }
 
-// update total and cart icon quantity
-// =======  work in progress =======
-function updateCart(){
-    // updateCartIconQuantity(quantity);
-    let foodNames = document.querySelectorAll(".foodName");
-    let foodName = foodNames[0].innerHTML;
-    console.log("modified quantity food:",foodName);
+// update cart on quantity change
+function updateCart(event){
+    let index = event.target.index;
+    console.log("event.target.index",index);
+    let newQuantity = event.target.value;
+    console.log("event.target.value",newQuantity);
+    let foodItemPrice = foodItems[index].dataset.price;
+    console.log("foodItemPrice",foodItemPrice);
+    itemPrice[index].innerHTML = `${newQuantity * foodItemPrice} RON`;
+    let foodItemName = foodItems[index].dataset.name;
+    console.log("food name: ", foodItemName);
+
+        // get food items from localstorage
+        let cartItemsObject = localStorage.getItem('cartItems');
+        let cartItems = JSON.parse(cartItemsObject);
+        // set new quantity in localstorage food object
+        cartItems.forEach(cartItem => {
+            if (cartItem.foodName == foodItemName){
+                cartItem.quantity = newQuantity;
+            }
+        });
+        // update food items in localstorage
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        // update cart icon quantity
+        let cartItemsNumber = cartItems.reduce((total, cartItem) => {
+            return total + (parseFloat(cartItem.quantity));
+        }, 0);
+        // update cart icon quantity number in localstorage
+        localStorage.setItem("cartItemsNumber", cartItemsNumber);
+        updateCartIconQuantity();
+        // update total amount display
+        let newTotalPrice = cartItems.reduce((total, cartItem) => {
+            return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
+        }, 0);
+        totalPrice.innerHTML = `${newTotalPrice} RON`;
 }
 
-
-
-
-
-
-    
 
