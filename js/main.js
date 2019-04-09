@@ -132,6 +132,13 @@ cityDelivery.onclick = function () {
     localStorage.setItem("localityManual", "");
 };
 
+function detectLocation(){
+    // clear manual location from local storage
+    localStorage.setItem("localityManual", "");
+    // geolocation
+    initialize();
+}
+
 // ======= fetch restaurants json =======
 const jsonRestaurantsDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
 fetch(jsonRestaurantsDataUrl)
@@ -347,7 +354,7 @@ function displayFood(restaurant) {
             <div class="col-3">
                 <div class="card-pricing">
                     <form class="priceForm ${foodItem.restaurantId}">
-                        <input type="number" name="quantity" min="1" max="10" value="1">
+                        <input type="number" name="quantity" min="1" max="10" value="1" class="quantityInput">
                         <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
                     </form>
                 </div>
@@ -361,7 +368,7 @@ function displayFood(restaurant) {
     const foodList = document.querySelector(".foodList");
     foodList.innerHTML = htmlContent;
 
-    // get price button elements and prevent default refresh action on click - OK
+    // get price button elements and prevent default refresh action on click 
     const priceFormButtons = document.querySelectorAll(".priceForm > button");
     for (let priceFormButton of priceFormButtons) {
         priceFormButton.addEventListener("click", function (event) {
@@ -373,7 +380,7 @@ function displayFood(restaurant) {
         priceFormButton.index = index;
     }
 
-    // add event listners to quantity inputs - OK
+    // add event listners to quantity inputs 
     const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
     for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
             priceFormQuantity.addEventListener("change", updateFoodPrices);
@@ -381,7 +388,7 @@ function displayFood(restaurant) {
     }
 }
 
-// update add to cart price button on quantity change - OK
+// update add to cart price button on quantity change 
 function updateFoodPrices(event){
     let index = event.target.index;
     let newQuantity = event.target.value;
@@ -391,7 +398,7 @@ function updateFoodPrices(event){
     priceButton.innerHTML = `${newQuantity * foodItemPrice} RON`;
 }
 
-// remove element by id - OK
+// remove element by id 
 function removeElementById(id) {
     let element = document.querySelector(`#${id}`);
     if (element) {
@@ -400,7 +407,7 @@ function removeElementById(id) {
     return false;
 }
 
-// remove element by class name - OK
+// remove element by class name 
 function removeElementByClass(className) {
     let element = document.querySelector(`.${className}`);
     if (element) {
@@ -415,29 +422,32 @@ function addItemToCart(event) {
     // let index = event.target.index;
     let priceButton = event.target;
     let foodName = priceButton.dataset.name;
+    let quantity = priceButton.previousElementSibling.value;
     console.log("foodName: ", foodName);
+    let itemPrice = parseFloat(priceButton.dataset.price);
+    let restaurantId = priceButton.parentElement.className.split(" ")[1];
     // check if localstorage contains items
     if (localStorage.getItem('cartItems')){
         let cartItemsObject = localStorage.getItem('cartItems');
         let cartItems = JSON.parse(cartItemsObject);
-        // check if item is already added in cart
-        const result = cartItems.find( cartItem => cartItem.foodName == foodName);
-        if(result) {
-            alert("item already added!");
+        // check if item is from different restaurant
+        let differentRestaurant = cartItems.find( cartItem => cartItem.restaurantId != restaurantId);
+        if(differentRestaurant) {
+            alert("Item is from different restaurant! \nPlease add food from the same restaurant!");
         } else {
-            let itemPrice = parseFloat(priceButton.dataset.price);
-            let restaurantId = priceButton.parentElement.className.split(" ")[1];
-            let foodType = localStorage.getItem("foodType");
-            let quantity = priceButton.previousElementSibling.value;
-            let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
-            cartItems.push(cartItemElements);
-            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            // check if item is already added in cart
+            let existingCartItem = cartItems.find( cartItem => cartItem.foodName == foodName);
+            if(existingCartItem) {
+                alert("Food already added in cart!");
+            } else {
+                let foodType = localStorage.getItem("foodType");
+                let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
+                cartItems.push(cartItemElements);
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
+            }
         }
     } else {
-        let itemPrice = parseFloat(priceButton.dataset.price);
-        let restaurantId = priceButton.parentElement.className.split(" ")[1];
         let foodType = localStorage.getItem("foodType");
-        let quantity = priceButton.previousElementSibling.value;
         let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
         cartItems.push(cartItemElements);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
@@ -453,7 +463,7 @@ function addItemToCart(event) {
     updateCartIconQuantity();
 }
 
-// update cart icon quantity number - OK
+// update cart icon quantity number 
 const cartIconQuantity = document.querySelector(".cartItems");
 function updateCartIconQuantity() {
     if(localStorage.getItem("cartItemsNumber") != "undefined"){
@@ -513,8 +523,8 @@ function renderCartHtml() {
                 <div class="col-4">
                     <div class="card-pricing">
                         <form class="priceForm">
-                            <input type="number" name="quantity" min="1" max="10" value="${cartItems[i].quantity}" class="priceInput">
-                            <input type="button" value="&#xe107;">
+                            <input type="number" name="quantity" min="1" max="10" value="${cartItems[i].quantity}" class="cartQuantityInput">
+                            <input type="button" value="&#10007">
                         </form>
                     </div>
                 </div>
@@ -569,18 +579,18 @@ function renderCartHtml() {
     detectedDeliveryPlaceText.innerHTML = `Deliver to:<br>
     ${streetNumber} ${street}, ${locality}`;
 
-    // add event listener to delete buttons - OK
+    // add event listener to delete buttons 
     const cartDeleteButtons = document.querySelectorAll(".priceForm > input[type=button]");
     for (let [index,cartDeleteButton] of cartDeleteButtons.entries()) {
         cartDeleteButton.addEventListener("click", removeItem);
         cartDeleteButton.index = index;
     }
 
-    // add event listners to quantity inputs - OK
+    // add event listners to quantity inputs 
     const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
     for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
-            priceFormQuantity.addEventListener("change", updateCart);
-            priceFormQuantity.index = index;
+        priceFormQuantity.addEventListener("change", updateCart);
+        priceFormQuantity.index = index;
     }
 
     // get all food cards
@@ -595,13 +605,14 @@ function renderCartHtml() {
 // remove item from cart
 function removeItem(event){
     let index = event.target.index;
-    console.log("index: ",index);
-    // remove items from view
-    foodItems[index].remove();
+    let foodItemName = foodItems[index].dataset.name;
     // remove item from localstorage
     let cartItemsObject = localStorage.getItem('cartItems');
     let cartItems = JSON.parse(cartItemsObject);
-    cartItems.splice(index, 1);
+    // find item index in cart items object
+    let cartItemIndex = cartItems.findIndex(cartItem => cartItem.foodName == foodItemName);
+    // remove item from local storage object array
+    cartItems.splice(cartItemIndex, 1);
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
     // update cart icon quantity
     let cartItemsNumber = cartItems.reduce((total, cartItem) => {
@@ -610,6 +621,13 @@ function removeItem(event){
     // update cart icon quantity number in localstorage
     localStorage.setItem("cartItemsNumber", cartItemsNumber);
     updateCartIconQuantity();
+    // update total amount display
+    let newTotalPrice = cartItems.reduce((total, cartItem) => {
+        return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
+    }, 0);
+    totalPrice.innerHTML = `${newTotalPrice} RON`;
+    // remove items from view
+    foodItems[index].remove();
 }
 
 // set manual delivery address
@@ -627,38 +645,34 @@ function submitOrder(){
 // update cart on quantity change
 function updateCart(event){
     let index = event.target.index;
-    console.log("event.target.index",index);
     let newQuantity = event.target.value;
-    console.log("event.target.value",newQuantity);
     let foodItemPrice = foodItems[index].dataset.price;
-    console.log("foodItemPrice",foodItemPrice);
-    itemPrice[index].innerHTML = `${newQuantity * foodItemPrice} RON`;
     let foodItemName = foodItems[index].dataset.name;
-    console.log("food name: ", foodItemName);
-
-        // get food items from localstorage
-        let cartItemsObject = localStorage.getItem('cartItems');
-        let cartItems = JSON.parse(cartItemsObject);
-        // set new quantity in localstorage food object
-        cartItems.forEach(cartItem => {
-            if (cartItem.foodName == foodItemName){
-                cartItem.quantity = newQuantity;
-            }
-        });
-        // update food items in localstorage
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-        // update cart icon quantity
-        let cartItemsNumber = cartItems.reduce((total, cartItem) => {
-            return total + (parseFloat(cartItem.quantity));
-        }, 0);
-        // update cart icon quantity number in localstorage
-        localStorage.setItem("cartItemsNumber", cartItemsNumber);
-        updateCartIconQuantity();
-        // update total amount display
-        let newTotalPrice = cartItems.reduce((total, cartItem) => {
-            return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
-        }, 0);
-        totalPrice.innerHTML = `${newTotalPrice} RON`;
+    // get food items from localstorage
+    let cartItemsObject = localStorage.getItem('cartItems');
+    let cartItems = JSON.parse(cartItemsObject);
+    // set new quantity in localstorage food object
+    cartItems.forEach(cartItem => {
+        if (cartItem.foodName == foodItemName){
+            cartItem.quantity = newQuantity;
+        }
+    });
+    // update food items in localstorage
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    // update cart icon quantity
+    let cartItemsNumber = cartItems.reduce((total, cartItem) => {
+        return total + (parseFloat(cartItem.quantity));
+    }, 0);
+    // update cart icon quantity number in localstorage
+    localStorage.setItem("cartItemsNumber", cartItemsNumber);
+    updateCartIconQuantity();
+    // update total amount display
+    let newTotalPrice = cartItems.reduce((total, cartItem) => {
+        return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
+    }, 0);
+    totalPrice.innerHTML = `${newTotalPrice} RON`;
+    // update food item price display 
+    itemPrice[index].innerHTML = `${newQuantity * foodItemPrice} RON`;
 }
 
 

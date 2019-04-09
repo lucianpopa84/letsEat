@@ -1,5 +1,5 @@
 *{
-    box-sizing: border-box;
+  box-sizing: border-box;
   }
 
 /* Add a dark background color to the top navigation */
@@ -10,20 +10,20 @@
 
 /* Style the links inside the navigation bar */
 .topnav a {
-float: left;
-color: #f2f2f2;
-text-align: center;
-padding: 14px 12px;
-text-decoration: none;
-font-size: 20px;
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 12px;
+  text-decoration: none;
+  font-size: 20px;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover {
-background-color: #ddd;
-color: black;
-transform: scale(1.1);
-transition: 0.3s;
+  background-color: #ddd;
+  color: black;
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 /* Add a color/change opacity to the active/current link */
@@ -33,7 +33,7 @@ transition: 0.3s;
 
 /* Right-aligned section inside the top navigation */
 .topnav-right {
-float: right;
+  float: right;
 }
 
 /* Style the dropdown menu */
@@ -285,7 +285,6 @@ a:link, a:visited {
   padding: 4px 8px 4px 8px;
 }
 
-
 .card-rating{
   font-size: 13px;
   margin: 5px 0 5px 0;
@@ -388,6 +387,10 @@ input{
   width: 90%;
 }
 
+#foodTypeListInput:hover, #cityDeliveryListInput:hover{
+  border: solid 1px greenyellow;
+}
+
 .foodList{
   margin-bottom: 5px;
 }
@@ -408,6 +411,11 @@ input{
   line-height: 50px;
   font-size: 28px;
   margin: 0 10px 0 10px;
+}
+
+.addressForm i:hover{
+  transform: scale(1.3);
+  transition: 0.3s;
 }
 
 .addressForm label{
@@ -471,11 +479,9 @@ input{
 /* always show up/down arrows for input "number" field */
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button {  
-   opacity: 1;
-   padding-top: 8px;
-   padding-bottom: 8px;
-   height: 18px;
-   border: solid gray 2px;
+  opacity: 1;
+  height: 32px;
+  width: 14px;
 }
 
 .priceForm button{
@@ -488,13 +494,22 @@ input[type=number]::-webkit-outer-spin-button {
   margin-top: 8px;
 }
 
+.priceForm input[type=number]:hover{
+  border: 1px solid greenyellow
+}
+
 .priceForm input[type=button]{
   height: 42px;
   margin-top: 8px;
   background-color: tomato;
   color: white;
   min-width: 25px;
-  font-family:"Segoe UI Symbol";
+}
+
+.priceForm input[type=button]:hover{
+  background-color: red;
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 .priceButton{
@@ -506,6 +521,11 @@ input[type=number]::-webkit-outer-spin-button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
+}
+
+.priceButton:hover{
+background-color: black;
+transition: 0.3s;
 }
 
 .cartItems{
@@ -527,7 +547,11 @@ input[type=number]::-webkit-outer-spin-button {
   margin-left: -18px;
 }
 
-.priceInput{
+.quantityInput{
+  max-width: 60px;
+}
+
+.cartQuantityInput{
   max-width: 44px;
 }
 
@@ -571,6 +595,12 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 8px 0 8px 2px;
 }
 
+.checkoutForm input[type=submit]:hover{
+  background-color: black;
+  transform: scale(1.05);
+  transition: 0.2s;
+}
+
 .contactForm p, .checkoutForm p{
   margin-top: 20px;
 }
@@ -586,4 +616,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .checkoutAddress{
   min-height: 70px;
+}
+
+#manualAddress:hover, #clientName:hover, #clientPhone:hover, #deliveryTime:hover, #comments:hover {
+  border: solid 1px greenyellow;
 }
