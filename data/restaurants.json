@@ -3,7 +3,7 @@
     {
         "name": "Pizza Forum",
         "id": "pizzaForum",
-        "foodType": ["pizza","pasta"],
+        "foodType": ["pizza"],
         "imageSrc": "images/restaurants/pizzaForum.png",
         "imageAlt": "Pizza Forum",
         "location": "Craiova",
@@ -11,8 +11,8 @@
         "operHour": 9,
         "closeHour": 23,
         "rating": 3,
-        "pricingFrom": 18,
-        "pricingTo": 25,
+        "pricingFrom": 16,
+        "pricingTo": 22,
         "pricingMin": 20
     },
     {
@@ -27,7 +27,7 @@
         "closeHour": 23,
         "rating": 3,
         "pricingFrom": 18,
-        "pricingTo": 25,
+        "pricingTo": 23,
         "pricingMin": 20
     },
     {
@@ -41,9 +41,9 @@
         "operHour": 10,
         "closeHour": 21,
         "rating": 4,
-        "pricingFrom": 19,
-        "pricingTo": 28,
-        "pricingMin": 25
+        "pricingFrom": 18,
+        "pricingTo": 23,
+        "pricingMin": 20
     },
     {
         "name": "El Greco",
@@ -56,24 +56,9 @@
         "operHour": 10,
         "closeHour": 23,
         "rating": 5,
-        "pricingFrom": 15,
-        "pricingTo": 35,
-        "pricingMin": 20
-    },
-    {
-        "name": "L'altra idea",
-        "id": "lAltraIdea",
-        "foodType": ["pizza","pasta"],
-        "imageSrc": "images/restaurants/lAltraIdea.png",
-        "imageAlt": "L'altra idea",
-        "location": "Brasov",
-        "deliveryTime": 40,
-        "operHour": 10,
-        "closeHour": 23,
-        "rating": 5,
-        "pricingFrom": 20,
-        "pricingTo": 30,
-        "pricingMin": 20
+        "pricingFrom": 14,
+        "pricingTo": 27,
+        "pricingMin": 25
     },
     {
         "name": "Spartan",
@@ -88,6 +73,66 @@
         "rating": 4,
         "pricingFrom": 12,
         "pricingTo": 24,
+        "pricingMin": 15
+    },
+    {
+        "name": "L'altra idea",
+        "id": "lAltraIdea",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/lAltraIdea.png",
+        "imageAlt": "L'altra idea",
+        "location": "Brasov",
+        "deliveryTime": 40,
+        "operHour": 10,
+        "closeHour": 23,
+        "rating": 5,
+        "pricingFrom": 23,
+        "pricingTo": 24,
+        "pricingMin": 20
+    },
+    {
+        "name": "Napoli Centrale",
+        "id": "NapoliCentrale",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaNapoliCentrale.png",
+        "imageAlt": "Napoli Centrale",
+        "location": "Cluj-Napoca",
+        "deliveryTime": 40,
+        "operHour": 10,
+        "closeHour": 23,
+        "rating": 5,
+        "pricingFrom": 14,
+        "pricingTo": 29,
+        "pricingMin": 15
+    },
+    {
+        "name": "Pizza Grande",
+        "id": "Grande",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaGrande.png",
+        "imageAlt": "Pizza Grande",
+        "location": "Cluj-Napoca",
+        "deliveryTime": 40,
+        "operHour": 10,
+        "closeHour": 23,
+        "rating": 4,
+        "pricingFrom": 27,
+        "pricingTo": 31,
+        "pricingMin": 25
+    },
+    {
+        "name": "Acrobatica",
+        "id": "Acrobatica",
+        "foodType": ["pizza","pasta"],
+        "imageSrc": "images/restaurants/pizzaAcrobatica.png",
+        "imageAlt": "Pizza Acrobatica",
+        "location": "Cluj-Napoca",
+        "deliveryTime": 50,
+        "operHour": 10,
+        "closeHour": 22,
+        "rating": 4,
+        "pricingFrom": 23,
+        "pricingTo": 25,
         "pricingMin": 20
     }
 ]

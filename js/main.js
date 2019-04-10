@@ -307,84 +307,99 @@ function removeSelectedQuickLink() {
 //display restaurant's food on click
 function displayFood(restaurant) {
     console.log("selected restaurant: ", restaurant.id);
-    // remove other restaurant cards
-    if (restaurantList.hasChildNodes()) {
-        let restaurantCards = restaurantList.querySelectorAll(".restaurantCard");
-        for (let restaurantCard of restaurantCards) {
-            if (restaurantCard.id != restaurant.id) {
-                restaurantList.removeChild(restaurantCard);
+    // check if restaurant is closed
+    let restaurantCardId = restaurantList.querySelector(`#${restaurant.id}`);
+    let restaurantTime = restaurantCardId.querySelector(".deliveryTime").innerHTML;
+    console.log("restaurantTime",restaurantTime);
+    if (restaurantTime  == " closed ") {
+        alert("Restaurant is closed!");
+    } else {
+        // remove other restaurant cards
+        if (restaurantList.hasChildNodes()) {
+            let restaurantCards = restaurantList.querySelectorAll(".restaurantCard");
+            for (let restaurantCard of restaurantCards) {
+                if (restaurantCard.id != restaurant.id) {
+                    restaurantList.removeChild(restaurantCard);
+                }
             }
         }
-    }
-    // remove quick grid and food search filter
-    removeElementById("foodQuickSearchGrid");
-    removeElementByClass("foodSearchFilter");
-    // display food 
-    let foodType = localStorage.getItem("foodType");
-    console.log("Selected food type", foodType);
-    // filter data from food json based on selected restaurant and food type
-    const restaurantFood = foodData.filter(food => (food.restaurantId == restaurant.id && food.foodType == foodType));
-    // console.log("restaurantFood: ", restaurantFood);
-    let htmlContent = "";
-    for (let foodItem of restaurantFood) {
-        htmlContent += `
-        <div class="foodCard">
-        <div class="row">
-            <div class="col-4">
-                <div class="card-image">
-                    <img src="${foodItem.imageSrc}" alt="${foodItem.imageAlt}">
+        // remove quick grid and food search filter
+        removeElementById("foodQuickSearchGrid");
+        removeElementByClass("foodSearchFilter");
+        // display food 
+        let foodType = localStorage.getItem("foodType");
+        console.log("Selected food type", foodType);
+        // filter data from food json based on selected restaurant and food type
+        const restaurantFood = foodData.filter(food => (food.restaurantId == restaurant.id && food.foodType == foodType));
+        // console.log("restaurantFood: ", restaurantFood);
+        let htmlContent = "";
+        for (let foodItem of restaurantFood) {
+            htmlContent += `
+            <div class="foodCard">
+            <div class="row">
+                <div class="col-4">
+                    <div class="card-image">
+                        <img src="${foodItem.imageSrc}" alt="${foodItem.imageAlt}">
+                    </div>
                 </div>
-            </div>
-            <div class="col-5">
-                <div class="card-delivery">
-                    <h4>${foodItem.name}</h4>
-                    <p>${foodItem.ingredients}</p>
+                <div class="col-5">
+                    <div class="card-delivery">
+                        <h4>${foodItem.name}</h4>
+                        <p>${foodItem.ingredients}</p>
+                    </div>
+                    `;
+            htmlContent += `<div class="card-rating">`;
+            for (let j = 0; j < foodItem.rating; j++) {
+                htmlContent += `<span class="fa fa-star checked"></span>`;
+            };
+            for (let j = 0; j < 5 - foodItem.rating; j++) {
+                htmlContent += `<span class="fa fa-star"></span>`;
+            };
+            htmlContent += `
+                    </div>
                 </div>
-                `;
-        htmlContent += `<div class="card-rating">`;
-        for (let j = 0; j < foodItem.rating; j++) {
-            htmlContent += `<span class="fa fa-star checked"></span>`;
-        };
-        for (let j = 0; j < 5 - foodItem.rating; j++) {
-            htmlContent += `<span class="fa fa-star"></span>`;
-        };
-        htmlContent += `
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card-pricing">
-                    <form class="priceForm ${foodItem.restaurantId}">
-                        <input type="number" name="quantity" min="1" max="10" value="1" class="quantityInput">
-                        <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
-                    </form>
+                <div class="col-3">
+                    <div class="card-pricing">
+                        <form class="priceForm ${foodItem.restaurantId}">
+                            <input type="number" name="quantity" min="1" max="10" value="1" class="quantityInput">
+                            <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        `;
-    }
+            `;
+        }
 
-    // render restaurant's food list html 
-    const foodList = document.querySelector(".foodList");
-    foodList.innerHTML = htmlContent;
+        // render restaurant's food list html 
+        const foodList = document.querySelector(".foodList");
+        foodList.innerHTML = htmlContent;
 
-    // get price button elements and prevent default refresh action on click 
-    const priceFormButtons = document.querySelectorAll(".priceForm > button");
-    for (let priceFormButton of priceFormButtons) {
-        priceFormButton.addEventListener("click", function (event) {
+        // get price button elements and prevent default refresh action on click 
+        const priceFormButtons = document.querySelectorAll(".priceForm > button");
+        for (let priceFormButton of priceFormButtons) {
+            priceFormButton.addEventListener("click", function (event) {
+                event.preventDefault();
+            });
+        }
+        for (let [index,priceFormButton] of priceFormButtons.entries()) {
+            priceFormButton.addEventListener("click", addItemToCart);
+            priceFormButton.index = index;
+        }
+
+        // add event listners to quantity inputs 
+        const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
+        for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
+                priceFormQuantity.addEventListener("change", updateFoodPrices);
+                priceFormQuantity.index = index;
+        }
+
+        // prevent default refresh on input submit
+        const priceForm = document.querySelectorAll(".priceForm");
+        for (let priceFormItem of priceForm)
+        priceFormItem.addEventListener("submit", function(event){
             event.preventDefault();
         });
-    }
-    for (let [index,priceFormButton] of priceFormButtons.entries()) {
-        priceFormButton.addEventListener("click", addItemToCart);
-        priceFormButton.index = index;
-    }
-
-    // add event listners to quantity inputs 
-    const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
-    for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
-            priceFormQuantity.addEventListener("change", updateFoodPrices);
-            priceFormQuantity.index = index;
     }
 }
 
@@ -593,6 +608,13 @@ function renderCartHtml() {
         priceFormQuantity.index = index;
     }
 
+    // prevent default refresh on input submit
+    const priceForm = document.querySelectorAll(".priceForm");
+    for (let priceFormItem of priceForm)
+    priceFormItem.addEventListener("submit", function(event){
+        event.preventDefault();
+    })
+
     // get all food cards
     foodItems = document.querySelectorAll(".foodCard");
     // get all price display paragraphs
@@ -600,7 +622,6 @@ function renderCartHtml() {
     // get total amount display
     totalPrice = document.querySelector("#totalPrice");
 };
-
 
 // remove item from cart
 function removeItem(event){
