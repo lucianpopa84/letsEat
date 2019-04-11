@@ -311,7 +311,7 @@ function displayFood(restaurant) {
     let restaurantCardId = restaurantList.querySelector(`#${restaurant.id}`);
     let restaurantTime = restaurantCardId.querySelector(".deliveryTime").innerHTML;
     console.log("restaurantTime",restaurantTime);
-    if (restaurantTime  == " closed ") {
+    if (restaurantTime  == " closed ") { 
         alert("Restaurant is closed!");
     } else {
         // remove other restaurant cards
@@ -375,6 +375,9 @@ function displayFood(restaurant) {
         const foodList = document.querySelector(".foodList");
         foodList.innerHTML = htmlContent;
 
+        // get image element
+        cardImage = document.querySelectorAll(".card-image"); 
+
         // get price button elements and prevent default refresh action on click 
         const priceFormButtons = document.querySelectorAll(".priceForm > button");
         for (let priceFormButton of priceFormButtons) {
@@ -434,13 +437,14 @@ function removeElementByClass(className) {
 var cartItems = [];
 // add item to cart -OK
 function addItemToCart(event) {
-    // let index = event.target.index;
+    let index = event.target.index;
     let priceButton = event.target;
     let foodName = priceButton.dataset.name;
     let quantity = priceButton.previousElementSibling.value;
-    console.log("foodName: ", foodName);
     let itemPrice = parseFloat(priceButton.dataset.price);
     let restaurantId = priceButton.parentElement.className.split(" ")[1];
+    let imageSrc = cardImage[index + 1].children[0].src;
+    let imageAlt = cardImage[index + 1].children[0].alt;
     // check if localstorage contains items
     if (localStorage.getItem('cartItems')){
         let cartItemsObject = localStorage.getItem('cartItems');
@@ -456,14 +460,14 @@ function addItemToCart(event) {
                 alert("Food already added in cart!");
             } else {
                 let foodType = localStorage.getItem("foodType");
-                let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
+                let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt};
                 cartItems.push(cartItemElements);
                 localStorage.setItem("cartItems", JSON.stringify(cartItems));
             }
         }
     } else {
         let foodType = localStorage.getItem("foodType");
-        let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity};
+        let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt};
         cartItems.push(cartItemElements);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
@@ -527,7 +531,7 @@ function renderCartHtml() {
             <div class="row">
                 <div class="col-3">
                     <div class="card-image">
-                        <img src="images/foodType/pizza.png " alt="${cartItems[i].foodName}">
+                        <img src="${cartItems[i].imageSrc}" alt="${cartItems[i].imageAlt}">
                     </div>
                 </div>
                 <div class="col-3">
