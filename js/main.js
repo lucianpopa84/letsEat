@@ -102,7 +102,7 @@ function codeLatLng(lat, lng) {
 // ======= quick search grid =======
 var quickGrid = document.querySelector("#foodQuickSearchGrid");
 var quickLink = quickGrid.querySelectorAll(".quickSearchLink");
-for (var i = 0; i < quickLink.length; i++) {
+for (let i of quickLink.keys()) {
     quickLink[i].addEventListener("click", function () {
         var current = document.querySelectorAll(".active");
         if (current.length > 0) {
@@ -115,8 +115,7 @@ for (var i = 0; i < quickLink.length; i++) {
 
 // set location manually, on input
 var cityDelivery = document.querySelector("#cityDeliveryListInput");
-cityDelivery.onchange = function () {
-    console.log("cityDelivery", cityDelivery.value);
+cityDelivery.onchange = () => {
     locality = cityDelivery.value;
     localStorage.setItem("localityManual", locality);
     // clear restaurant results
@@ -126,13 +125,14 @@ cityDelivery.onchange = function () {
 };
 
 // empty manual location input on click
-cityDelivery.onclick = function () {
+cityDelivery.onclick = () => {
     cityDelivery.value = "";
     // clear manual location from local storage
     localStorage.setItem("localityManual", "");
 };
 
-function detectLocation(){
+// execute on google geolocation icon click
+function detectLocation() {
     // clear manual location from local storage
     localStorage.setItem("localityManual", "");
     // geolocation
@@ -142,10 +142,8 @@ function detectLocation(){
 // ======= fetch restaurants json =======
 const jsonRestaurantsDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
 fetch(jsonRestaurantsDataUrl)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
+    .then(response => response.json())
+    .then(data => {
         // localStorage.setItem("restaurantsData", JSON.stringify(data));
         restaurantsData = data;
     });
@@ -153,12 +151,8 @@ fetch(jsonRestaurantsDataUrl)
 // ======= fetch food json =======
 const jsonFoodDataUrl = 'https://lucianpopa84.github.io/letsEat/data/food.json';
 fetch(jsonFoodDataUrl)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
-        foodData = data;
-    });
+    .then(response => response.json())
+    .then(data => foodData = data);
 
 // ======= render restaurants html =======
 const restaurantList = document.querySelector(".restaurantList");
@@ -206,7 +200,7 @@ function renderRestaurantsHtml(data) {
 
 // generate restaurant cards based on selected restaurant food type on food list input
 var foodTypeListInput = document.querySelector("#foodTypeListInput");
-foodTypeListInput.onchange = function () {
+foodTypeListInput.onchange = () => {
     console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
     localStorage.setItem("foodType", food);
@@ -215,7 +209,7 @@ foodTypeListInput.onchange = function () {
 };
 
 // empty food type input on click
-foodTypeListInput.onclick = function () {
+foodTypeListInput.onclick = () => {
     foodTypeListInput.value = "";
     localStorage.setItem("foodType", "");
 };
@@ -223,6 +217,7 @@ foodTypeListInput.onclick = function () {
 // generate restaurant cards based on selected/detected city
 function generateRestaurantCards(food) {
     if (restaurantsData) {
+        restaurantList.innerHTML = "searching for restaurants...";
         let htmlContent = "";
         // retrieve city from local storage or manual city input
         let city = "";
@@ -233,9 +228,11 @@ function generateRestaurantCards(food) {
             city = localStorage.getItem("locality");
         }
         console.log("city = ", city);
+        let results = 0;
         for (let restaurantData of restaurantsData) {
             if (restaurantData.foodType.includes(food)) {
                 if (restaurantData.location == city) {
+                    results++;
                     htmlContent += `
                     <div class="restaurantCard" id="${restaurantData.id}" onclick="displayFood(this)"> 
                         <div class="row">
@@ -276,17 +273,21 @@ function generateRestaurantCards(food) {
                 }
             }
         }
-        restaurantList.innerHTML = htmlContent;
+        if (results) {
+            restaurantList.innerHTML = htmlContent;
+        } else {
+            restaurantList.innerHTML = "No restaurants found!";
+        }  
     }
 }
 
 // ======= add links to logo and menus =======
-document.querySelector(".letsEatLogo").addEventListener("click", function () {
+document.querySelector(".letsEatLogo").addEventListener("click", () => {
     window.location = 'index.html';
 });
 
 const topDropdownMenu = document.querySelector(".dropdown-content");
-document.querySelector("#topMenu").addEventListener("click", function () {
+document.querySelector("#topMenu").addEventListener("click", () => {
     if (topDropdownMenu.style.display === "block") {
         topDropdownMenu.style.display = "none";
     } else {
@@ -296,12 +297,12 @@ document.querySelector("#topMenu").addEventListener("click", function () {
 
 // remove selected food quick link
 function removeSelectedQuickLink() {
-    for (let i = 0; i < quickLink.length; i++) {
+    quickLink.forEach = () => {
         var current = document.querySelectorAll(".active");
         if (current.length > 0) {
             current[0].className = current[0].className.replace(" active", "");
         }
-    }
+    };
 }
 
 //display restaurant's food on click
@@ -503,7 +504,7 @@ cartButton.addEventListener("click", renderCartHtml);
 
 // render cart html
 function renderCartHtml() {
-    // remove elements
+    // remove html elements from view
     removeElementByClass("addressForm");
     removeElementById("foodQuickSearchGrid");
     removeElementByClass("foodSearchFilter");
@@ -515,7 +516,6 @@ function renderCartHtml() {
     <div class="checkout">
     <h2>Cart</h2>
     </div>
-
     <div class="foodList">
     <div class="flex-container">
     `;
