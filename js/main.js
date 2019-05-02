@@ -117,7 +117,6 @@ function getCityId(locality) {
         .then(response => response.json())
         .then(cityData => {
             if (cityData.length == 1) {
-                console.log("cityData[0].id: ", cityData[0].id);
                 cityId = cityData[0].id;
             } else {
                 detectedPlaceText.innerHTML = "Delivery not available for your area";
@@ -216,7 +215,6 @@ function removeRestaurantCards() {
 
 // generate restaurant cards on food list input change event
 foodTypeListInput.onchange = () => {
-    console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
     getFoodTypeId(food);
     generateRestaurantCards(foodTypeId);
@@ -231,7 +229,6 @@ foodTypeListInput.onclick = () => {
 // generate restaurant cards based on selected/detected city
 function generateRestaurantCards(foodTypeId) {
     // ==== json server call ========
-    console.log("foodTypeId: ", foodTypeId);
     let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/restaurants?cityId=${cityId}&foodTypeId=${foodTypeId}`;
     fetch(url)
         .then(response => response.json())
@@ -315,7 +312,7 @@ function displayFood(restaurant, id) {
             // check if restaurant is closed
             let restaurantCardId = restaurantList.querySelector(`#${restaurant.id}`);
             let restaurantTime = restaurantCardId.querySelector(".deliveryTime").innerHTML;
-            if (restaurantTime == " closedTEST ") {
+            if (restaurantTime == " closed ") {
                 alert("Restaurant is closed!");
             } else {
                 if (foodData.length >= 1) {
