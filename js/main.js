@@ -1,5 +1,14 @@
-// ======= google geolocation =======
 const detectedPlaceText = document.querySelector("#detectedPlace");
+const restaurantList = document.querySelector(".restaurantList");
+const quickGrid = document.querySelector("#foodQuickSearchGrid");
+const quickLink = quickGrid.querySelectorAll(".quickSearchLink");
+const cityDelivery = document.querySelector("#cityDeliveryListInput");
+const foodTypeListInput = document.querySelector("#foodTypeListInput");
+const topDropdownMenu = document.querySelector(".dropdown-content");
+const cartIconQuantity = document.querySelector(".cartItems");
+const cart = document.querySelector("#cart");
+const cartButton = document.querySelector("#cartButton");
+const foodList = document.querySelector(".foodList");
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
@@ -7,6 +16,7 @@ function initialize() {
     updateCartIconQuantity();
 }
 
+// ======= google geolocation ======= 
 function getLocation() {
     if (navigator.geolocation) {
         // navigator.geolocation.watchPosition(showPosition, showError);
@@ -83,6 +93,7 @@ function codeLatLng(lat, lng) {
                     if (streetNumber && street && locality) {
                         detectedPlaceText.innerHTML = `Detected location:<br>
                         ${streetNumber} ${street}, ${locality}`;
+                        getCityId(locality);
                         break;
                     } else {
                         detectedPlaceText.innerHTML = `Detected location: <br>
@@ -99,9 +110,34 @@ function codeLatLng(lat, lng) {
     });
 }
 
+// ======= get city id from json server =======
+function getCityId(locality) {
+    let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/cities?q=${locality}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(cityData => {
+            if (cityData.length == 1) {
+                console.log("cityData[0].id: ", cityData[0].id);
+                cityId = cityData[0].id;
+            } else {
+                detectedPlaceText.innerHTML = "Delivery not available for your area";
+            }
+        }).catch(error => console.log("error: ", error.message));
+}
+
+// ======= get food type id from json server =======
+function getFoodTypeId(food) {
+    let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/foodType?q=${food}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(foodTypeData => {
+            if (foodTypeData.length == 1) {
+                foodTypeId = foodTypeData[0].id;
+            }
+        }).catch(error => console.log("error: ", error.message));
+}
+
 // ======= quick search grid =======
-var quickGrid = document.querySelector("#foodQuickSearchGrid");
-var quickLink = quickGrid.querySelectorAll(".quickSearchLink");
 for (let i of quickLink.keys()) {
     quickLink[i].addEventListener("click", function () {
         var current = document.querySelectorAll(".active");
@@ -114,12 +150,12 @@ for (let i of quickLink.keys()) {
 }
 
 // set location manually, on input
-var cityDelivery = document.querySelector("#cityDeliveryListInput");
 cityDelivery.onchange = () => {
     locality = cityDelivery.value;
-    localStorage.setItem("localityManual", locality);
-    // clear restaurant results
-    renderRestaurantsHtml("");
+    getCityId(locality);
+    detectedPlaceText.innerHTML = `Selected city: ${locality}`;
+    // remove previous restaurant cards
+    removeRestaurantCards()
     // remove selected food quick link
     removeSelectedQuickLink();
 };
@@ -127,114 +163,85 @@ cityDelivery.onchange = () => {
 // empty manual location input on click
 cityDelivery.onclick = () => {
     cityDelivery.value = "";
-    // clear manual location from local storage
-    localStorage.setItem("localityManual", "");
 };
 
 // execute on google geolocation icon click
 function detectLocation() {
-    // clear manual location from local storage
-    localStorage.setItem("localityManual", "");
     // geolocation
     initialize();
 }
 
-// ======= fetch restaurants json =======
-const jsonRestaurantsDataUrl = 'https://lucianpopa84.github.io/letsEat/data/restaurants.json';
-fetch(jsonRestaurantsDataUrl)
-    .then(response => response.json())
-    .then(data => {
-        // localStorage.setItem("restaurantsData", JSON.stringify(data));
-        restaurantsData = data;
-    });
-
-// ======= fetch food json =======
-const jsonFoodDataUrl = 'https://lucianpopa84.github.io/letsEat/data/food.json';
-fetch(jsonFoodDataUrl)
-    .then(response => response.json())
-    .then(data => foodData = data);
-
 // ======= render restaurants html =======
-const restaurantList = document.querySelector(".restaurantList");
 function renderRestaurantsHtml(data) {
-    // remove previous restaurant cards
+    removeRestaurantCards();
+    // generate restaurant cards based on selected restaurant food type on quick search grid
+    switch (data) {
+        case "quickSearchPizza":
+            console.log("Pizza restaurants selected");
+            foodTypeId = 1;
+            break;
+        case "quickSearchDesert":
+            console.log("Desert restaurants selected");
+            foodTypeId = 3;
+            break;
+        case "quickSearchFastFood":
+            console.log("Fast food restaurants selected");
+            foodTypeId = 4;
+            break;
+        case "quickSearchSalads":
+            console.log("Salads restaurants selected");
+            foodTypeId = 7;
+            break;
+        case "quickSearchDailyMenu":
+            console.log("Daily menu restaurants selected");
+            foodTypeId = 8;
+            break;
+        case "quickSearchRomanian":
+            console.log("Romanian food restaurants selected");
+            foodTypeId = 9;
+            break;
+        default: ;
+    }
+    generateRestaurantCards(foodTypeId);
+}
+
+// remove previous restaurant cards
+function removeRestaurantCards() {
     if (restaurantList.hasChildNodes()) {
         while (restaurantList.firstChild) {
             restaurantList.removeChild(restaurantList.firstChild);
         }
     }
-    // generate restaurant cards based on selected restaurant food type on quick search grid
-    switch (data) {
-        case "quickSearchPizza":
-            console.log("Pizza restaurants selected");
-            generateRestaurantCards("pizza");
-            localStorage.setItem("foodType", "pizza");
-            break;
-        case "quickSearchDailyMenu":
-            console.log("Daily menu restaurants selected");
-            generateRestaurantCards("daily menu");
-            localStorage.setItem("foodType", "daily menu");
-            break;
-        case "quickSearchRomanian":
-            console.log("Romanian food restaurants selected");
-            generateRestaurantCards("romanian");
-            localStorage.setItem("foodType", "romanian");
-            break;
-        case "quickSearchFastFood":
-            console.log("Fast food restaurants selected");
-            generateRestaurantCards("fast food");
-            localStorage.setItem("foodType", "fast food");
-            break;
-        case "quickSearchSalads":
-            console.log("Salads restaurants selected");
-            generateRestaurantCards("salads");
-            localStorage.setItem("foodType", "salads");
-            break;
-        case "quickSearchDesert":
-            console.log("Desert restaurants selected");
-            generateRestaurantCards("desert");
-            localStorage.setItem("foodType", "desert");
-            break;
-    }
 }
 
-// generate restaurant cards based on selected restaurant food type on food list input
-var foodTypeListInput = document.querySelector("#foodTypeListInput");
+// generate restaurant cards on food list input change event
 foodTypeListInput.onchange = () => {
     console.log("foodTypeListInput", foodTypeListInput.value);
     food = foodTypeListInput.value;
-    localStorage.setItem("foodType", food);
+    getFoodTypeId(food);
+    generateRestaurantCards(foodTypeId);
     removeSelectedQuickLink();
-    generateRestaurantCards(food);
 };
 
 // empty food type input on click
 foodTypeListInput.onclick = () => {
     foodTypeListInput.value = "";
-    localStorage.setItem("foodType", "");
 };
 
 // generate restaurant cards based on selected/detected city
-function generateRestaurantCards(food) {
-    if (restaurantsData) {
-        restaurantList.innerHTML = "searching for restaurants...";
-        let htmlContent = "";
-        // retrieve city from local storage or manual city input
-        let city = "";
-        let cityManual = localStorage.getItem("localityManual");
-        if (cityManual) {
-            city = cityManual;
-        } else {
-            city = localStorage.getItem("locality");
-        }
-        console.log("city = ", city);
-        let results = 0;
-        for (let restaurantData of restaurantsData) {
-            if (restaurantData.foodType.includes(food)) {
-                if (restaurantData.location == city) {
-                    results++;
+function generateRestaurantCards(foodTypeId) {
+    // ==== json server call ========
+    console.log("foodTypeId: ", foodTypeId);
+    let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/restaurants?cityId=${cityId}&foodTypeId=${foodTypeId}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(restaurantsData => {
+            restaurantList.innerHTML = "Searching for restaurants...";
+            if (restaurantsData.length >= 1) {
+                let htmlContent = "";
+                for (let restaurantData of restaurantsData) {
                     htmlContent += `
-                    <div class="restaurantCard" id="${restaurantData.id}" onclick="displayFood(this)"> 
+                    <div class="restaurantCard" id="restId${restaurantData.id}" onclick="displayFood(this,${restaurantData.id})"> 
                         <div class="row">
                             <div class="col-3">
                                 <div class="card-image">
@@ -271,14 +278,11 @@ function generateRestaurantCards(food) {
                         </div>
                     </div> `;
                 }
+                restaurantList.innerHTML = htmlContent;
+            } else {
+                restaurantList.innerHTML = "No restaurants found!";
             }
-        }
-        if (results) {
-            restaurantList.innerHTML = htmlContent;
-        } else {
-            restaurantList.innerHTML = "No restaurants found!";
-        }  
-    }
+        }).catch(error => console.log("error: ", error.message));
 }
 
 // ======= add links to logo and menus =======
@@ -286,7 +290,6 @@ document.querySelector(".letsEatLogo").addEventListener("click", () => {
     window.location = 'index.html';
 });
 
-const topDropdownMenu = document.querySelector(".dropdown-content");
 document.querySelector("#topMenu").addEventListener("click", () => {
     if (topDropdownMenu.style.display === "block") {
         topDropdownMenu.style.display = "none";
@@ -297,118 +300,111 @@ document.querySelector("#topMenu").addEventListener("click", () => {
 
 // remove selected food quick link
 function removeSelectedQuickLink() {
-    quickLink.forEach = () => {
-        var current = document.querySelectorAll(".active");
-        if (current.length > 0) {
-            current[0].className = current[0].className.replace(" active", "");
-        }
-    };
-}
-
-//display restaurant's food on click
-function displayFood(restaurant) {
-    console.log("selected restaurant: ", restaurant.id);
-    // check if restaurant is closed
-    let restaurantCardId = restaurantList.querySelector(`#${restaurant.id}`);
-    let restaurantTime = restaurantCardId.querySelector(".deliveryTime").innerHTML;
-    console.log("restaurantTime",restaurantTime);
-    if (restaurantTime  == " closed ") { 
-        alert("Restaurant is closed!");
-    } else {
-        // remove other restaurant cards
-        if (restaurantList.hasChildNodes()) {
-            let restaurantCards = restaurantList.querySelectorAll(".restaurantCard");
-            for (let restaurantCard of restaurantCards) {
-                if (restaurantCard.id != restaurant.id) {
-                    restaurantList.removeChild(restaurantCard);
-                }
-            }
-        }
-        // remove quick grid and food search filter
-        removeElementById("foodQuickSearchGrid");
-        removeElementByClass("foodSearchFilter");
-        // display food 
-        let foodType = localStorage.getItem("foodType");
-        console.log("Selected food type", foodType);
-        // filter data from food json based on selected restaurant and food type
-        const restaurantFood = foodData.filter(food => (food.restaurantId == restaurant.id && food.foodType == foodType));
-        // console.log("restaurantFood: ", restaurantFood);
-        let htmlContent = "";
-        for (let foodItem of restaurantFood) {
-            htmlContent += `
-            <div class="foodCard">
-            <div class="row">
-                <div class="col-4">
-                    <div class="card-image">
-                        <img src="${foodItem.imageSrc}" alt="${foodItem.imageAlt}">
-                    </div>
-                </div>
-                <div class="col-5">
-                    <div class="card-delivery">
-                        <h4>${foodItem.name}</h4>
-                        <p>${foodItem.ingredients}</p>
-                    </div>
-                    `;
-            htmlContent += `<div class="card-rating">`;
-            for (let j = 0; j < foodItem.rating; j++) {
-                htmlContent += `<span class="fa fa-star checked"></span>`;
-            };
-            for (let j = 0; j < 5 - foodItem.rating; j++) {
-                htmlContent += `<span class="fa fa-star"></span>`;
-            };
-            htmlContent += `
-                    </div>
-                </div>
-                <div class="col-3">
-                    <div class="card-pricing">
-                        <form class="priceForm ${foodItem.restaurantId}">
-                            <input type="number" name="quantity" min="1" max="10" value="1" class="quantityInput">
-                            <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-            `;
-        }
-
-        // render restaurant's food list html 
-        const foodList = document.querySelector(".foodList");
-        foodList.innerHTML = htmlContent;
-
-        // get image element
-        cardImage = document.querySelectorAll(".card-image"); 
-
-        // get price button elements and prevent default refresh action on click 
-        const priceFormButtons = document.querySelectorAll(".priceForm > button");
-        for (let priceFormButton of priceFormButtons) {
-            priceFormButton.addEventListener("click", function (event) {
-                event.preventDefault();
-            });
-        }
-        for (let [index,priceFormButton] of priceFormButtons.entries()) {
-            priceFormButton.addEventListener("click", addItemToCart);
-            priceFormButton.index = index;
-        }
-
-        // add event listners to quantity inputs 
-        const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
-        for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
-                priceFormQuantity.addEventListener("change", updateFoodPrices);
-                priceFormQuantity.index = index;
-        }
-
-        // prevent default refresh on input submit
-        const priceForm = document.querySelectorAll(".priceForm");
-        for (let priceFormItem of priceForm)
-        priceFormItem.addEventListener("submit", function(event){
-            event.preventDefault();
-        });
+    let current = document.querySelectorAll(".active");
+    if (current.length > 0) {
+        current[0].className = current[0].className.replace(" active", "");
     }
 }
 
+//display restaurant's food on click
+function displayFood(restaurant, id) {
+    let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/food/?restaurantId=${id}&foodTypeId=${foodTypeId}`;
+    fetch(url)
+        .then(response => response.json())
+        .then(foodData => {
+            // check if restaurant is closed
+            let restaurantCardId = restaurantList.querySelector(`#${restaurant.id}`);
+            let restaurantTime = restaurantCardId.querySelector(".deliveryTime").innerHTML;
+            if (restaurantTime == " closedTEST ") {
+                alert("Restaurant is closed!");
+            } else {
+                if (foodData.length >= 1) {
+                    foodList.innerHTML = "Serching for restaurant food...";
+                }
+                // remove other restaurant cards
+                if (restaurantList.hasChildNodes()) {
+                    let restaurantCards = restaurantList.querySelectorAll(".restaurantCard");
+                    for (let restaurantCard of restaurantCards) {
+                        if (restaurantCard.id != restaurant.id) {
+                            restaurantList.removeChild(restaurantCard);
+                        }
+                    }
+                }
+                // remove quick grid and food search filter
+                removeElementById("foodQuickSearchGrid");
+                removeElementByClass("foodSearchFilter");
+                // display food 
+                let htmlContent = "";
+                for (let foodItem of foodData) {
+                    htmlContent += `
+                    <div class="foodCard">
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="card-image">
+                                <img src="${foodItem.imageSrc}" alt="${foodItem.imageAlt}">
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="card-delivery">
+                                <h4>${foodItem.name}</h4>
+                                <p>${foodItem.ingredients}</p>
+                            </div>
+                            `;
+                    htmlContent += `<div class="card-rating">`;
+                    for (let j = 0; j < foodItem.rating; j++) {
+                        htmlContent += `<span class="fa fa-star checked"></span>`;
+                    };
+                    for (let j = 0; j < 5 - foodItem.rating; j++) {
+                        htmlContent += `<span class="fa fa-star"></span>`;
+                    };
+                    htmlContent += `
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="card-pricing">
+                                <form class="priceForm ${foodItem.restaurantId}">
+                                    <input type="number" name="quantity" min="1" max="10" value="1" class="quantityInput">
+                                    <button class="priceButton" data-price="${foodItem.price}" data-name="${foodItem.name}"> ${foodItem.price} RON </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    `;
+                }
+                // render restaurant's food list html 
+                foodList.innerHTML = htmlContent;
+                // get image element
+                cardImage = document.querySelectorAll(".card-image");
+                // get price button elements and prevent default refresh action on click 
+                const priceFormButtons = document.querySelectorAll(".priceForm > button");
+                for (let priceFormButton of priceFormButtons) {
+                    priceFormButton.addEventListener("click", (event) => {
+                        event.preventDefault();
+                    });
+                }
+                for (let [index, priceFormButton] of priceFormButtons.entries()) {
+                    priceFormButton.addEventListener("click", addItemToCart);
+                    priceFormButton.index = index;
+                }
+                // add event listners to quantity inputs 
+                const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
+                for (let [index, priceFormQuantity] of priceFormQuantityInputs.entries()) {
+                    priceFormQuantity.addEventListener("change", updateFoodPrices);
+                    priceFormQuantity.index = index;
+                }
+                // prevent default refresh on input submit
+                const priceForm = document.querySelectorAll(".priceForm");
+                for (let priceFormItem of priceForm)
+                    priceFormItem.addEventListener("submit", (event) => {
+                        event.preventDefault();
+                    });
+            }
+        });
+}
+
 // update add to cart price button on quantity change 
-function updateFoodPrices(event){
+function updateFoodPrices(event) {
     let index = event.target.index;
     let newQuantity = event.target.value;
     let priceButton = document.querySelectorAll(".priceButton")[index];
@@ -447,28 +443,26 @@ function addItemToCart(event) {
     let imageSrc = cardImage[index + 1].children[0].src;
     let imageAlt = cardImage[index + 1].children[0].alt;
     // check if localstorage contains items
-    if (localStorage.getItem('cartItems')){
+    if (localStorage.getItem('cartItems')) {
         let cartItemsObject = localStorage.getItem('cartItems');
         let cartItems = JSON.parse(cartItemsObject);
         // check if item is from different restaurant
-        let differentRestaurant = cartItems.find( cartItem => cartItem.restaurantId != restaurantId);
-        if(differentRestaurant) {
+        let differentRestaurant = cartItems.find(cartItem => cartItem.restaurantId != restaurantId);
+        if (differentRestaurant) {
             alert("Item is from different restaurant! \nPlease add food from the same restaurant!");
         } else {
             // check if item is already added in cart
-            let existingCartItem = cartItems.find( cartItem => cartItem.foodName == foodName);
-            if(existingCartItem) {
+            let existingCartItem = cartItems.find(cartItem => cartItem.foodName == foodName);
+            if (existingCartItem) {
                 alert("Food already added in cart!");
             } else {
-                let foodType = localStorage.getItem("foodType");
-                let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt};
+                let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt };
                 cartItems.push(cartItemElements);
                 localStorage.setItem("cartItems", JSON.stringify(cartItems));
             }
         }
     } else {
-        let foodType = localStorage.getItem("foodType");
-        let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodType': foodType, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt};
+        let cartItemElements = { 'itemPrice': itemPrice, 'restaurantId': restaurantId, 'foodName': foodName, 'quantity': quantity, 'imageSrc': imageSrc, 'imageAlt': imageAlt };
         cartItems.push(cartItemElements);
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
     }
@@ -484,22 +478,19 @@ function addItemToCart(event) {
 }
 
 // update cart icon quantity number 
-const cartIconQuantity = document.querySelector(".cartItems");
 function updateCartIconQuantity() {
-    if(localStorage.getItem("cartItemsNumber") != "undefined"){
+    if (localStorage.getItem("cartItemsNumber") != "undefined") {
         var cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
     } else {
         var cartItemsNumber = 0;
     }
-    if (cartItemsNumber > 0){
+    if (cartItemsNumber > 0) {
         cartIconQuantity.innerHTML = cartItemsNumber;
     } else {
-        cartIconQuantity.innerHTML = ""; 
+        cartIconQuantity.innerHTML = "";
     }
 }
 
-const cart = document.querySelector("#cart");
-const cartButton = document.querySelector("#cartButton");
 cartButton.addEventListener("click", renderCartHtml);
 
 // render cart html
@@ -525,7 +516,7 @@ function renderCartHtml() {
     let cartItems = JSON.parse(cartItemsObject);
 
     // loop through cart items
-    for (let i in cartItems){
+    for (let i in cartItems) {
         htmlContent += `
             <div class="foodCard" data-name="${cartItems[i].foodName}" data-price="${cartItems[i].itemPrice}">
             <div class="row">
@@ -548,7 +539,7 @@ function renderCartHtml() {
                     </div>
                 </div>
                 <div class="col-2">
-                    <p class="price">${cartItems[i].itemPrice*cartItems[i].quantity} RON</p>
+                    <p class="price">${cartItems[i].itemPrice * cartItems[i].quantity} RON</p>
                 </div>
             </div>
         </div>
@@ -600,14 +591,14 @@ function renderCartHtml() {
 
     // add event listener to delete buttons 
     const cartDeleteButtons = document.querySelectorAll(".priceForm > input[type=button]");
-    for (let [index,cartDeleteButton] of cartDeleteButtons.entries()) {
+    for (let [index, cartDeleteButton] of cartDeleteButtons.entries()) {
         cartDeleteButton.addEventListener("click", removeItem);
         cartDeleteButton.index = index;
     }
 
     // add event listners to quantity inputs 
     const priceFormQuantityInputs = document.querySelectorAll(".priceForm > input[type=number]");
-    for (let [index,priceFormQuantity] of priceFormQuantityInputs.entries()) {
+    for (let [index, priceFormQuantity] of priceFormQuantityInputs.entries()) {
         priceFormQuantity.addEventListener("change", updateCart);
         priceFormQuantity.index = index;
     }
@@ -615,9 +606,9 @@ function renderCartHtml() {
     // prevent default refresh on input submit
     const priceForm = document.querySelectorAll(".priceForm");
     for (let priceFormItem of priceForm)
-    priceFormItem.addEventListener("submit", function(event){
-        event.preventDefault();
-    })
+        priceFormItem.addEventListener("submit", (event) => {
+            event.preventDefault();
+        })
 
     // get all food cards
     foodItems = document.querySelectorAll(".foodCard");
@@ -628,7 +619,7 @@ function renderCartHtml() {
 };
 
 // remove item from cart
-function removeItem(event){
+function removeItem(event) {
     let index = event.target.index;
     let foodItemName = foodItems[index].dataset.name;
     // remove item from localstorage
@@ -657,18 +648,19 @@ function removeItem(event){
 
 // set manual delivery address
 function setManualDeliveryAddress(element) {
+    const detectedDeliveryPlaceText = document.querySelector("#detectedDeliveryPlace");
     detectedDeliveryPlaceText.innerHTML = `Deliver to:<br>
     ${element.value}`;
 }
 
 // submit order
-function submitOrder(){
+function submitOrder() {
     let clientName = document.querySelector("#clientName");
     alert(`Order for ${clientName.value} is placed`);
 }
 
 // update cart on quantity change
-function updateCart(event){
+function updateCart(event) {
     let index = event.target.index;
     let newQuantity = event.target.value;
     let foodItemPrice = foodItems[index].dataset.price;
@@ -678,7 +670,7 @@ function updateCart(event){
     let cartItems = JSON.parse(cartItemsObject);
     // set new quantity in localstorage food object
     cartItems.forEach(cartItem => {
-        if (cartItem.foodName == foodItemName){
+        if (cartItem.foodName == foodItemName) {
             cartItem.quantity = newQuantity;
         }
     });
