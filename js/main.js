@@ -583,7 +583,10 @@ function renderCartHtml() {
 
     // get food items from localstorage
     let cartItemsObject = localStorage.getItem('cartItems');
-    let cartItems = JSON.parse(cartItemsObject);
+    let cartItems = [];
+    if (cartItemsObject) {
+        cartItems = JSON.parse(cartItemsObject);
+    }
 
     // loop through cart items
     for (let i in cartItems) {
@@ -616,7 +619,7 @@ function renderCartHtml() {
         `;
     }
 
-    // compute total price 
+    // compute total price
     let totalPrice = cartItems.reduce((total, cartItem) => {
         return total + (cartItem.quantity * parseFloat(cartItem.itemPrice));
     }, 0);
