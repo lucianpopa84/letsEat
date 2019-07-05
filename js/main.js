@@ -5,17 +5,17 @@ const quickLink = quickGrid.querySelectorAll(".quickSearchLink");
 const cityDelivery = document.querySelector("#cityDeliveryListInput");
 const foodTypeListInput = document.querySelector("#foodTypeListInput");
 const topDropdownMenu = document.querySelector(".dropdown-content");
-const cartIconQuantity = document.querySelector(".cartItems");
-const cart = document.querySelector("#cart");
+// const cartIconQuantity = document.querySelector(".cartItems");
+// const cart = document.querySelector("#cart");
 const about = document.querySelector("#about");
 const contact = document.querySelector("#contact");
-const cartButton = document.querySelector("#cartButton");
+// const cartButton = document.querySelector("#cartButton");
 const foodList = document.querySelector(".foodList");
 
 function initialize() {
     geocoder = new google.maps.Geocoder();
     getLocation();
-    updateCartIconQuantity();
+    // updateCartIconQuantity();
 }
 
 // ======= google geolocation ======= 
@@ -544,24 +544,24 @@ function addItemToCart(event) {
     }, 0);
     // update cart icon quantity number
     localStorage.setItem("cartItemsNumber", cartItemsNumber);
-    updateCartIconQuantity();
+    // updateCartIconQuantity();
 }
 
-// update cart icon quantity number 
-function updateCartIconQuantity() {
-    if (localStorage.getItem("cartItemsNumber") != "undefined") {
-        var cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
-    } else {
-        var cartItemsNumber = 0;
-    }
-    if (cartItemsNumber > 0) {
-        cartIconQuantity.innerHTML = cartItemsNumber;
-    } else {
-        cartIconQuantity.innerHTML = "";
-    }
-}
+// // update cart icon quantity number 
+// function updateCartIconQuantity() {
+//     if (localStorage.getItem("cartItemsNumber") != "undefined") {
+//         var cartItemsNumber = parseFloat(localStorage.getItem("cartItemsNumber"));
+//     } else {
+//         var cartItemsNumber = 0;
+//     }
+//     if (cartItemsNumber > 0) {
+//         cartIconQuantity.innerHTML = cartItemsNumber;
+//     } else {
+//         cartIconQuantity.innerHTML = "";
+//     }
+// }
 
-cartButton.addEventListener("click", renderCartHtml);
+// cartButton.addEventListener("click", renderCartHtml);
 
 // render cart html
 function renderCartHtml() {

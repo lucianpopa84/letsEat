@@ -1,149 +1,151 @@
 <!DOCTYPE html>
 <html lang="en-us">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Let's eat</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
 
-<body onload="initialize()">
+  <body onload="initialize()">
     <header>
-        <div class="topnav">
-            <a href="#menu" id="topMenu" class="dropdown"><i class="fas fa-bars"></i> </a>
-            <div class="dropdown-content">
-                <nav id="topMenu">
-                    <ul>
-                        <li> <a href="#home" id="topMenuHome"> <i class="fas fa-home"> </i> Home </a> </li>
-                        <li> <a href="#about" id="topMenuAbout"> <i class="far fa-question-circle"> </i> About </a>
-                        </li>
-                        <li> <a href="#contact" id="topMenuContact"> <i class="far fa-address-card"></i> Contact </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
-            <div class="topnav-right">
-                <a href="#language" id="language">
-                    <form id="languageForm">
-                        <label for="EN" id="languageSelectorEN">
-                            <input type="radio" id='radioEN' name="languageRadio" value="EN" />
-                        </label>
-                        <label for="RO" id="languageSelectorRO">
-                            <input type="radio" id='radioRO' name="languageRadio" value="RO" />
-                        </label>
-                    </form>
+      <div class="topnav">
+        <a href="#menu" id="topMenu" class="dropdown"
+          ><i class="fas fa-bars"></i
+        ></a>
+        <div class="dropdown-content">
+          <nav id="topMenu">
+            <ul>
+              <li>
+                <a href="#home" id="topMenuHome">
+                  <i class="fas fa-home"> </i> Home
                 </a>
-                <a href="#userLogin"> <i class="fas fa-user-circle"> </i></a>
-                <a href="#cart" id="cartButton"> <i class="fas fa-shopping-cart"></i></a> <span
-                    class="cartItems"></span>
-            </div>
+              </li>
+              <li>
+                <a href="#about" id="topMenuAbout">
+                  <i class="far fa-question-circle"> </i> About
+                </a>
+              </li>
+              <li>
+                <a href="#contact" id="topMenuContact">
+                  <i class="far fa-address-card"></i> Contact
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <div class="letsEatLogo">
+
+        <div class="topnav-right" id="topnav-right">
         </div>
+      </div>
+      <div class="letsEatLogo"></div>
     </header>
 
     <section>
-        <form id="FoodSearchFilter">
-            <div class="addressForm">
-                <div class="flex-container">
-                    <i class="fas fa-map-marker-alt" onclick="detectLocation()"> </i>
-                    <p id="detectedPlace"> </p>
-                    <input list="cityDeliveryList" id="cityDeliveryListInput" name="City" placeholder="Change address">
-                    <datalist id="cityDeliveryList">
-                        <option value="Craiova">
-                        <option value="Brasov">
-                        <option value="Bucuresti">
-                        <option value="Cluj-Napoca">
-                    </datalist>
-                </div>
-            </div>
-
-            <div class="foodSearchFilter">
-                <input list="foodTypeList" id="foodTypeListInput" placeholder="What do you want to eat today?">
-                <datalist id="foodTypeList">
-                    <option value="pizza">
-                    <option value="daily menu">
-                    <option value="pasta">
-                    <option value="romanian">
-                    <option value="fast food">
-                    <option value="sea-food">
-                    <option value="steaks">
-                    <option value="desert">
-                    <option value="chinese">
-                    <option value="salads">
-                    <option value="vegetarian">
-                    <option value="greek">
-                </datalist>
-                <i class="fas fa-search"></i>
-            </div>
-        </form>
-
-        <div class="quickSearchGrid" id="foodQuickSearchGrid">
-            <div class="flex-container">
-                <a href="#pizza" class="quickSearchLink" id="quickSearchPizza">
-                    <div class="foodTitle">
-                        <p>Pizza</p>
-                    </div>
-                    <img src="images/foodType/pizza.png" alt="Pizza">
-                </a>
-                <a href="#dailyMenu" class="quickSearchLink" id="quickSearchDailyMenu">
-                    <div class="foodTitle">
-                        <p>Daily menu</p>
-                    </div>
-                    <img src="images/foodType/dailyMenu.png" alt="Daily menu">
-                </a>
-                <a href="#romanian" class="quickSearchLink" id="quickSearchRomanian">
-                    <div class="foodTitle">
-                        <p>Romanian</p>
-                    </div>
-                    <img src="images/foodType/romanian.png" alt="Romanian">
-                </a>
-                <a href="#fastFood" class="quickSearchLink" id="quickSearchFastFood">
-                    <div class="foodTitle">
-                        <p>Fast-food</p>
-                    </div>
-                    <img src="images/foodType/fastFood.png" alt="Fast-food">
-                </a>
-                <a href="#salads" class="quickSearchLink" id="quickSearchSalads">
-                    <div class="foodTitle">
-                        <p>Salads</p>
-                    </div>
-                    <img src="images/foodType/salads.png" alt="Salads">
-                </a>
-                <a href="#desert" class="quickSearchLink" id="quickSearchDesert">
-                    <div class="foodTitle">
-                        <p>Desert</p>
-                    </div>
-                    <img src="images/foodType/desert.png" alt="Desert">
-                </a>
-            </div>
+      <form id="FoodSearchFilter">
+        <div class="addressForm">
+          <div class="flex-container">
+            <i class="fas fa-map-marker-alt" onclick="detectLocation()"> </i>
+            <p id="detectedPlace"></p>
+            <input list="cityDeliveryList" id="cityDeliveryListInput" name="City" placeholder="Change address"/>
+            <datalist id="cityDeliveryList">
+              <option value="Craiova"> </option>
+              <option value="Brasov"> </option>
+              <option value="Bucuresti"> </option>
+              <option value="Cluj-Napoca"> </option>
+            </datalist>
+          </div>
         </div>
 
-        <div class="flex-container restaurantList" id="restaurantList"></div>
+        <div class="foodSearchFilter">
+          <input list="foodTypeList" id="foodTypeListInput" placeholder="What do you want to eat today?"/>
+          <datalist id="foodTypeList">
+            <option value="pizza"> </option>
+            <option value="daily menu"> </option>
+            <option value="pasta"> </option>
+            <option value="romanian"> </option>
+            <option value="fast food"> </option>
+            <option value="sea-food"> </option>
+            <option value="steaks"> </option>
+            <option value="desert"> </option>
+            <option value="chinese"> </option>
+            <option value="salads"> </option>
+            <option value="vegetarian"> </option>
+            <option value="greek"> </option>
+          </datalist>
 
-        <div class="flex-container foodList"></div>
+          <i class="fas fa-search"></i>
+        </div>
+      </form>
 
-        <div id="cart"></div>
-        <div id="about"></div>
-        <div id="contact"></div>
+      <div class="quickSearchGrid" id="foodQuickSearchGrid">
+        <div class="flex-container">
+          <a href="#pizza" class="quickSearchLink" id="quickSearchPizza">
+            <div class="foodTitle">
+              <p>Pizza</p>
+            </div>
+            <img src="images/foodType/pizza.png" alt="Pizza" />
+          </a>
+          <a href="#dailyMenu" class="quickSearchLink" id="quickSearchDailyMenu">
+            <div class="foodTitle">
+              <p>Daily menu</p>
+            </div>
+            <img src="images/foodType/dailyMenu.png" alt="Daily menu" />
+          </a>
+          <a href="#romanian" class="quickSearchLink" id="quickSearchRomanian">
+            <div class="foodTitle">
+              <p>Romanian</p>
+            </div>
+            <img src="images/foodType/romanian.png" alt="Romanian" />
+          </a>
+          <a href="#fastFood" class="quickSearchLink" id="quickSearchFastFood">
+            <div class="foodTitle">
+              <p>Fast-food</p>
+            </div>
+            <img src="images/foodType/fastFood.png" alt="Fast-food" />
+          </a>
+          <a href="#salads" class="quickSearchLink" id="quickSearchSalads">
+            <div class="foodTitle">
+              <p>Salads</p>
+            </div>
+            <img src="images/foodType/salads.png" alt="Salads" />
+          </a>
+          <a href="#desert" class="quickSearchLink" id="quickSearchDesert">
+            <div class="foodTitle">
+              <p>Desert</p>
+            </div>
+            <img src="images/foodType/desert.png" alt="Desert" />
+          </a>
+        </div>
+      </div>
 
+      <div class="flex-container restaurantList" id="restaurantList"></div>
+
+      <div class="flex-container foodList"></div>
+
+      <div id="cart"></div>
+      <div id="about"></div>
+      <div id="contact"></div>
     </section>
 
     <footer>
-        <div class="footerNavbar">
-            <a href="#">Add a restaurant</a>
-            <a href="#">How it works</a>
-            <a href="#">Terms</a>
-            <a href="#">Report bug</a>
-        </div>
+      <div class="footerNavbar">
+        <a href="#">Add a restaurant</a>
+        <a href="#">How it works</a>
+        <a href="#">Terms</a>
+        <a href="#">Report bug</a>
+      </div>
     </footer>
 
-</body>
-
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM"> </script>
-<script src="js/main.js"> </script>
-
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM"></script>
+    <script src="js/main.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script type="text/babel" src="js/cart.js"></script>
+  </body>
 </html>
