@@ -5,16 +5,6 @@ const NavLink = ReactRouterDOM.NavLink;
 const Switch = ReactRouterDOM.Switch;
 const Redirect = ReactRouterDOM.Redirect;
 
-function Root() {
-   return (
-      <Router>
-         <Route path={"/letsEat/cart"} component={Cart} />
-      </Router>
-   );
-}
-
-ReactDOM.render(<Root />, document.querySelector("#cart"));
-
 function Topnav() {
    const [cartItemsNumber, setCartItemsNumber] = React.useState(
       JSON.parse(localStorage.getItem("cartItemsNumber")) || ""
@@ -22,15 +12,16 @@ function Topnav() {
 
    return (
       <Router>
-         <Link to="/letsEat/login">
+         <NavLink to="/letsEat/login">
             <i className="fas fa-user-circle"> </i>
-         </Link>
-         <Link to="/letsEat/cart" id="cartButton">
+         </NavLink>
+         <NavLink to="/letsEat/cart" id="cartButton">
             <i className="fas fa-shopping-cart" />
-         </Link>
+         </NavLink>
          <span className="cartItems">
             {cartItemsNumber != ("" || 0) ? cartItemsNumber : ""}
          </span>
+         <Route exact path="/letsEat/cart" render={renderCartHtml} />
       </Router>
    );
 }
