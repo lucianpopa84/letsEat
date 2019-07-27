@@ -26,14 +26,18 @@
    transition: 0.3s;
 }
 
-/* Add a color/change opacity to the active/current link */
-.topnav a.active {
-   opacity: 1;
-}
-
 /* Right-aligned section inside the top navigation */
 #topnav-right {
    float: right;
+}
+
+#topnav-right a {
+   opacity: 0.85;
+}
+/* Add a color/change opacity to the active/current nav link */
+#topnav-right a.active {
+   transform: scale(1.2);
+   opacity: 1;
 }
 
 /* Style the dropdown menu */
@@ -571,6 +575,7 @@ input[type="number"]::-webkit-outer-spin-button {
    position: relative;
    left: -8px;
    top: 8px;
+   opacity: 0.85;
 }
 
 .checkout,

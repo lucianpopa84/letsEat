@@ -10,23 +10,84 @@ function Topnav() {
       JSON.parse(localStorage.getItem("cartItemsNumber")) || ""
    );
 
+   function attachTopMenuEventListeners() {
+      let topDropdownMenu = document.querySelector(".dropdown-content");
+
+      function toggleMenu() {
+         if (topDropdownMenu.style.display === "block") {
+            topDropdownMenu.style.display = "none";
+         } else {
+            topDropdownMenu.style.display = "block";
+         }
+      }
+
+      document.querySelector("#topMenu").addEventListener("click", () => toggleMenu());
+      document.querySelector("#topMenuHome").addEventListener("click", () => toggleMenu());
+      document.querySelector("#topMenuAbout").addEventListener("click", () => toggleMenu());
+      document.querySelector("#topMenuContact").addEventListener("click", () => toggleMenu());
+   }
+
+   React.useEffect(() => {
+      attachTopMenuEventListeners();
+   });
+
    return (
       <Router>
-         <NavLink to="/letsEat/login">
-            <i className="fas fa-user-circle"> </i>
+         <div className="topnav">
+            <a id="topMenu" className="dropdown">
+               <i className="fas fa-bars" />
+            </a>
+            <div className="dropdown-content">
+               <nav id="topMenu">
+                  <ul>
+                     <li>
+                        <NavLink exact to="/letsEat/" id="topMenuHome">
+                           <i className="fas fa-home"> </i> Home
+                        </NavLink>
+                     </li>
+                     <li>
+                        <NavLink to="/letsEat/about" id="topMenuAbout">
+                           <i className="far fa-question-circle"> </i> About
+                        </NavLink>
+                     </li>
+                     <li>
+                        <NavLink to="/letsEat/contact" id="topMenuContact">
+                           <i className="far fa-address-card" /> Contact
+                        </NavLink>
+                     </li>
+                  </ul>
+               </nav>
+            </div>
+
+            <div id="topnav-right">
+               <NavLink to="/letsEat/login">
+                  <i className="fas fa-user-circle"> </i>
+               </NavLink>
+               <NavLink to="/letsEat/cart" id="cartButton">
+                  <i className="fas fa-shopping-cart" />
+               </NavLink>
+               <span className="cartItems">
+                  {cartItemsNumber != ("" || 0) ? cartItemsNumber : ""}
+               </span>
+            </div>
+         </div>
+         <NavLink to="/letsEat/">
+            <div className="letsEatLogo" />
          </NavLink>
-         <NavLink to="/letsEat/cart" id="cartButton">
-            <i className="fas fa-shopping-cart" />
-         </NavLink>
-         <span className="cartItems">
-            {cartItemsNumber != ("" || 0) ? cartItemsNumber : ""}
-         </span>
-         <Route exact path="/letsEat/cart" render={renderCartHtml} />
+         {/* <Route path="/letsEat/cart" render={renderCartHtml} /> */}
+         <Route path="/letsEat/cart" render={renderReactCart} />
+         <Route path="/letsEat/about" render={renderReactAbout} />
+         <Route path="/letsEat/contact" render={renderReactContact} />
+         <Route
+            exact
+            path="/letsEat/"
+            render={() => (window.location.pathname = "/letsEat/index.html")}
+         />
       </Router>
    );
 }
 
-ReactDOM.render(<Topnav />, document.querySelector("#topnav-right"));
+ReactDOM.render(<Topnav />, document.querySelector("#topnav"));
 
 function Cart() {
    // get food items from localstorage
@@ -166,7 +227,75 @@ function Cart() {
    );
 }
 
-function renderCartHtml() {
+function About() {
+   const aboutStyle = { color: "darkblue" };
+   const h2Style = { textAlign: "center" };
+   return (
+      <div>
+         <h2 style={h2Style}>
+            About <span style={aboutStyle}>Let's Eat</span>
+         </h2>
+         <hr />
+         <p>This website is designed to help you order food quick and easy.</p>
+         <p>
+            If you have a favourite restaurant which is not listed, please use
+            the <i>Add a restaurant</i> form.
+         </p>
+         <br />
+         <p>© 2019 Lucian Popa</p>
+      </div>
+   );
+}
+
+function Contact() {
+   return (
+      <div>
+         <div className="checkout">
+            <h2>Contact us</h2>
+         </div>
+
+         <div className="contactForm">
+            <form>
+               <label htmlFor="name">Name</label>
+               <input
+                  type="text"
+                  id="name"
+                  name="firstname"
+                  autoComplete="name"
+                  placeholder="Your name.."
+               />
+
+               <label htmlFor="city">City</label>
+               <select id="city" name="city">
+                  <option value="Craiova">Craiova</option>
+                  <option value="Brasov">Brasov</option>
+                  <option value="Cluj">Cluj</option>
+               </select>
+
+               <label htmlFor="subject">Subject</label>
+               <textarea
+                  id="subject"
+                  name="subject"
+                  placeholder="Your message.."
+                  style={{ height: "100px" }}
+               />
+               <input type="submit" value="Send" />
+            </form>
+            <p>
+               Or send us an e-mail at
+               <a
+                  href="mailto:contact@letseat.com?Subject=Hello%20Letseat"
+                  target="_top"
+               >
+                  contact@letseat.com
+               </a>
+            </p>
+         </div>
+      </div>
+   );
+}
+
+function renderReactCart() {
    // remove html elements from view
    removeElementByClass("addressForm");
    removeElementById("foodQuickSearchGrid");
@@ -174,4 +303,28 @@ function renderCartHtml() {
    removeElementByClass("restaurantList");
    removeElementByClass("foodList");
    ReactDOM.render(<Cart />, document.querySelector("#cart"));
+}
+
+function renderReactAbout() {
+   // remove html elements from view
+   removeElementByClass("addressForm");
+   removeElementById("foodQuickSearchGrid");
+   removeElementByClass("foodSearchFilter");
+   removeElementByClass("restaurantList");
+   removeElementByClass("foodList");
+   ReactDOM.unmountComponentAtNode(document.querySelector("#contact"));
+   ReactDOM.unmountComponentAtNode(document.querySelector("#cart"));
+   ReactDOM.render(<About />, document.querySelector("#about"));
+}
+
+function renderReactContact() {
+   // remove html elements from view
+   removeElementByClass("addressForm");
+   removeElementById("foodQuickSearchGrid");
+   removeElementByClass("foodSearchFilter");
+   removeElementByClass("restaurantList");
+   removeElementByClass("foodList");
+   ReactDOM.unmountComponentAtNode(document.querySelector("#about"));
+   ReactDOM.unmountComponentAtNode(document.querySelector("#cart"));
+   ReactDOM.render(<Contact />, document.querySelector("#contact"));
 }
