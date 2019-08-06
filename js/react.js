@@ -7,8 +7,10 @@ const Redirect = ReactRouterDOM.Redirect;
 
 function Topnav() {
    const [cartItemsNumber, setCartItemsNumber] = React.useState(
-      JSON.parse(localStorage.getItem("cartItemsNumber")) || ""
-   );
+      (JSON.parse(localStorage.getItem("cartItems")) || []).reduce(
+         (total, cartItem) => {
+            return total + parseFloat(cartItem.quantity);
+         },0));
 
    function attachTopMenuEventListeners() {
       let topDropdownMenu = document.querySelector(".dropdown-content");
@@ -21,10 +23,18 @@ function Topnav() {
          }
       }
 
-      document.querySelector("#topMenu").addEventListener("click", () => toggleMenu());
-      document.querySelector("#topMenuHome").addEventListener("click", () => toggleMenu());
-      document.querySelector("#topMenuAbout").addEventListener("click", () => toggleMenu());
-      document.querySelector("#topMenuContact").addEventListener("click", () => toggleMenu());
+      document
+         .querySelector("#topMenu")
+         .addEventListener("click", () => toggleMenu());
+      document
+         .querySelector("#topMenuHome")
+         .addEventListener("click", () => toggleMenu());
+      document
+         .querySelector("#topMenuAbout")
+         .addEventListener("click", () => toggleMenu());
+      document
+         .querySelector("#topMenuContact")
+         .addEventListener("click", () => toggleMenu());
    }
 
    React.useEffect(() => {
@@ -101,6 +111,20 @@ function Cart() {
    }, 0);
    let deleteCharacter = "\u2717";
 
+   function removeCartItem(cartItemId) {
+      const newCartItems = [...cartItems];
+      const index = newCartItems.findIndex(
+         cartItem => cartItem.id === cartItemId
+      );
+      newCartItems.splice(index, 1);
+      setCartItems(newCartItems);
+   }
+
+   React.useEffect(() => {
+      // update cart items in localstorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+   }, [cartItems]);
+
    return (
       <div>
          <div className="checkout">
@@ -145,7 +169,7 @@ function Cart() {
                                  <input
                                     type="button"
                                     value={deleteCharacter}
-                                    onClick={() => removeItem()}
+                                    onClick={e => removeCartItem(cartItem.id)}
                                  />
                               </form>
                            </div>
