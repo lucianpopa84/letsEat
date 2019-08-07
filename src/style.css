@@ -415,7 +415,7 @@ input {
    margin: 0 10px 0 10px;
 }
 
-.addressForm i:hover {
+.addressForm i:hover, .checkoutAddress i:hover {
    transform: scale(1.3);
    transition: 0.3s;
 }
