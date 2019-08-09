@@ -59,9 +59,13 @@ function RestaurantListItem({ restaurantData }) {
 }
 
 function RestaurantList({ restaurantStatus, restaurants }) {
+  const pStyle = {
+    width: '100%',
+    textAlign: 'center'
+  };
    return (
       <div className="flex-container restaurantList" id="restaurantList">
-         {restaurantStatus ? <p> {restaurantStatus} </p> : ""}
+         {restaurantStatus ? <p style={pStyle}> {restaurantStatus} </p> : ""}
          {restaurants.map(restaurantData => (
             <RestaurantListItem
                key={restaurantData.id}
