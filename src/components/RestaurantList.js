@@ -1,9 +1,11 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 function RestaurantListItem({ restaurantData }) {
    let currentDate = new Date();
    let currentHour = currentDate.getHours();
    return (
+      <NavLink to=`/restaurants/${restaurantData.id}`>
       <div className="restaurantCard" id={`restId${restaurantData.id}`}>
          <div className="row">
             <div className="col-3">
@@ -52,6 +54,7 @@ function RestaurantListItem({ restaurantData }) {
             </div>
          </div>
       </div>
+    </NavLink>
    );
 }
 
