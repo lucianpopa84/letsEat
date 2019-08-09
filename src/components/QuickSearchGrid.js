@@ -43,6 +43,7 @@ function QuickSearchGrid({
                );
             } else {
                setRestaurantStatus("No restaurants found!");
+               setRestaurants([]);
             }
          })
          .catch(error => console.log("error: ", error.message));
