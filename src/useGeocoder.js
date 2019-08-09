@@ -3,56 +3,84 @@ import Geocode from "react-geocode";
 
 function useGeocoder() {
    Geocode.setApiKey("AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM");
+
+   let initialLat = "";
+   let initialLong = "";
+
+   if (localStorage.getItem("lat") && localStorage.getItem("long")) {
+      initialLat = localStorage.getItem("lat");
+      initialLong = localStorage.getItem("long");
+   } else {
+      initialLat = 44.3354258; // Craiova
+      initialLong = 23.8167439; // Craiova
+   }
+
    const [address, setAddress] = useState(
       JSON.parse(localStorage.getItem("address")) || []
    );
    const [detectedAddress, setDetectedAddress] = useState(
       JSON.parse(localStorage.getItem("address")) || []
    );
+   const [coordinates, setCoordinates] = useState({
+      lat: initialLat,
+      long: initialLong
+   });
    const [locationStatus, setLocationStatus] = useState("Locating...");
-   const [latitude, setLatitude] = useState(44.3354258);
-   const [longitude, setLongitude] = useState(23.8167439);
+   const [city, setCity] = useState(localStorage.getItem("city") || "");
+   const [cityId, setCityId] = useState(null);
+
+   function getCityId(city) {
+      let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/cities?q=${city}`;
+      fetch(url)
+         .then(response => response.json())
+         .then(cityData => {
+            if (cityData.length === 1) {
+               setCityId(cityData[0].id);
+            } else {
+               setLocationStatus("Delivery not available for your area");
+            }
+         })
+         .catch(error => console.log("error: ", error.message));
+   }
+
+   let streetNumber = "";
+   let locality = "";
+   let street = "";
 
    function geoFindMe() {
-      let streetNumber = "";
-      let locality = "";
-      let street = "";
       function success(position) {
-         let lat = position.coords.latitude;
-         let long = position.coords.longitude;
-         setLatitude(lat);
-         setLongitude(long);
-         setLocationStatus("Location detected!");
+         // set new coordinates and status
+         let newCoordinates = coordinates;
+         newCoordinates.lat = position.coords.latitude;
+         newCoordinates.long = position.coords.longitude;
+         setCoordinates(newCoordinates);
+         localStorage.setItem("lat", coordinates.lat);
+         localStorage.setItem("long", coordinates.long);
+
          // Get address from latidude & longitude.
-         Geocode.fromLatLng(latitude, longitude).then(
+         Geocode.fromLatLng(coordinates.lat, coordinates.long).then(
             response => {
                if (response.results) {
                   for (let result of response.results) {
                      // search for street number
-                     for (let address of result.address_components) {
-                        if (address.types.includes("street_number")) {
-                           console.log(
-                              "Street number results:",
-                              address.long_name
-                           );
-                           streetNumber = address.long_name;
+                     for (let address_component of result.address_components) {
+                        if (address_component.types.includes("street_number")) {
+                           streetNumber = address_component.long_name;
                            break;
                         }
                      }
                      // search for locality (city)
-                     for (let address of result.address_components) {
-                        if (address.types.includes("locality")) {
-                           console.log("Locality results:", address.long_name);
-                           locality = address.long_name;
-                           localStorage.setItem("locality", locality);
+                     for (let address_component of result.address_components) {
+                        if (address_component.types.includes("locality")) {
+                           locality = address_component.long_name;
+                           localStorage.setItem("city", locality);
                            break;
                         }
                      }
                      // search for route (street)
-                     for (let address of result.address_components) {
-                        if (address.types.includes("route")) {
-                           console.log("Route results:", address.long_name);
-                           street = address.long_name;
+                     for (let address_component of result.address_components) {
+                        if (address_component.types.includes("route")) {
+                           street = address_component.long_name;
                            if (
                               document.documentElement.lang.toLowerCase() ===
                               "en"
@@ -80,20 +108,27 @@ function useGeocoder() {
                         setDetectedAddress(
                            `${streetNumber} ${street}, ${locality}`
                         );
-                        // getCityId(locality);
+                        setAddress(detectedAddress);
+                        setLocationStatus("Detected address:");
+                        // ======= get city id from json server =======
+                        getCityId(locality);
+                        setCity(locality);
                         break;
                      } else {
-                        setDetectedAddress(
-                           `${response.results[0].formatted_address.split(",")[0]},
-                            ${response.results[0].formatted_address.split(",")[1]}
-                            Delivery not available for your area`
-                        );
+                        console.log("not all address components found");
+                        setDetectedAddress(`${
+                           response.results[0].formatted_address.split(",")[0]
+                        },
+                        ${
+                           response.results[0].formatted_address.split(",")[1]
+                        }`);
+                        setAddress(detectedAddress);
+                        setLocationStatus("Detected address:");
                      }
                   }
                } else {
-                  console.log("No results found");
+                  setLocationStatus("No results found");
                }
-               setAddress(`Detected location: ${detectedAddress}`);
             },
             error => {
                setLocationStatus(error);
@@ -113,10 +148,12 @@ function useGeocoder() {
    }
 
    return {
-      address,
-      setAddress,
+      address, setAddress,
       detectedAddress,
-      locationStatus,
+      locationStatus, setLocationStatus,
+      city, setCity,
+      cityId, getCityId,
+      locality,
       geoFindMe
    };
 }

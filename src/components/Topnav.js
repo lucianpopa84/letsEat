@@ -1,12 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import useCartItems from "../useCartItems.js";
 
-function Topnav() {
-   const {
-      cartItemsNumber
-   } = useCartItems();
-
+function Topnav({ cartItemsNumber }) {
    function toggleMenu(event, position) {
       let element = null;
       switch (position) {
@@ -15,7 +10,8 @@ function Topnav() {
             break;
          case 2:
             element =
-               event.target.parentElement.parentElement.parentElement.parentElement;
+               event.target.parentElement.parentElement.parentElement
+                  .parentElement;
             break;
          default:
       }

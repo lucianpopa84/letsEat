@@ -1,21 +1,23 @@
 import React, { useEffect } from "react";
-import useCartItems from "../useCartItems.js";
-import useGeocoder from "../useGeocoder";
 
-function Cart() {
-   const { cartItems, setCartItems, setCartItemsNumber } = useCartItems();
-   const {
-      address,
-      setAddress,
-      detectedAddress,
-      geoFindMe,
-      locationStatus
-   } = useGeocoder();
+function Cart({
+   cartItems, setCartItems,
+   setCartItemsNumber,
+   address, setAddress,
+   locationStatus, setLocationStatus,
+   setCity,
+   geoFindMe
+}) {
    // compute total price
    let totalPrice = cartItems.reduce((total, cartItem) => {
       return total + cartItem.quantity * parseFloat(cartItem.itemPrice);
    }, 0);
    let deleteCharacter = "\u2717";
+
+   useEffect(() => {
+      // update cart items in localstorage
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+   }, [cartItems]);
 
    function removeCartItem(cartItemId) {
       const newCartItems = [...cartItems];
@@ -31,12 +33,14 @@ function Cart() {
       );
    }
 
-   function updateCart() {
+   function updateCart(cartItemId) {
       // work in progress
+      console.log(cartItemId);
    }
 
-   function submitOrder() {
+   function submitOrder(e) {
       // work in progress
+      e.preventDefault();
    }
 
    function nameChange() {
@@ -50,15 +54,6 @@ function Cart() {
    function timeChange() {
       // work in progress
    }
-
-   useEffect(() => {
-      // update cart items in localstorage
-      localStorage.setItem("cartItems", JSON.stringify(cartItems));
-   }, [cartItems]);
-
-   useEffect(() => {
-      geoFindMe();
-   }, [detectedAddress]);
 
    return (
       <div>
@@ -99,7 +94,7 @@ function Cart() {
                                     max="10"
                                     value={cartItem.quantity}
                                     className="cartQuantityInput"
-                                    onChange={() => updateCart()}
+                                    onChange={() => updateCart(cartItem.id)}
                                  />
                                  <input
                                     type="button"
@@ -124,28 +119,32 @@ function Cart() {
             <h2 id="totalPrice">Total = {totalPrice} RON</h2>
          </div>
          <div className="checkoutForm">
-            <form id="checkoutForm" onSubmit={() => submitOrder()}>
+            <form id="checkoutForm" onSubmit={(e) => submitOrder(e)}>
                <div className="checkoutAddress flex-container">
                   <i
                      className="fas fa-map-marker-alt"
                      onClick={() => geoFindMe()}
-                  >
-                     {" "}
-                  </i>
+                  />
                   {address ? (
-                     <p id="detectedDeliveryPlace"> {address}</p>
+                     <p id="detectedDeliveryPlace">
+                        {" "}
+                        {locationStatus} <br /> {address}
+                     </p>
                   ) : (
-                     <p id="detectedDeliveryPlace">{locationStatus}</p>
+                     <p id="detectedPlace">{locationStatus}</p>
                   )}
                   <input
                      name="address"
                      id="manualAddress"
                      autoComplete="address-level2"
                      placeholder="Change address"
-                     onChange={e =>
-                        setAddress(`Selected location: ${e.target.value}`)
-                     }
-                     onClick={e => (e.target.value = "")}
+                     onChange={e => {
+                        setAddress(e.target.value);
+                        setCity(e.target.value); 
+                        localStorage.setItem("city", e.target.value);
+                        e.target.value = "";
+                        setLocationStatus("Selected address:");
+                     }}
                   />
                </div>
 
@@ -191,7 +190,9 @@ function Cart() {
                   maxLength={1000}
                   placeholder="Delivery instructions:"
                />
-               <input type="submit" value="Submit order" />
+               <input type="submit" value="Submit order" onClick= {(e)  => {
+                  totalPrice? alert("Order placed!") : alert("No items in cart!");
+                  }}/>
             </form>
          </div>
       </div>

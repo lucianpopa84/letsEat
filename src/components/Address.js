@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import useGeocoder from "../useGeocoder";
 
-function Address() {
-   const {
-      address,
-      detectedAddress,
-      setAddress,
-      locationStatus,
-      geoFindMe
-   } = useGeocoder();
-
+function Address({
+   address,
+   setAddress,
+   detectedAddress,
+   locationStatus,
+   setLocationStatus,
+   setCity,
+   getCityId,
+   geoFindMe
+}) {
    useEffect(() => {
       geoFindMe();
    }, [detectedAddress]);
@@ -19,7 +19,10 @@ function Address() {
          <div className="flex-container">
             <i className="fas fa-map-marker-alt" onClick={() => geoFindMe()} />
             {address ? (
-               <p id="detectedPlace"> {address}</p>
+               <p id="detectedPlace">
+                  {" "}
+                  {locationStatus} <br /> {address}
+               </p>
             ) : (
                <p id="detectedPlace">{locationStatus}</p>
             )}
@@ -28,10 +31,14 @@ function Address() {
                id="cityDeliveryListInput"
                name="City"
                placeholder="Change address"
-               onChange={e =>
-                  setAddress(`Selected location: ${e.target.value}`)
-               }
-               onClick={e => (e.target.value = "")}
+               onChange={e => {
+                  setAddress(e.target.value);
+                  setCity(e.target.value);
+                  getCityId(e.target.value);
+                  localStorage.setItem("city", e.target.value);
+                  e.target.value = "";
+                  setLocationStatus("Selected address:");
+               }}
             />
             <datalist id="cityDeliveryList">
                <option value="Craiova"> </option>
