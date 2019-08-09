@@ -3,8 +3,13 @@ import React from "react";
 function RestaurantListItem({ restaurantData }) {
    let currentDate = new Date();
    let currentHour = currentDate.getHours();
+   
+   function goToRestaurant(restaurantId) {
+      window.location = `/restaurant/${restaurantId}`;
+   };
+   
    return (
-      <div className="restaurantCard" id={`restId${restaurantData.id}`}>
+      <div className="restaurantCard" id={`restId${restaurantData.id}`} onClick={() => goToRestaurant(restaurantData.id)}>
          <div className="row">
             <div className="col-3">
                <div className="card-image">
