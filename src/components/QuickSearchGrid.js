@@ -37,10 +37,12 @@ function QuickSearchGrid({
          .then(restaurantsData => {
             setRestaurantStatus("Searching for restaurants...");
             if (restaurantsData.length >= 1) {
+               if (restaurantsData.length === 1){
+                  setRestaurantStatus(`1 restaurant found!`);
+               } else {
+                  setRestaurantStatus(`${restaurantsData.length} restaurants found!`);
+               }
                setRestaurants(restaurantsData);
-               setRestaurantStatus(
-                  `${restaurantsData.length} restaurants found!`
-               );
             } else {
                setRestaurantStatus("No restaurants found!");
                setRestaurants([]);
