@@ -6,17 +6,15 @@ function useCartItems() {
       JSON.parse(localStorage.getItem("cartItems")) || []
    );
    
-   const [cartItemsNumber, setCartItemsNumber] = useState(
-      cartItems.reduce((total, cartItem) => {
+   const cartItemsNumber = cartItems.reduce((total, cartItem) => {
          return total + parseFloat(cartItem.quantity);
       }, 0)
-   );
+   ;
 
    return {
       cartItems,
       setCartItems,
-      cartItemsNumber,
-      setCartItemsNumber
+      cartItemsNumber
    };
 }
 export default useCartItems;
