@@ -76,7 +76,7 @@ function Topnav({ cartItemsNumber }) {
                   <i className="fas fa-shopping-cart" />
                </NavLink>
                <span className="cartItems">
-                  {cartItemsNumber !== ("" || 0) ? cartItemsNumber : ""}
+                  {(cartItemsNumber !== 0) ? cartItemsNumber : ""}
                </span>
             </div>
          </div>

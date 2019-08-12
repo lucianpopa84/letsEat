@@ -1,20 +1,23 @@
 import React, { useEffect } from "react";
 
 function Cart({
-   cartItems, setCartItems,
-   address, setAddress,
-   locationStatus, setLocationStatus,
+   cartItems,
+   setCartItems,
+   address,
+   setAddress,
+   locationStatus,
+   setLocationStatus,
    setCity,
    geoFindMe
 }) {
    // compute total price
    let totalPrice = 0;
-   if (cartItems.length >=1 ){
+   if (cartItems.length >= 1) {
       totalPrice = cartItems.reduce((total, cartItem) => {
          return total + cartItem.quantity * parseFloat(cartItem.itemPrice);
       }, 0);
    }
- 
+
    let deleteCharacter = "\u2717";
 
    useEffect(() => {
@@ -31,9 +34,13 @@ function Cart({
       setCartItems(newCartItems);
    }
 
-   function updateCart(cartItemId) {
-      // work in progress
-      console.log(cartItemId);
+   function updateCart(e, cartItemId) {
+      const newCartItems = [...cartItems];
+      const index = newCartItems.findIndex(
+         cartItem => cartItem.id === cartItemId
+      );
+      newCartItems[index].quantity = e.target.value;
+      setCartItems(newCartItems);
    }
 
    function submitOrder(e) {
@@ -41,16 +48,19 @@ function Cart({
       e.preventDefault();
    }
 
-   function nameChange() {
+   function nameChange(e) {
       // work in progress
+      e.preventDefault();
    }
 
-   function phoneChange() {
+   function phoneChange(e) {
       // work in progress
+      e.preventDefault();
    }
 
-   function timeChange() {
+   function timeChange(e) {
       // work in progress
+      e.preventDefault();
    }
 
    return (
@@ -62,15 +72,12 @@ function Cart({
          <div className="foodList">
             <div className="flex-container">
                {cartItems.map(cartItem => (
-                  <div
-                     key={cartItem.foodName}
-                     className="foodCard"
-                  >
+                  <div key={cartItem.foodName} className="foodCard">
                      <div className="row">
                         <div className="col-3">
                            <div className="card-image">
                               <img
-                                 src={cartItem.imageSrc}
+                                 src={require(`../images/foodType/${cartItem.imageSrc}`)}
                                  alt={cartItem.imageAlt}
                               />
                            </div>
@@ -90,7 +97,7 @@ function Cart({
                                     max="10"
                                     value={cartItem.quantity}
                                     className="cartQuantityInput"
-                                    onChange={() => updateCart(cartItem.id)}
+                                    onChange={e => updateCart(e, cartItem.id)}
                                  />
                                  <input
                                     type="button"
@@ -102,7 +109,7 @@ function Cart({
                         </div>
                         <div className="col-2">
                            <p className="price">
-                              {cartItem.itemPrice * cartItem.quantity} RON
+                              {cartItem.itemPrice * cartItem.quantity} €
                            </p>
                         </div>
                      </div>
@@ -112,10 +119,10 @@ function Cart({
          </div>
 
          <div className="total">
-            <h2 id="totalPrice">Total = {totalPrice} RON</h2>
+            <h2 id="totalPrice">Total = {totalPrice} €</h2>
          </div>
          <div className="checkoutForm">
-            <form id="checkoutForm" onSubmit={(e) => submitOrder(e)}>
+            <form id="checkoutForm" onSubmit={e => submitOrder(e)}>
                <div className="checkoutAddress flex-container">
                   <i
                      className="fas fa-map-marker-alt"
@@ -136,7 +143,7 @@ function Cart({
                      placeholder="Change address"
                      onChange={e => {
                         setAddress(e.target.value);
-                        setCity(e.target.value); 
+                        setCity(e.target.value);
                         localStorage.setItem("city", e.target.value);
                         e.target.value = "";
                         setLocationStatus("Selected address:");
@@ -186,9 +193,15 @@ function Cart({
                   maxLength={1000}
                   placeholder="Delivery instructions:"
                />
-               <input type="submit" value="Submit order" onClick= {(e)  => {
-                  totalPrice? alert("Order placed!") : alert("No items in cart!");
-                  }}/>
+               <input
+                  type="submit"
+                  value="Submit order"
+                  onClick={e => {
+                     totalPrice
+                        ? alert("Order placed!")
+                        : alert("No items in cart!");
+                  }}
+               />
             </form>
          </div>
       </div>

@@ -58,9 +58,9 @@ function RestaurantListItem({ restaurantData }) {
             </div>
             <div className="col-4">
                <div className="card-pricing">
-                  <p> From: {restaurantData.pricingFrom} RON </p>
-                  <p> To: {restaurantData.pricingTo} RON </p>
-                  <p> Min: {restaurantData.pricingMin} RON </p>
+                  <p> From: {restaurantData.pricingFrom} € </p>
+                  <p> To: {restaurantData.pricingTo} € </p>
+                  <p> Min: {restaurantData.pricingMin} € </p>
                </div>
             </div>
          </div>

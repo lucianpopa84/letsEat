@@ -24,9 +24,17 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
          });
    }
 
-   function changeQuantity(e) {
+   function changeQuantity(e, foodItemName) {
       e.preventDefault();
-      console.log(e.target.value);
+      // work in progress
+      console.log("e.target.value:", e.target.value, "foodItemName:", foodItemName);
+      const newFoodData = [...foodData];
+      const index = newFoodData.findIndex(
+         foodItem => foodItem.name === foodItemName
+      );
+      newFoodData[index].quantity = e.target.value;
+      newFoodData[index].totalPrice = newFoodData[index].quantity * newFoodData[index].price;
+      setFoodData(newFoodData);
    }
 
    function addToCart(e, foodItem) {
@@ -47,7 +55,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
               itemPrice: foodItem.price,
               imageSrc: foodItem.imageSrc,
               imageAlt: foodItem.imageAlt,
-              quantity: 1
+              quantity: foodItem.quantity
             }
           ]);
         }
@@ -59,7 +67,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
             itemPrice: foodItem.price,
             imageSrc: foodItem.imageSrc,
             imageAlt: foodItem.imageAlt,
-            quantity: 1
+            quantity: foodItem.quantity
           }
         ]);
       }
@@ -85,7 +93,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                      <div className="col-4">
                         <div className="card-image">
                            <img
-                              src={foodItem.imageSrc}
+                              src={require(`../images/foodType/${foodItem.imageSrc}`)}
                               alt={foodItem.imageAlt}
                            />
                         </div>
@@ -110,9 +118,9 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                                  name="quantity"
                                  min="1"
                                  max="10"
-                                 value="1"
+                                 value={foodItem.quantity ? foodItem.quantity : 1}
                                  className="quantityInput"
-                                 onChange={e => changeQuantity(e)}
+                                 onChange={e => changeQuantity(e, foodItem.name)}
                               />
                               <button
                                  className="priceButton"
@@ -124,7 +132,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                                     )
                                  }
                               >
-                                 {foodItem.price} €{" "}
+                                 {foodItem.totalPrice? foodItem.totalPrice : foodItem.price} €{" "}
                                  <i className="fa fa-shopping-cart" />
                               </button>
                            </form>
