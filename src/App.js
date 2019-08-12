@@ -6,16 +6,14 @@ import Cart from "./components/Cart";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import FoodSearchFilter from "./components/FoodSearchFilter"
+import Restaurant from "./components/Restaurant"
 import useCartItems from "./useCartItems.js";
 import useGeocoder from "./useGeocoder";
 
 function App() {
+   const { cartItems, setCartItems, cartItemsNumber } = useCartItems();
    const {
-      cartItems, setCartItems,
-      cartItemsNumber
-   } = useCartItems();
-   const {
-      location, setLocation,
+      address, setAddress,
       detectedAddress,
       locationStatus, setLocationStatus,
       city, setCity,
@@ -43,9 +41,11 @@ function App() {
             render={props => (
                <Cart
                   {...props}
-                  cartItems={cartItems} setCartItems={setCartItems}
-                  location={location} setLocation={setLocation}
-                  locationStatus={locationStatus} setLocationStatus={setLocationStatus}
+                  cartItems={cartItems}
+                  setCartItems={setCartItems}
+                  address={address} setAddress={setAddress}
+                  locationStatus={locationStatus}
+                  setLocationStatus={setLocationStatus}
                   setCity={setCity}
                   geoFindMe={geoFindMe}
                />
@@ -54,7 +54,7 @@ function App() {
          <Route path="/about" component={About} />
          <Route path="/contact" component={Contact} />
          <FoodSearchFilter
-            location={location} setLocation={setLocation}
+            address={address} setAddress={setAddress}
             detectedAddress={detectedAddress}
             locationStatus={locationStatus} setLocationStatus={setLocationStatus}
             city={city} setCity={setCity}
@@ -64,6 +64,17 @@ function App() {
             foodTypeId={foodTypeId} setFoodTypeId={setFoodTypeId}
             restaurants={restaurants} setRestaurants={setRestaurants}
             restaurantStatus={restaurantStatus} setRestaurantStatus={setRestaurantStatus}
+         />
+        <Route
+            path="/restaurant/:restaurantId"
+            render={props => (
+               <Restaurant
+                  {...props}
+                  foodTypeId={foodTypeId}
+                  cityId={cityId}
+                  cartItems={cartItems} setCartItems={setCartItems}
+               />
+            )}
          />
          <Route path="/" component={Footer} />
       </Router>

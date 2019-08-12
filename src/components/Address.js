@@ -20,7 +20,6 @@ function Address({
             <i className="fas fa-map-marker-alt" onClick={() => geoFindMe()} />
             {address ? (
                <p id="detectedPlace">
-                  {" "}
                   {locationStatus} <br /> {address}
                </p>
             ) : (

@@ -9,9 +9,9 @@ import imgDesert from "../images/foodType/desert.png";
 
 function QuickSearchGrid({
    match,
-   cityId,
    foodTypeId,
    setFoodTypeId,
+   cityId,
    setRestaurants,
    setRestaurantStatus
 }) {
@@ -23,26 +23,24 @@ function QuickSearchGrid({
          .then(foodTypeData => {
             if (foodTypeData.length === 1) {
                setFoodTypeId(foodTypeData[0].id);
-               localStorage.setItem("foodTypeId", foodTypeData[0].id);
+               localStorage.setItem("foodTypeId", foodTypeId);
             }
          })
          .catch(error => console.log("error: ", error.message));
    }
 
-   // ======= get restaurants from json server based on query parameters =======
    function getRestaurantList(cityId, foodTypeId) {
+      // ==== json server call ========
       let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/restaurants?cityId=${cityId}&foodTypeId=${foodTypeId}`;
       fetch(url)
          .then(response => response.json())
          .then(restaurantsData => {
             setRestaurantStatus("Searching for restaurants...");
             if (restaurantsData.length >= 1) {
-               if (restaurantsData.length === 1) {
+               if (restaurantsData.length === 1){
                   setRestaurantStatus(`1 restaurant found!`);
                } else {
-                  setRestaurantStatus(
-                     `${restaurantsData.length} restaurants found!`
-                  );
+                  setRestaurantStatus(`${restaurantsData.length} restaurants found!`);
                }
                setRestaurants(restaurantsData);
             } else {
@@ -54,19 +52,13 @@ function QuickSearchGrid({
    }
 
    useEffect(() => {
-      if (cityId && foodTypeId) {
-         getRestaurantList(cityId, foodTypeId);
-      }
-   }, [foodTypeId]);
-
-   useEffect(() => {
       if (match.params.foodType) {
          getFoodTypeId(match.params.foodType);
       }
       if (cityId && foodTypeId) {
          getRestaurantList(cityId, foodTypeId);
       }
-   }, [match.params.foodType, foodTypeId]);
+   }, [match.params.foodType, foodTypeId, cityId]);
 
    return (
       <div className="quickSearchGrid" id="foodQuickSearchGrid">

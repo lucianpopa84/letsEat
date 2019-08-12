@@ -6,10 +6,12 @@ function useCartItems() {
       JSON.parse(localStorage.getItem("cartItems")) || []
    );
    
-   const cartItemsNumber = cartItems.reduce((total, cartItem) => {
+   let cartItemsNumber = 0;
+   if (cartItems.length >=1 ){
+      cartItemsNumber = cartItems.reduce((total, cartItem) => {
          return total + parseFloat(cartItem.quantity);
-      }, 0)
-   ;
+      }, 0);
+   }  
 
    return {
       cartItems,

@@ -2,16 +2,19 @@ import React, { useEffect } from "react";
 
 function Cart({
    cartItems, setCartItems,
-   setCartItemsNumber,
    address, setAddress,
    locationStatus, setLocationStatus,
    setCity,
    geoFindMe
 }) {
    // compute total price
-   let totalPrice = cartItems.reduce((total, cartItem) => {
-      return total + cartItem.quantity * parseFloat(cartItem.itemPrice);
-   }, 0);
+   let totalPrice = 0;
+   if (cartItems.length >=1 ){
+      totalPrice = cartItems.reduce((total, cartItem) => {
+         return total + cartItem.quantity * parseFloat(cartItem.itemPrice);
+      }, 0);
+   }
+ 
    let deleteCharacter = "\u2717";
 
    useEffect(() => {
@@ -26,11 +29,6 @@ function Cart({
       );
       newCartItems.splice(index, 1);
       setCartItems(newCartItems);
-      setCartItemsNumber(
-         cartItems.reduce((total, cartItem) => {
-            return total + parseFloat(cartItem.quantity);
-         }, 0)
-      );
    }
 
    function updateCart(cartItemId) {
@@ -67,8 +65,6 @@ function Cart({
                   <div
                      key={cartItem.foodName}
                      className="foodCard"
-                     data-name={cartItem.foodName}
-                     data-price={cartItem.itemPrice}
                   >
                      <div className="row">
                         <div className="col-3">

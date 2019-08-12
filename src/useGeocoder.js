@@ -115,7 +115,6 @@ function useGeocoder() {
                         setCity(locality);
                         break;
                      } else {
-                        console.log("not all address components found");
                         setDetectedAddress(`${
                            response.results[0].formatted_address.split(",")[0]
                         },
@@ -123,7 +122,7 @@ function useGeocoder() {
                            response.results[0].formatted_address.split(",")[1]
                         }`);
                         setAddress(detectedAddress);
-                        setLocationStatus("Detected address:");
+                        setLocationStatus("Please select a city from list!");
                      }
                   }
                } else {
@@ -152,7 +151,8 @@ function useGeocoder() {
       detectedAddress,
       locationStatus, setLocationStatus,
       city, setCity,
-      cityId, getCityId,
+      cityId, setCityId,
+      getCityId,
       locality,
       geoFindMe
    };

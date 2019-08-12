@@ -6,7 +6,7 @@ import QuickSearchGrid from "./QuickSearchGrid";
 import RestaurantList from "./RestaurantList";
 
 function FoodSearchFilter({
-   location, setLocation,
+   address, setAddress,
    detectedAddress,
    locationStatus, setLocationStatus,
    city, setCity,
@@ -25,7 +25,7 @@ function FoodSearchFilter({
             render={props => (
                <Address
                   {...props}
-                  location={location} setLocation={setLocation}
+                  address={address} setAddress={setAddress}
                   detectedAddress={detectedAddress}
                   locationStatus={locationStatus} setLocationStatus={setLocationStatus}
                   city={city} setCity={setCity}
@@ -42,7 +42,7 @@ function FoodSearchFilter({
             render={props => (
                <Address
                   {...props}
-                  location={location} setLocation={setLocation}
+                  address={address} setAddress={setAddress}
                   detectedAddress={detectedAddress}
                   locationStatus={locationStatus} setLocationStatus={setLocationStatus}
                   city={city} setCity={setCity}

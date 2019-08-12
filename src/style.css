@@ -529,6 +529,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .priceButton:hover {
    background-color: black;
+   color:white;
    transition: 0.3s;
 }
 
