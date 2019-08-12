@@ -29,35 +29,42 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
       console.log(e.target.value);
    }
 
-   function addToCart(e, foodItem, restaurantId) {
-      e.preventDefault();
-      console.log(foodItem);
+   function addToCart(e, foodItem) {
+    e.preventDefault();
+    if (foodItem) {
       if (cartItems.length >= 1) {
-         const foodItemId = cartItems.findIndex(
-            cartItem => cartItem.name === foodItem.name
-         );
-         if (foodItemId) alert("Food item already in cart!");
-         if (restaurantId !== foodItem.restaurantId)
-            alert("Add food from same restaurant!");
-         setCartItems([...cartItems], {
+        let foodItemId = cartItems.findIndex(
+          cartItem => cartItem.foodName === foodItem.name
+        );
+        if (foodItemId !== -1) {
+          alert("Food item already in cart!");
+        } else {
+          setCartItems([
+            ...cartItems,
+            {
+              foodName: foodItem.name,
+              restaurantId: foodItem.restaurantId,
+              itemPrice: foodItem.price,
+              imageSrc: foodItem.imageSrc,
+              imageAlt: foodItem.imageAlt,
+              quantity: 1
+            }
+          ]);
+        }
+      } else {
+        setCartItems([
+          {
             foodName: foodItem.name,
             restaurantId: foodItem.restaurantId,
             itemPrice: foodItem.price,
             imageSrc: foodItem.imageSrc,
             imageAlt: foodItem.imageAlt,
             quantity: 1
-         });
-      } else {
-         setCartItems({
-            foodName: foodItem.name,
-            itemPrice: foodItem.price,
-            imageSrc: foodItem.imageSrc,
-            imageAlt: foodItem.imageAlt,
-            quantity: 1,
-            id: foodItem.name
-         });
+          }
+        ]);
       }
-   }
+    }
+  }
 
    useEffect(() => {
       if (match.params.restaurantId) {
