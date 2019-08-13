@@ -44,6 +44,7 @@ function App() {
                   cartItems={cartItems}
                   setCartItems={setCartItems}
                   address={address} setAddress={setAddress}
+                  detectedAddress={detectedAddress}
                   locationStatus={locationStatus}
                   setLocationStatus={setLocationStatus}
                   setCity={setCity}

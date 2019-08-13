@@ -1,12 +1,10 @@
 import React, { useEffect } from "react";
 
 function Cart({
-   cartItems,
-   setCartItems,
-   address,
-   setAddress,
-   locationStatus,
-   setLocationStatus,
+   cartItems, setCartItems,
+   address, setAddress,
+   detectedAddress,
+   locationStatus, setLocationStatus,
    setCity,
    geoFindMe
 }) {
@@ -24,6 +22,10 @@ function Cart({
       // update cart items in localstorage
       localStorage.setItem("cartItems", JSON.stringify(cartItems));
    }, [cartItems]);
+
+   useEffect(() => {
+      geoFindMe();
+   }, [detectedAddress]);
 
    function removeCartItem(cartItemId) {
       const newCartItems = [...cartItems];
@@ -130,7 +132,6 @@ function Cart({
                   />
                   {address ? (
                      <p id="detectedDeliveryPlace">
-                        {" "}
                         {locationStatus} <br /> {address}
                      </p>
                   ) : (
@@ -159,7 +160,7 @@ function Cart({
                   placeholder="Enter your name"
                   autoComplete="name"
                   required
-                  onChange={() => nameChange()}
+                  onChange={e => nameChange(e)}
                />
 
                <label htmlFor="clientPhone">Phone </label>
@@ -170,7 +171,7 @@ function Cart({
                   placeholder="Enter phone number"
                   autoComplete="tel"
                   required
-                  onChange={() => phoneChange()}
+                  onChange={e => phoneChange(e)}
                />
 
                <label htmlFor="deliveryTime">Preferred delivery time:</label>
@@ -182,7 +183,7 @@ function Cart({
                   step="900"
                   value="12:30"
                   name="delivery"
-                  onChange={() => timeChange()}
+                  onChange={e => timeChange(e)}
                />
 
                <label htmlFor="comments">Comments</label>
