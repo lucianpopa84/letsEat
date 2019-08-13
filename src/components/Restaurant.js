@@ -55,7 +55,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
               itemPrice: foodItem.price,
               imageSrc: foodItem.imageSrc,
               imageAlt: foodItem.imageAlt,
-              quantity: foodItem.quantity
+              quantity: foodItem.quantity || 1
             }
           ]);
         }
@@ -67,7 +67,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
             itemPrice: foodItem.price,
             imageSrc: foodItem.imageSrc,
             imageAlt: foodItem.imageAlt,
-            quantity: foodItem.quantity
+            quantity: foodItem.quantity || 1
           }
         ]);
       }
