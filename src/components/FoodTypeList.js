@@ -1,8 +1,9 @@
 import React from "react";
 
 function FoodTypeList() {
-   function goToFoodList(foodType) {
-      window.location = `/food/${foodType}`;
+   function goToFoodList(e) {
+      e.preventDefault();
+      window.location = `/food/${e.target.value.replace(/\s/g, "")}`;
    }
    return (
       <div className="foodSearchFilter">
@@ -10,32 +11,17 @@ function FoodTypeList() {
             list="foodTypeList"
             id="foodTypeListInput"
             placeholder="What do you want to eat today?"
+            onChange={e => {goToFoodList(e);}}
          />
          <datalist id="foodTypeList">
-            <option
-               value="pizza"
-               onClick={e => {goToFoodList("pizza");}}
-            />
-            <option
-               value="daily menu"
-               onClick={e => {goToFoodList("dailymenu");}}
-            />
-            <option
-               value="romanian"
-               onClick={e => {goToFoodList("romanian");}}
-            />
-            <option
-               value="fast food"
-               onClick={e => {goToFoodList("fastfood");}}
-            />
-            <option
-               value="salads"
-               onClick={e => {goToFoodList("salads");}}
-            />
-            <option
-               value="desert"
-               onClick={e => {goToFoodList("desert");}}
-            />
+            <option value="pizza" />
+            <option value="daily menu" />
+            <option value="romanian" />
+            <option value="fast food" />
+            <option value="salads" />
+            <option value="desert" />
+            <option value="pasta" />
+            <option value="greek" />
          </datalist>{" "}
          <i className="fas fa-search" />
       </div>
