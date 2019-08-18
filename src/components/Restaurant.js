@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CardRating from "./CardRating";
 
 function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
    const [foodData, setFoodData] = useState([]);
@@ -41,9 +42,13 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
       if (foodItem) {
          if (cartItems.length >= 1) {
             // check if item is from different restaurant
-            let differentRestaurant = cartItems.find(cartItem => cartItem.restaurantId != restaurantId);
+            let differentRestaurant = cartItems.find(
+               cartItem => cartItem.restaurantId !== restaurantId
+            );
             if (differentRestaurant) {
-               alert("Item is from different restaurant! \nPlease add food from the same restaurant!");
+               alert(
+                  "Item is from different restaurant! \nPlease add food from the same restaurant!"
+               );
             } else {
                // check if item is already added in cart
                let existingCartItem = cartItems.findIndex(
@@ -104,7 +109,9 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                      <div className="col-4">
                         <div className="card-image">
                            <img
-                              src={require(`../images/foodType/${foodItem.imageSrc}`)}
+                              src={require(`../images/foodType/${
+                                 foodItem.imageSrc
+                              }`)}
                               alt={foodItem.imageAlt}
                            />
                         </div>
@@ -114,12 +121,7 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                            <h4>{foodItem.name}</h4>
                            <p>{foodItem.ingredients}</p>
                         </div>
-                        <div className="card-rating" />
-                        <span className="fa fa-star checked" />
-                        <span className="fa fa-star checked" />
-                        <span className="fa fa-star checked" />
-                        <span className="fa fa-star" />
-                        <span className="fa fa-star" />
+                        <CardRating rating={foodItem.rating}/>
                      </div>
                      <div className="col-3">
                         <div className="card-pricing">
@@ -129,15 +131,28 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                                  name="quantity"
                                  min="1"
                                  max="10"
-                                 value={foodItem.quantity ? foodItem.quantity : 1}
+                                 value={
+                                    foodItem.quantity ? foodItem.quantity : 1
+                                 }
                                  className="quantityInput"
-                                 onChange={e =>changeQuantity(e, foodItem.name)}
+                                 onChange={e =>
+                                    changeQuantity(e, foodItem.name)
+                                 }
                               />
                               <button
                                  className="priceButton"
-                                 onClick={e => addToCart(e,foodItem,match.params.restaurantId)}
+                                 onClick={e =>
+                                    addToCart(
+                                       e,
+                                       foodItem,
+                                       match.params.restaurantId
+                                    )
+                                 }
                               >
-                                 {foodItem.totalPrice? foodItem.totalPrice : foodItem.price}{" "}€ 
+                                 {foodItem.totalPrice
+                                    ? foodItem.totalPrice
+                                    : foodItem.price}{" "}
+                                 €
                                  <i className="fa fa-shopping-cart" />
                               </button>
                            </form>

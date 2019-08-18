@@ -1,4 +1,5 @@
 import React from "react";
+import CardRating from "./CardRating";
 
 function RestaurantListItem({ restaurantData }) {
    let currentDate = new Date();
@@ -12,7 +13,7 @@ function RestaurantListItem({ restaurantData }) {
       <div
          className="restaurantCard"
          id={`restId${restaurantData.id}`}
-         onClick={(e) => {
+         onClick={e => {
             goToRestaurant(restaurantData.id);
          }}
       >
@@ -48,13 +49,7 @@ function RestaurantListItem({ restaurantData }) {
                      </p>
                   )}
                </div>
-               <div className="card-rating">
-                  <span className="fa fa-star checked" />
-                  <span className="fa fa-star checked" />
-                  <span className="fa fa-star checked" />
-                  <span className="fa fa-star" />
-                  <span className="fa fa-star" />
-               </div>
+               <CardRating rating={restaurantData.rating} />
             </div>
             <div className="col-4">
                <div className="card-pricing">
