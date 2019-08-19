@@ -42,10 +42,10 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
       if (foodItem) {
          if (cartItems.length >= 1) {
             // check if item is from different restaurant
-            let differentRestaurant = cartItems.find(
-               cartItem => cartItem.restaurantId !== restaurantId
+            let differentRestaurant = cartItems.findIndex(
+               cartItem => cartItem.restaurantId != restaurantId
             );
-            if (differentRestaurant) {
+            if (differentRestaurant !== -1) {
                alert(
                   "Item is from different restaurant! \nPlease add food from the same restaurant!"
                );

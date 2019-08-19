@@ -1,17 +1,16 @@
 import React from "react";
+import { Route } from "react-router-dom";
 
 function FoodTypeList() {
-   function goToFoodList(e) {
-      e.preventDefault();
-      window.location = `/food/${e.target.value.replace(/\s/g, "")}`;
-   }
    return (
+      <Route
+      render={({ history }) => (
       <div className="foodSearchFilter">
          <input
             list="foodTypeList"
             id="foodTypeListInput"
             placeholder="What do you want to eat today?"
-            onChange={e => {goToFoodList(e);}}
+            onChange={e => {history.push(`/food/${e.target.value.replace(/\s/g, "")}`);}}
          />
          <datalist id="foodTypeList">
             <option value="pizza" />
@@ -25,6 +24,8 @@ function FoodTypeList() {
          </datalist>{" "}
          <i className="fas fa-search" />
       </div>
+      )}
+      />
    );
 }
 
