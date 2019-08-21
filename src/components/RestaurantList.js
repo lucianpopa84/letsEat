@@ -12,7 +12,12 @@ function RestaurantListItem({ restaurantData }) {
             <div
                className="restaurantCard"
                id={`restId${restaurantData.id}`}
-               onClick={() => {history.push(`/restaurant/${restaurantData.id}`);}}
+               onClick={() => {
+                  currentHour < restaurantData.closeHour &&
+                  currentHour >= restaurantData.operHour
+                  ? history.push(`/restaurant/${restaurantData.id}`)
+                  : alert("Restaurant is closed!");
+               }}
             >
                <div className="row">
                   <div className="col-3">
