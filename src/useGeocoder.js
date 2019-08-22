@@ -139,10 +139,16 @@ function useGeocoder() {
          setLocationStatus("Unable to retrieve your location");
       }
 
+      let options = {
+         enableHighAccuracy: true,
+         timeout: 5000,
+         maximumAge: 60000
+      }
+
       if (!navigator.geolocation) {
          setLocationStatus("Geolocation is not supported by your browser");
       } else {
-         navigator.geolocation.getCurrentPosition(success, error);
+         navigator.geolocation.getCurrentPosition(success, error, options);
       }
    }
 

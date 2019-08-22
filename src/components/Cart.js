@@ -27,19 +27,19 @@ function Cart({
       geoFindMe();
    }, [detectedAddress]);
 
-   function removeCartItem(cartItemId) {
+   function removeCartItem(cartItemName) {
       const newCartItems = [...cartItems];
       const index = newCartItems.findIndex(
-         cartItem => cartItem.id === cartItemId
+         cartItem => cartItem.foodName === cartItemName
       );
       newCartItems.splice(index, 1);
       setCartItems(newCartItems);
    }
 
-   function updateCart(e, cartItemId) {
+   function updateCart(e, cartItemName) {
       const newCartItems = [...cartItems];
       const index = newCartItems.findIndex(
-         cartItem => cartItem.id === cartItemId
+         cartItem => cartItem.foodName === cartItemName
       );
       newCartItems[index].quantity = e.target.value;
       setCartItems(newCartItems);
@@ -99,12 +99,12 @@ function Cart({
                                     max="10"
                                     value={cartItem.quantity}
                                     className="cartQuantityInput"
-                                    onChange={e => updateCart(e, cartItem.id)}
+                                    onChange={e => updateCart(e, cartItem.foodName)}
                                  />
                                  <input
                                     type="button"
                                     value={deleteCharacter}
-                                    onClick={e => removeCartItem(cartItem.id)}
+                                    onClick={() => removeCartItem(cartItem.foodName)}
                                  />
                               </form>
                            </div>
