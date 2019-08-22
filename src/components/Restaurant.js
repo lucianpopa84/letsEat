@@ -4,6 +4,8 @@ import CardRating from "./CardRating";
 function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
    const [foodData, setFoodData] = useState([]);
    const [restaurantName, setRestaurantName] = useState("");
+   const lastCartItemId = Math.max(...cartItems.map(cartItem => cartItem.id), 0); // compute greatest cartItem id
+   const [cartItemId, setCartItemId] = useState(lastCartItemId + 1); // set next cartItem id
 
    // get restaurant food from json server
    function getFood(restaurantId, foodTypeId) {
@@ -65,9 +67,11 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                         itemPrice: foodItem.price,
                         imageSrc: foodItem.imageSrc,
                         imageAlt: foodItem.imageAlt,
-                        quantity: foodItem.quantity || 1
+                        quantity: foodItem.quantity || 1,
+                        id: cartItemId
                      }
                   ]);
+                  setCartItemId(cartItemId + 1); // increment cartItem id
                }
             }
          } else {
@@ -78,9 +82,11 @@ function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
                   itemPrice: foodItem.price,
                   imageSrc: foodItem.imageSrc,
                   imageAlt: foodItem.imageAlt,
-                  quantity: foodItem.quantity || 1
+                  quantity: foodItem.quantity || 1,
+                  id: cartItemId
                }
             ]);
+            setCartItemId(cartItemId + 1); // increment cartItem id
          }
       }
    }
