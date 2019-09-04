@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 function Login() {
    const [userIsLoggedIn, setUserIsLoggedIn] = useState("");
+
+   useEffect(() => {
+      if (userIsLoggedIn) {
+         console.log("User is logged in");
+      } else {
+         console.log("User is logged out");
+      }
+   }, [userIsLoggedIn]);
 
    const responseGoogle = response => {
       if (response.error) {
