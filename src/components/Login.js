@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 function Login() {
-   const [userIsLoggedIn, setUserIsLoggedIn] = useState(null);
+   const [userIsLoggedIn, setUserIsLoggedIn] = useState("");
 
    const responseGoogle = response => {
       if (response.error) {
@@ -11,7 +11,7 @@ function Login() {
       } else {
          console.log("GAPI response: ", response);
          setUserIsLoggedIn(true);
-         alert(`Welcome ${response.w3.ig}!`);
+         alert(`Welcome ${response.profileObj.name}!`);
       }
    };
 
@@ -23,7 +23,7 @@ function Login() {
       <div className="checkout">
          <h2>Login</h2>
          <h4>Login with Social Media</h4>
-         {userIsLoggedIn ? (
+         {userIsLoggedIn === true ? (
             <GoogleLogout
                clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
                buttonText="Logout"
