@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" />
-    <title>Let's eat</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <script
+   <head>
+      <meta charset="utf-8" />
+      <meta
+         name="google-signin-client_id"
+         content="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+      />
+      <script
+         async
+         defer
+         src="https://apis.google.com/js/platform.js?onload=onLoadCallback"
+      ></script>
+      <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta name="theme-color" content="#000000" />
+      <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+      <link
+         rel="stylesheet"
+         href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+      />
+      <title>Let's eat</title>
+   </head>
+   <body>
+      <noscript>You need to enable JavaScript to run this app.</noscript>
+      <div id="root"></div>
+      <script
          async
          defer
          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM"
       ></script>
-  </body>
+      <script>
+         window.onLoadCallback = function() {
+            gapi.load("auth2", function() {
+               gapi.auth2.init();
+            });
+         };
+      </script>
+   </body>
 </html>

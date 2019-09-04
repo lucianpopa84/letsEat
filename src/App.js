@@ -7,6 +7,7 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import FoodSearchFilter from "./components/FoodSearchFilter"
 import Restaurant from "./components/Restaurant"
+import Login from "./components/Login"
 import useCartItems from "./useCartItems.js";
 import useGeocoder from "./useGeocoder";
 
@@ -36,6 +37,7 @@ function App() {
                <Topnav {...props} cartItemsNumber={cartItemsNumber} />
             )}
          />
+         <Route path="/login" component={Login} />
          <Route
             path="/cart"
             render={props => (

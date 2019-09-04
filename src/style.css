@@ -641,3 +641,8 @@ textarea {
 #comments:hover {
    border: solid 1px greenyellow;
 }
+
+.g-signin2{
+   display: flex;
+   justify-content: center;
+}
