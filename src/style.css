@@ -29,7 +29,8 @@
 }
 
 /* Change the color of links on hover */
-.topnav a:hover, button:hover {
+.topnav a:hover,
+button:hover {
    background-color: #ddd;
    color: black;
    transform: scale(1.1);
@@ -415,7 +416,8 @@ input {
    margin: 0 10px 0 10px;
 }
 
-.addressForm i:hover, .checkoutAddress i:hover {
+.addressForm i:hover,
+.checkoutAddress i:hover {
    transform: scale(1.3);
    transition: 0.3s;
 }
@@ -529,7 +531,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .priceButton:hover {
    background-color: black;
-   color:white;
+   color: white;
    transition: 0.3s;
 }
 
@@ -640,9 +642,4 @@ textarea {
 #deliveryTime:hover,
 #comments:hover {
    border: solid 1px greenyellow;
-}
-
-.g-signin2{
-   display: flex;
-   justify-content: center;
 }

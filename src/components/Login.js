@@ -1,6 +1,17 @@
-import React, { useEffect } from "react";
+import React from "react";
+import GoogleLogin from "react-google-login";
 
 function Login() {
+   const responseGoogle = response => {
+      if (response.error) {
+         console.log("GAPI response error: ",response.error);
+         console.log("GAPI response error details: ",response.details);
+      } else {
+         console.log("GAPI response: ",response);
+         console.log("userData:", response.userData);
+      }
+   };
+
    function onSignIn(googleUser) {
       // Useful data for your client-side scripts:
       var profile = googleUser.getBasicProfile();
@@ -11,6 +22,7 @@ function Login() {
       console.log("Image URL: " + profile.getImageUrl());
       console.log("Email: " + profile.getEmail());
    }
+
    function manualLogin(e) {
       e.preventDefault();
    }
@@ -20,7 +32,13 @@ function Login() {
          <h2>Login</h2>
          <h4>Login with Social Media</h4>
          <form onSubmit={e => manualLogin(e)}>
-            <div className="g-signin2" data-onsuccess="onSignIn" />
+            <GoogleLogin
+               clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+               buttonText="Login with Google"
+               onSuccess={responseGoogle}
+               onFailure={responseGoogle}
+               cookiePolicy={"single_host_origin"}
+            />
             <br />
             <h4>Or login manually</h4>
             <input

@@ -2,15 +2,6 @@
 <html lang="en">
    <head>
       <meta charset="utf-8" />
-      <meta
-         name="google-signin-client_id"
-         content="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
-      />
-      <script
-         async
-         defer
-         src="https://apis.google.com/js/platform.js?onload=onLoadCallback"
-      ></script>
       <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
       <meta name="theme-color" content="#000000" />
@@ -29,12 +20,5 @@
          defer
          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM"
       ></script>
-      <script>
-         window.onLoadCallback = function() {
-            gapi.load("auth2", function() {
-               gapi.auth2.init();
-            });
-         };
-      </script>
    </body>
 </html>
