@@ -10,6 +10,8 @@ function Address({
    getCityId,
    geoFindMe
 }) {
+   let cityDeliveryList = ["Craiova", "Brasov", "Cluj-Napoca"];
+
    useEffect(() => {
       geoFindMe();
    }, [detectedAddress]);
@@ -31,18 +33,20 @@ function Address({
                name="City"
                placeholder="Change address"
                onChange={e => {
-                  setAddress(e.target.value);
-                  setCity(e.target.value);
-                  getCityId(e.target.value);
-                  localStorage.setItem("city", e.target.value);
-                  e.target.value = "";
-                  setLocationStatus("Selected address:");
+                  if (cityDeliveryList.includes(e.target.value)) {
+                     setAddress(e.target.value);
+                     setCity(e.target.value);
+                     getCityId(e.target.value);
+                     localStorage.setItem("city", e.target.value);
+                     e.target.value = "";
+                     setLocationStatus("Selected address:");
+                  }
                }}
             />
             <datalist id="cityDeliveryList">
-               <option value="Craiova"> </option>
-               <option value="Brasov"> </option>
-               <option value="Cluj-Napoca"> </option>
+               {cityDeliveryList.map((city, index) => (
+                  <option value={city} key={index} />
+               ))}
             </datalist>
          </div>
       </div>
