@@ -26,8 +26,16 @@ function FoodSearchFilter({
   restaurantStatus,
   setRestaurantStatus
 }) {
+  function clickOutsideMenu(e) {
+    let modalMenu = document.querySelector('.dropdown-content');
+    let modalMenuButton = document.querySelector('#topMenu');
+    if (e.target !== modalMenu && e.target !== modalMenuButton) {
+      modalMenu.style.display = 'none';
+    }
+  }
+
   return (
-    <form id="FoodSearchFilter">
+    <form id="FoodSearchFilter" onClick={e => clickOutsideMenu(e)}>
       <Route
         exact
         path="/"
