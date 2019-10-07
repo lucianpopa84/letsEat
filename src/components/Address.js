@@ -4,13 +4,13 @@ function Address({
   address,
   setAddress,
   detectedAddress,
+  detectionEnabled,
+  setDetectionEnabled,
   locationStatus,
   setLocationStatus,
   setCity,
   getCityId,
   geoFindMe,
-  detectionEnabled,
-  setDetectionEnabled
 }) {
   let cityDeliveryList = ['Craiova', 'Brasov', 'Cluj-Napoca'];
 
