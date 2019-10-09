@@ -10,6 +10,7 @@ import Restaurant from './components/Restaurant';
 import Login from './components/Login';
 import useCartItems from './useCartItems.js';
 import useGeocoder from './useGeocoder';
+import { AppContext } from './AppContext';
 
 function App() {
   const { cartItems, setCartItems, cartItemsNumber } = useCartItems();
@@ -19,12 +20,10 @@ function App() {
     detectedAddress,
     locationStatus,
     setLocationStatus,
-    detectionEnabled,
     setDetectionEnabled,
     city,
     setCity,
     cityId,
-    setCityId,
     getCityId,
     geoFindMe
   } = useGeocoder();
@@ -59,68 +58,36 @@ function App() {
   return (
     <div id="app" onClick={e => clickOutsideMenu(e)}>
       <Router>
-        <Route
-          path="/"
-          render={props => (
-            <Topnav {...props} cartItemsNumber={cartItemsNumber} />
-          )}
-        />
-        <Route path="/login" component={Login} />
-        <Route
-          path="/cart"
-          render={props => (
-            <Cart
-              {...props}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-              address={address}
-              setAddress={setAddress}
-              detectedAddress={detectedAddress}
-              detectionEnabled={detectionEnabled}
-              setDetectionEnabled={setDetectionEnabled}
-              locationStatus={locationStatus}
-              setLocationStatus={setLocationStatus}
-              setCity={setCity}
-              geoFindMe={geoFindMe}
-            />
-          )}
-        />
-        <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} />
-        <FoodSearchFilter
-          address={address}
-          setAddress={setAddress}
-          detectedAddress={detectedAddress}
-          detectionEnabled={detectionEnabled}
-          setDetectionEnabled={setDetectionEnabled}
-          locationStatus={locationStatus}
-          setLocationStatus={setLocationStatus}
-          city={city}
-          setCity={setCity}
-          cityId={cityId}
-          setCityId={setCityId}
-          getCityId={getCityId}
-          geoFindMe={geoFindMe}
-          foodTypeId={foodTypeId}
-          setFoodTypeId={setFoodTypeId}
-          restaurants={restaurants}
-          setRestaurants={setRestaurants}
-          restaurantStatus={restaurantStatus}
-          setRestaurantStatus={setRestaurantStatus}
-        />
-        <Route
-          path="/restaurant/:restaurantId"
-          render={props => (
-            <Restaurant
-              {...props}
-              foodTypeId={foodTypeId}
-              cityId={cityId}
-              cartItems={cartItems}
-              setCartItems={setCartItems}
-            />
-          )}
-        />
-        <Route path="/" component={Footer} />
+        <AppContext.Provider
+          value={{
+            cartItemsNumber,
+            cartItems,
+            setCartItems,
+            address,
+            setAddress,
+            setDetectionEnabled,
+            locationStatus,
+            setLocationStatus,
+            geoFindMe,
+            setCity,
+            cityId,
+            foodTypeId,
+            setFoodTypeId,
+            restaurants,
+            setRestaurants,
+            restaurantStatus,
+            setRestaurantStatus
+          }}
+        >
+          <Route path="/" component={Topnav} />
+          <Route path="/login" component={Login} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
+          <FoodSearchFilter />
+          <Route path="/restaurant/:restaurantId" component={Restaurant} />
+          <Route path="/" component={Footer} />
+        </AppContext.Provider>
       </Router>
     </div>
   );

@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { AppContext } from '../AppContext';
 
-function Cart({
-  cartItems,
-  setCartItems,
-  address,
-  setAddress,
-  setDetectionEnabled,
-  locationStatus,
-  setLocationStatus,
-  geoFindMe
-}) {
+function Cart() {
+  const {
+    cartItems,
+    setCartItems,
+    address,
+    setAddress,
+    setDetectionEnabled,
+    locationStatus,
+    setLocationStatus,
+    geoFindMe
+  } = useContext(AppContext);
+  
   // compute total price
   let totalPrice = 0;
   if (cartItems.length >= 1) {

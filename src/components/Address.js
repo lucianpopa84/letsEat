@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AppContext } from '../AppContext';
 
-function Address({
-  address,
-  setAddress,
-  locationStatus,
-  setLocationStatus,
-  setCity,
-  geoFindMe,
-  setDetectionEnabled
-}) {
+function Address() {
+  const {
+    address,
+    setAddress,
+    setDetectionEnabled,
+    locationStatus,
+    setLocationStatus,
+    geoFindMe,
+    setCity,
+  } = useContext(AppContext);
+  
   let cityDeliveryList = ['Craiova', 'Brasov', 'Cluj-Napoca'];
 
   function onAddressChange(e) {

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Route } from 'react-router-dom';
 import CardRating from './CardRating';
+import { AppContext } from '../AppContext';
 
 function RestaurantListItem({ restaurantData }) {
   let currentDate = new Date();
@@ -62,16 +63,17 @@ function RestaurantListItem({ restaurantData }) {
   );
 }
 
-function RestaurantList({
-  match,
-  restaurantStatus,
-  setRestaurantStatus,
-  restaurants,
-  setRestaurants,
-  cityId,
-  foodTypeId,
-  setFoodTypeId
-}) {
+function RestaurantList({ match }) {
+  const {
+    cityId,
+    foodTypeId,
+    setFoodTypeId,
+    restaurants,
+    setRestaurants,
+    restaurantStatus,
+    setRestaurantStatus,
+  } = useContext(AppContext);
+
   const pStyle = {
     width: '100%',
     textAlign: 'center'

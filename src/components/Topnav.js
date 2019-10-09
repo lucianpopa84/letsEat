@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { AppContext } from '../AppContext';
 
-function Topnav({ cartItemsNumber }) {
+function Topnav() {
+  const {cartItemsNumber} = useContext(AppContext);
   function toggleMenu(event, position) {
     let element = null;
     switch (position) {

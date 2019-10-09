@@ -5,41 +5,17 @@ import FoodTypeList from './FoodTypeList';
 import QuickSearchGrid from './QuickSearchGrid';
 import RestaurantList from './RestaurantList';
 
-function FoodSearchFilter({
-  address,
-  setAddress,
-  setDetectionEnabled,
-  locationStatus,
-  setLocationStatus,
-  setCity,
-  cityId,
-  geoFindMe,
-  foodTypeId,
-  setFoodTypeId,
-  restaurants,
-  setRestaurants,
-  restaurantStatus,
-  setRestaurantStatus
-}) {
+function FoodSearchFilter() {
   return (
     <form id="FoodSearchFilter">
       <Route
         exact
         path="/"
-        render={props => (
+        render={() => (
           <>
-            <Address
-              {...props}
-              address={address}
-              setAddress={setAddress}
-              locationStatus={locationStatus}
-              setLocationStatus={setLocationStatus}
-              setCity={setCity}
-              geoFindMe={geoFindMe}
-              setDetectionEnabled={setDetectionEnabled}
-            />
+            <Address />
             <FoodTypeList />
-            <QuickSearchGrid {...props} />
+            <QuickSearchGrid />
           </>
         )}
       />
@@ -47,35 +23,10 @@ function FoodSearchFilter({
         path="/food/:foodType"
         render={props => (
           <>
-            <Address
-              {...props}
-              address={address}
-              setAddress={setAddress}
-              locationStatus={locationStatus}
-              setLocationStatus={setLocationStatus}
-              setCity={setCity}
-              geoFindMe={geoFindMe}
-              setDetectionEnabled={setDetectionEnabled}
-            />
+            <Address />
             <FoodTypeList />
-            <QuickSearchGrid
-              {...props}
-              foodTypeId={foodTypeId}
-              setFoodTypeId={setFoodTypeId}
-              cityId={cityId}
-              setRestaurants={setRestaurants}
-              setRestaurantStatus={setRestaurantStatus}
-            />
-            <RestaurantList
-              {...props}
-              restaurantStatus={restaurantStatus}
-              setRestaurantStatus={setRestaurantStatus}
-              restaurants={restaurants}
-              setRestaurants={setRestaurants}
-              cityId={cityId}
-              foodTypeId={foodTypeId}
-              setFoodTypeId={setFoodTypeId}
-            />
+            <QuickSearchGrid />
+            <RestaurantList {...props} />
           </>
         )}
       />

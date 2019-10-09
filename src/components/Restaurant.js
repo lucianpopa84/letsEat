@@ -1,7 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import CardRating from './CardRating';
+import { AppContext } from '../AppContext';
 
-function Restaurant({ match, foodTypeId, cityId, cartItems, setCartItems }) {
+function Restaurant({ match }) {
+  const { cartItems, setCartItems, cityId, foodTypeId } = useContext(
+    AppContext
+  );
+
   const [foodData, setFoodData] = useState([]);
   const [restaurantName, setRestaurantName] = useState('');
   const lastCartItemId = Math.max(...cartItems.map(cartItem => cartItem.id), 0); // compute greatest cartItem id
