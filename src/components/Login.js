@@ -2,23 +2,26 @@ import React, { useState, useEffect } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 function Login() {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState(
+    '' || localStorage.getItem('userName')
+  );
 
   useEffect(() => {
     if (userName) {
-      console.log('User is logged in');
+      console.log(`User ${userName} is logged in`);
     } else {
       console.log('User is not logged in / user logged out');
     }
   }, [userName]);
 
-  const responseGoogle = (response) => {
+  const responseGoogle = response => {
     if (response.error) {
       console.log('GAPI response error: ', response.error);
       console.log('GAPI response error details: ', response.details);
     } else {
       console.log('GAPI response: ', response);
       setUserName(response.profileObj.name);
+      localStorage.setItem('userName', response.profileObj.name);
       alert(`Welcome ${response.profileObj.name}!`);
     }
   };
@@ -35,7 +38,10 @@ function Login() {
         <GoogleLogout
           clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
           buttonText="Logout"
-          onLogoutSuccess={setUserName(null)}
+          onLogoutSuccess={() => {
+            setUserName(null);
+            localStorage.setItem('userName', null);
+          }}
           onFailure={responseGoogle}
         ></GoogleLogout>
       ) : (
