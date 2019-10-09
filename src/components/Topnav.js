@@ -6,27 +6,24 @@ function Topnav({ cartItemsNumber }) {
     let element = null;
     switch (position) {
       case 1:
-        element = event.target.parentElement.nextElementSibling;
+        element = event.target.nextElementSibling;
         break;
       case 2:
+        element = event.target.parentElement.nextElementSibling;
+        break;
+      case 3:
         element =
           event.target.parentElement.parentElement.parentElement.parentElement;
         break;
       default:
     }
 
-    if (element.style.display === 'block') {
-      element.style.display = 'none';
-    } else {
-      element.style.display = 'block';
-    }
-  }
-
-  function clickOutsideMenu(e) {
-    let modalMenu = document.querySelector('.dropdown-content');
-    let modalMenuButton = document.querySelector('#topMenu');
-    if (e.target !== modalMenu && e.target !== modalMenuButton) {
-      modalMenu.style.display = 'none';
+    if (element) {
+      if (element.style.display === 'block') {
+        element.style.display = 'none';
+      } else {
+        element.style.display = 'block';
+      }
     }
   }
 
@@ -38,7 +35,11 @@ function Topnav({ cartItemsNumber }) {
           className="dropdown"
           onClick={e => toggleMenu(e, 1)}
         >
-          <i className="fas fa-bars" />
+          <i
+            className="fas fa-bars"
+            id="topMenuIcon"
+            onClick={e => toggleMenu(e, 2)}
+          />
         </button>
         <div className="dropdown-content">
           <nav id="topMenu">
@@ -48,7 +49,7 @@ function Topnav({ cartItemsNumber }) {
                   exact
                   to="/"
                   id="topMenuHome"
-                  onClick={e => toggleMenu(e, 2)}
+                  onClick={e => toggleMenu(e, 3)}
                 >
                   <i className="fas fa-home"> </i> Home
                 </NavLink>
@@ -57,7 +58,7 @@ function Topnav({ cartItemsNumber }) {
                 <NavLink
                   to="/about"
                   id="topMenuAbout"
-                  onClick={e => toggleMenu(e, 2)}
+                  onClick={e => toggleMenu(e, 3)}
                 >
                   <i className="far fa-question-circle"> </i> About
                 </NavLink>
@@ -66,7 +67,7 @@ function Topnav({ cartItemsNumber }) {
                 <NavLink
                   to="/contact"
                   id="topMenuContact"
-                  onClick={e => toggleMenu(e, 2)}
+                  onClick={e => toggleMenu(e, 3)}
                 >
                   <i className="far fa-address-card" /> Contact
                 </NavLink>
@@ -88,7 +89,7 @@ function Topnav({ cartItemsNumber }) {
         </div>
       </div>
       <NavLink to="/">
-        <div className="letsEatLogo" onClick={e => clickOutsideMenu(e)} />
+        <div className="letsEatLogo" />
       </NavLink>
     </div>
   );
