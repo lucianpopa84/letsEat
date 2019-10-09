@@ -8,7 +8,7 @@ function Login() {
       if (userIsLoggedIn) {
          console.log("User is logged in");
       } else {
-         console.log("User is logged out");
+         console.log("User logged out");
       }
    }, [userIsLoggedIn]);
 

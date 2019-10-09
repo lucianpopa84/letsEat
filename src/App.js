@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Topnav from './components/Topnav';
 import Footer from './components/Footer';
@@ -14,16 +14,28 @@ import useGeocoder from './useGeocoder';
 function App() {
   const { cartItems, setCartItems, cartItemsNumber } = useCartItems();
   const {
-    address, setAddress,
+    address,
+    setAddress,
     detectedAddress,
-    locationStatus, setLocationStatus,
+    locationStatus,
+    setLocationStatus,
     detectionEnabled,
     setDetectionEnabled,
-    city, setCity,
-    cityId, setCityId,
+    city,
+    setCity,
+    cityId,
+    setCityId,
     getCityId,
     geoFindMe
   } = useGeocoder();
+
+  useEffect(() => {
+    geoFindMe();
+  }, [detectedAddress, geoFindMe]);
+
+  useEffect(() => {
+    getCityId(city)
+  }, [city, getCityId]);
 
   const [foodTypeId, setFoodTypeId] = useState(
     localStorage.getItem('foodTypeId') || ''

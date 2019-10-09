@@ -5,12 +5,9 @@ function Cart({
   setCartItems,
   address,
   setAddress,
-  detectedAddress,
-  detectionEnabled,
   setDetectionEnabled,
   locationStatus,
   setLocationStatus,
-  setCity,
   geoFindMe
 }) {
   // compute total price
@@ -28,10 +25,6 @@ function Cart({
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  useEffect(() => {
-    geoFindMe();
-  }, [detectedAddress, detectionEnabled]);
-
   function removeCartItem(cartItemId) {
     const newCartItems = [...cartItems];
     const index = newCartItems.findIndex(
@@ -48,6 +41,11 @@ function Cart({
     );
     newCartItems[index].quantity = e.target.value;
     setCartItems(newCartItems);
+  }
+
+  function onDeliveryAddressChange(e) {
+    setAddress(e.target.value);
+    setLocationStatus('Selected address:');
   }
 
   function submitOrder(e) {
@@ -150,10 +148,7 @@ function Cart({
               id="manualAddress"
               autoComplete="address-level2"
               placeholder="Change address"
-              onChange={e => {
-                setAddress(e.target.value);
-                setLocationStatus('Selected address:');
-              }}
+              onChange={e => onDeliveryAddressChange(e)}
               onClick={e => {
                 e.target.value = '';
               }}
