@@ -27,9 +27,12 @@ function App() {
     getCityId,
     geoFindMe
   } = useGeocoder();
-  
+
   const [userData, setUserData] = useState(
-    [] || JSON.parse(localStorage.getItem('userData'))
+    {
+      name: null,
+      imgUrl: null
+    } || JSON.parse(localStorage.getItem('userData'))
   );
 
   function clickOutsideMenu(e) {

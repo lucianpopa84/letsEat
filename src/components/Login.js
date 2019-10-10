@@ -3,7 +3,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { AppContext } from '../AppContext';
 
 function Login() {
-  const { userData, setuserData } = useContext(AppContext);
+  const { userData, setUserData } = useContext(AppContext);
 
   useEffect(() => {
     if (userData.name) {
@@ -19,13 +19,16 @@ function Login() {
       console.log('GAPI response error details: ', response.details);
     } else {
       console.log('GAPI response: ', response);
-      setuserData({
+      setUserData({
         name: response.profileObj.name,
         imgUrl: response.profileObj.imageUrl
       });
       localStorage.setItem(
         'userData',
-        JSON.stringify({ name: response.profileObj.name, imgUrl: response.profileObj.imageUrl })
+        JSON.stringify({
+          name: response.profileObj.name,
+          imgUrl: response.profileObj.imageUrl
+        })
       );
       alert(`Welcome ${response.profileObj.name}!`);
     }
@@ -44,7 +47,7 @@ function Login() {
           clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
           buttonText="Logout"
           onLogoutSuccess={() => {
-            setuserData({
+            setUserData({
               name: null,
               imgUrl: null
             });
