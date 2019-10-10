@@ -356,7 +356,8 @@ p {
 
    .addressForm input,
    .checkoutForm input,
-   .contactForm input {
+   .contactForm input,
+   .loginForm input {
       min-width: 35%;
    }
 }

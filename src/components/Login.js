@@ -73,7 +73,7 @@ function Login() {
             type="text"
             name="userData"
             id="userName"
-            placeholder="type your username"
+            placeholder="type your username..."
             required
           />
           <label htmlFor="userPassword">Password</label>
@@ -81,7 +81,7 @@ function Login() {
             type="password"
             id="userPassword"
             name="password"
-            placeholder="type your password"
+            placeholder="type your password..."
             required
           />
           <input type="submit" value="Login" />
