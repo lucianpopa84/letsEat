@@ -5,9 +5,7 @@ import { AppContext } from '../AppContext';
 function Topnav() {
   const { cartItemsNumber, userData } = useContext(AppContext);
   const userImgStyle = {
-    width: '20px',
-    height: '20px',
-    padding: '14px 12px',
+    height: '22px',
     textAlign: 'center',
     float: 'left'
   };

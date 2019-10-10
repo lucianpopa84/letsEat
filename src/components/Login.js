@@ -65,11 +65,20 @@ function Login() {
         />
       )}
       <br />
-      <form onSubmit={e => manualLogin(e)}>
+      <form id="loginForm" onSubmit={e => manualLogin(e)}>
         <h4>Or login manually</h4>
-        <input type="text" name="userData" placeholder="userData" required />
+        <label htmlFor="userName">Username</label>
+        <input
+          type="text"
+          name="userData"
+          id="userName"
+          placeholder="userData"
+          required
+        />
+        <label htmlFor="userPassword">Password</label>
         <input
           type="password"
+          id="userPassword"
           name="password"
           placeholder="Password"
           required
