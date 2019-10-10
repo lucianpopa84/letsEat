@@ -41,50 +41,52 @@ function Login() {
   return (
     <div className="checkout">
       <h2>Login</h2>
-      <h4>Login with Social Media</h4>
-      {userData.name ? (
-        <GoogleLogout
-          clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
-          buttonText="Logout"
-          onLogoutSuccess={() => {
-            setUserData({
-              name: null,
-              imgUrl: null
-            });
-            localStorage.setItem('userData', JSON.stringify(userData));
-          }}
-          onFailure={responseGoogle}
-        ></GoogleLogout>
-      ) : (
-        <GoogleLogin
-          clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
-          buttonText="Login with Google"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        />
-      )}
-      <br />
-      <form id="loginForm" onSubmit={e => manualLogin(e)}>
-        <h4>Or login manually</h4>
-        <label htmlFor="userName">Username</label>
-        <input
-          type="text"
-          name="userData"
-          id="userName"
-          placeholder="userData"
-          required
-        />
-        <label htmlFor="userPassword">Password</label>
-        <input
-          type="password"
-          id="userPassword"
-          name="password"
-          placeholder="Password"
-          required
-        />
-        <input type="submit" value="Login" />
-      </form>
+      <div className="loginForm">
+        <h4>Login with Social Media</h4>
+        {userData.name ? (
+          <GoogleLogout
+            clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+            buttonText="Logout"
+            onLogoutSuccess={() => {
+              setUserData({
+                name: null,
+                imgUrl: null
+              });
+              localStorage.setItem('userData', JSON.stringify(userData));
+            }}
+            onFailure={responseGoogle}
+          ></GoogleLogout>
+        ) : (
+          <GoogleLogin
+            clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+            buttonText="Login with Google"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            cookiePolicy={'single_host_origin'}
+          />
+        )}
+        <br />
+        <form onSubmit={e => manualLogin(e)}>
+          <h4>Or login manually</h4>
+          <label htmlFor="userName">Username</label>
+          <input
+            type="text"
+            name="userData"
+            id="userName"
+            placeholder="userData"
+            required
+          />
+          <label htmlFor="userPassword">Password</label>
+          <input
+            type="password"
+            id="userPassword"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input type="submit" value="Login" />
+        </form>
+      </div>
     </div>
   );
 }

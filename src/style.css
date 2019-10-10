@@ -608,7 +608,8 @@ textarea {
 }
 
 .contactForm input[type="submit"],
-.checkoutForm input[type="submit"] {
+.checkoutForm input[type="submit"],
+.loginForm input[type="submit"] {
    background-color: #444;
    color: white;
    padding: 10px 20px;
@@ -629,7 +630,8 @@ textarea {
    margin-top: 20px;
 }
 
-.contactForm input[type="submit"]:hover {
+.contactForm  input[type="submit"]:hover,
+.loginForm input[type="submit"]:hover {
    background-color: darkblue;
 }
 
