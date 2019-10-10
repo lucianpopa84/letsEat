@@ -340,7 +340,8 @@ p {
    }
 
    .checkoutForm input,
-   .contactForm input {
+   .contactForm input,
+   .loginForm input {
       width: 100%;
       margin-bottom: 10px;
    }
@@ -570,7 +571,7 @@ input[type="number"]::-webkit-outer-spin-button {
    max-width: 44px;
 }
 
-.contactForm {
+.contactForm .loginForm {
    border: gray solid 1px;
    border-radius: 10px;
    background-color: #f2f2f2;
