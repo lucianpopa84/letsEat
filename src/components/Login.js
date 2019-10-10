@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { AppContext } from '../AppContext';
 
 function Login() {
-  const [userName, setUserName] = useState(
-    '' || localStorage.getItem('userName')
-  );
+  const { userData, setuserData } = useContext(AppContext);
 
   useEffect(() => {
-    if (userName) {
-      console.log(`User ${userName} is logged in`);
+    if (userData.name) {
+      console.log(`User ${userData.name} is logged in`);
     } else {
       console.log('User is not logged in / user logged out');
     }
-  }, [userName]);
+  }, [userData.name]);
 
   const responseGoogle = response => {
     if (response.error) {
@@ -20,8 +19,14 @@ function Login() {
       console.log('GAPI response error details: ', response.details);
     } else {
       console.log('GAPI response: ', response);
-      setUserName(response.profileObj.name);
-      localStorage.setItem('userName', response.profileObj.name);
+      setuserData({
+        name: response.profileObj.name,
+        imgUrl: response.profileObj.imageUrl
+      });
+      localStorage.setItem(
+        'userData',
+        JSON.stringify({ name: response.profileObj.name, imgUrl: response.profileObj.imageUrl })
+      );
       alert(`Welcome ${response.profileObj.name}!`);
     }
   };
@@ -34,13 +39,16 @@ function Login() {
     <div className="checkout">
       <h2>Login</h2>
       <h4>Login with Social Media</h4>
-      {userName ? (
+      {userData.name ? (
         <GoogleLogout
           clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
           buttonText="Logout"
           onLogoutSuccess={() => {
-            setUserName(null);
-            localStorage.setItem('userName', null);
+            setuserData({
+              name: null,
+              imgUrl: null
+            });
+            localStorage.setItem('userData', JSON.stringify(userData));
           }}
           onFailure={responseGoogle}
         ></GoogleLogout>
@@ -56,7 +64,7 @@ function Login() {
       <br />
       <form onSubmit={e => manualLogin(e)}>
         <h4>Or login manually</h4>
-        <input type="text" name="username" placeholder="Username" required />
+        <input type="text" name="userData" placeholder="userData" required />
         <input
           type="password"
           name="password"

@@ -37,6 +37,11 @@ button:hover {
    transition: 0.3s;
 }
 
+.topnav img:hover {
+   transform: scale(1.1);
+   transition: 0.3s;
+}
+
 /* Right-aligned section inside the top navigation */
 #topnav-right {
    float: right;

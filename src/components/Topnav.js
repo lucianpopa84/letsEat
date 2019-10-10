@@ -3,7 +3,15 @@ import { NavLink } from 'react-router-dom';
 import { AppContext } from '../AppContext';
 
 function Topnav() {
-  const {cartItemsNumber} = useContext(AppContext);
+  const { cartItemsNumber, userData } = useContext(AppContext);
+  const userImgStyle = {
+    width: '20px',
+    height: '20px',
+    padding: '14px 12px',
+    textAlign: 'center',
+    float: 'left'
+  };
+
   function toggleMenu(event, position) {
     let element = null;
     switch (position) {
@@ -80,7 +88,15 @@ function Topnav() {
 
         <div id="topnav-right">
           <NavLink to="/login">
-            <i className="fas fa-user-circle"> </i>
+            {userData.imgUrl ? (
+              <img
+                src={userData.imgUrl}
+                alt="user avatar"
+                style={userImgStyle}
+              />
+            ) : (
+              <i className="fas fa-user-circle"> </i>
+            )}
           </NavLink>
           <NavLink to="/cart" id="cartButton">
             <i className="fas fa-shopping-cart" />
