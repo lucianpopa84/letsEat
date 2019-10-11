@@ -1,6 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { AppContext } from '../AppContext';
+import { createBrowserHistory } from 'history';
+const history = createBrowserHistory();
 
 function Login() {
   const { userData, setUserData } = useContext(AppContext);
@@ -31,6 +33,7 @@ function Login() {
         })
       );
       alert(`Welcome ${response.profileObj.name}!`);
+      history.push('/');
     }
   };
 
@@ -48,11 +51,13 @@ function Login() {
             clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
             buttonText="Logout"
             onLogoutSuccess={() => {
+              alert(`${userData.name} logged out!`);
               setUserData({
                 name: null,
                 imgUrl: null
               });
               localStorage.setItem('userData', JSON.stringify(userData));
+              history.push('/');
             }}
             onFailure={responseGoogle}
           ></GoogleLogout>
