@@ -1,595 +1,604 @@
 * {
-   box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* Add a dark background color to the top navigation */
 .topnav {
-   background-color: #444;
-   overflow: hidden;
+  background-color: #444;
+  overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
-   float: left;
-   color: #f2f2f2;
-   text-align: center;
-   padding: 14px 12px;
-   text-decoration: none;
-   font-size: 20px;
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 12px;
+  text-decoration: none;
+  font-size: 20px;
 }
 
 .topnav button {
-   color: #f2f2f2;
-   background-color: #444;
-   float: left;
-   text-align: center;
-   padding: 14px 12px;
-   font-size: 20px;
-   border: none;
+  color: #f2f2f2;
+  background-color: #444;
+  float: left;
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 20px;
+  border: none;
 }
 
 /* Change the color of links on hover */
 .topnav a:hover,
 button:hover {
-   background-color: #ddd;
-   color: black;
-   transform: scale(1.1);
-   transition: 0.3s;
+  background-color: #ddd;
+  color: black;
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 .topnav img:hover {
-   transform: scale(1.1);
-   transition: 0.3s;
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 /* Right-aligned section inside the top navigation */
 #topnav-right {
-   float: right;
+  float: right;
 }
 
 #topnav-right a {
-   opacity: 0.85;
+  opacity: 0.85;
 }
 /* Add a color/change opacity to the active/current nav link */
 #topnav-right a.active {
-   transform: scale(1.2);
-   opacity: 1;
+  transform: scale(1.2);
+  opacity: 1;
 }
 
 /* Style the dropdown menu */
 .dropdown-content {
-   display: none;
-   position: absolute;
-   top: 58px;
-   background-color: #444;
-   min-width: 140px;
-   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-   z-index: 1;
-   padding-bottom: 10px;
+  display: none;
+  position: absolute;
+  top: 58px;
+  background-color: #444;
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding-bottom: 10px;
 }
 
 /* change defalut 40px padding-inline-start of list */
 .dropdown-content ul {
-   padding-inline-start: 10px;
-   margin: 0;
-   padding-top: 10px;
+  padding-inline-start: 10px;
+  margin: 0;
+  padding-top: 10px;
 }
 
 /* remove bullets from dropdown-content list*/
 .dropdown-content li {
-   list-style: none;
+  list-style: none;
 }
 
 .dropdown-content li:hover {
-   background-color: #f1f1f1;
-   color: #444;
+  background-color: #f1f1f1;
+  color: #444;
 }
 
 #topMenu a {
-   width: 92%;
-   font-size: 16px;
-   text-align: left;
+  width: 92%;
+  font-size: 16px;
+  text-align: left;
 }
 
 .row::after {
-   content: "";
-   clear: both;
-   display: table;
+  content: "";
+  clear: both;
+  display: table;
 }
 
 /* set padding and floating of columns */
 [class*="col-"] {
-   float: left;
-   padding: 5px;
+  float: left;
+  padding: 5px;
 }
 
 /* columns width definition */
 .col-1 {
-   width: 8.33%;
+  width: 8.33%;
 }
 .col-2 {
-   width: 16.66%;
+  width: 16.66%;
 }
 .col-3 {
-   width: 25%;
+  width: 25%;
 }
 .col-4 {
-   width: 33.33%;
+  width: 33.33%;
 }
 .col-5 {
-   width: 41.66%;
+  width: 41.66%;
 }
 .col-6 {
-   width: 50%;
+  width: 50%;
 }
 .col-7 {
-   width: 58.33%;
+  width: 58.33%;
 }
 .col-8 {
-   width: 66.66%;
+  width: 66.66%;
 }
 .col-9 {
-   width: 75%;
+  width: 75%;
 }
 .col-10 {
-   width: 83.33%;
+  width: 83.33%;
 }
 .col-11 {
-   width: 91.66%;
+  width: 91.66%;
 }
 .col-12 {
-   width: 100%;
+  width: 100%;
 }
 
 header {
-   background-color: #444;
-   color: #ffffff;
+  background-color: #444;
+  color: #ffffff;
 }
 
 /* hero style logo */
 .letsEatLogo {
-   background-size: cover;
-   background-image: url("./images/LetsEatLogo.jpg");
-   height: 120px;
-   background-position: center;
-   background-repeat: no-repeat;
-   cursor: pointer;
-   margin-bottom: 5px;
+  background-size: cover;
+  background-image: url("./images/LetsEatLogo.jpg");
+  height: 120px;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  margin-bottom: 5px;
 }
 
 .flex-container {
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-container > a {
-   background-color: #f1f1f1;
-   width: 100px;
-   height: 110px;
-   text-align: center;
-   margin: 5px;
-   border: gray solid 1px;
-   border-radius: 10px;
+  background-color: #f1f1f1;
+  width: 100px;
+  height: 110px;
+  text-align: center;
+  margin: 5px;
+  border: gray solid 1px;
+  border-radius: 10px;
 }
 
 .flex-container a img {
-   object-fit: contain;
-   height: 90%;
-   width: 90%;
-   margin-top: -6px;
+  object-fit: contain;
+  height: 90%;
+  width: 90%;
+  margin-top: -6px;
 }
 
 .flex-container a:hover {
-   transform: scale(1.1);
-   transition: 0.2s;
+  transform: scale(1.1);
+  transition: 0.2s;
 }
 
 .flex-container > .restaurantCard {
-   background-color: #f1f1f1;
-   /* background-color: beige; */
-   /* height: 90px; */
-   text-align: left;
-   border: gray solid 1px;
-   border-radius: 10px;
-   cursor: pointer;
+  background-color: #f1f1f1;
+  /* background-color: beige; */
+  /* height: 90px; */
+  text-align: left;
+  border: gray solid 1px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#restaurantList {
+  justify-content: space-between;
 }
 
 .flex-container > .restaurantCard:hover {
-   background-color: lightgoldenrodyellow;
-   transition: 0.3s;
+  background-color: lightgoldenrodyellow;
+  transition: 0.3s;
 }
 
 .flex-container > .foodCard {
-   background-color: #f1f1f1;
-   /* background-color: beige; */
-   /* height: 130px; */
-   text-align: left;
-   border: gray solid 1px;
-   border-radius: 10px;
+  background-color: #f1f1f1;
+  /* background-color: beige; */
+  /* height: 130px; */
+  text-align: left;
+  border: gray solid 1px;
+  border-radius: 10px;
 }
 
 .flex-container > .foodCard:hover {
-   background-color: lightgoldenrodyellow;
-   transition: 0.3s;
+  background-color: lightgoldenrodyellow;
+  transition: 0.3s;
 }
 
 .foodTitle {
-   border-bottom: gray solid 1px;
-   background-color: gray;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
+  border-bottom: gray solid 1px;
+  background-color: gray;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .foodTitle > p {
-   margin: 0px;
-   padding: 2px 0 2px 0;
-   color: #444;
-   color: #ffffff;
+  margin: 0px;
+  padding: 2px 0 2px 0;
+  color: #444;
+  color: #ffffff;
 }
 
 .foodSearchFilter {
-   background-color: #f1f1f1;
-   /* background-color: beige; */
-   text-align: center;
-   border-top-left-radius: 10px;
-   border-top-right-radius: 10px;
-   padding: 5px;
-   border-top: gray solid 1px;
-   border-left: gray solid 1px;
-   border-right: gray solid 1px;
+  background-color: #f1f1f1;
+  /* background-color: beige; */
+  text-align: center;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 5px;
+  border-top: gray solid 1px;
+  border-left: gray solid 1px;
+  border-right: gray solid 1px;
 }
 
 .foodSearchFilter i {
-   line-height: 32px;
-   margin-top: 4px;
+  line-height: 32px;
+  margin-top: 4px;
 }
 
 a:link,
 a:visited {
-   text-decoration: none;
-   cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .checked {
-   color: orange;
+  color: orange;
 }
 
 .card-pricing p {
-   margin: 5px 0 5px 0;
+  margin: 5px 0 5px 0;
 }
 
 .card-delivery h4,
 p {
-   margin: 5px 0 5px 0;
+  margin: 5px 0 5px 0;
 }
 
 .restaurantCard .card-image img {
-   object-fit: contain;
-   max-height: 70px;
-   width: 100%;
+  object-fit: contain;
+  max-height: 70px;
+  width: 100%;
 }
 
 .foodCard .card-image img {
-   object-fit: contain;
-   max-height: 110px;
-   width: 100%;
+  object-fit: contain;
+  max-height: 110px;
+  width: 100%;
 }
 
 .card-image {
-   padding: 4px 8px 4px 8px;
+  padding: 4px 8px 4px 8px;
 }
 
 .card-rating {
-   font-size: 13px;
-   margin: 5px 0 5px 0;
+  font-size: 13px;
+  margin: 5px 0 5px 0;
 }
 
 .footerNavbar {
-   width: 100%;
-   background-color: #444;
-   overflow: auto;
-   margin-top: 5px;
+  width: 100%;
+  background-color: #444;
+  overflow: auto;
+  margin-top: 5px;
 }
 
 .footerNavbar a {
-   float: left;
-   padding: 12px;
-   color: white;
-   text-decoration: none;
-   font-size: 14px;
-   width: 25%;
-   text-align: center;
+  float: left;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  width: 25%;
+  text-align: center;
 }
 
 /* Add a background color on mouse-over */
 .footerNavbar a:hover {
-   background-color: #000;
-   transition: 0.3s;
+  background-color: #000;
+  transition: 0.3s;
 }
 
 /* Add responsiveness */
 @media screen and (max-width: 480px) {
-   .restaurantCard,
-   .foodCard {
-      width: 100%;
-      margin: 5px 0 5px 0;
-   }
+  .restaurantCard,
+  .foodCard {
+    width: 100%;
+    margin: 5px 0 5px 0;
+  }
 
-   .footerNavbar a {
-      float: none;
-      display: block;
-      width: 100%;
-      text-align: center;
-      padding: 8px;
-   }
+  .footerNavbar a {
+    float: none;
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 8px;
+  }
 
-   .card-delivery h4,
-   p {
-      font-size: 14px;
-   }
+  .card-delivery h4,
+  p {
+    font-size: 14px;
+  }
 
-   .foodCard .card-delivery p {
-      font-size: 13px;
-   }
+  .foodCard .card-delivery p {
+    font-size: 13px;
+  }
 
-   .addressForm input {
-      width: 90%;
-      margin-bottom: 10px;
-   }
+  .addressForm input {
+    width: 90%;
+    margin-bottom: 10px;
+  }
 
-   .checkoutForm input,
-   .contactForm input,
-   .loginForm input {
-      width: 100%;
-      margin-bottom: 10px;
-   }
+  .checkoutForm input,
+  .contactForm input,
+  .loginForm input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }
 
 @media screen and (min-width: 480px) {
-   .restaurantCard,
-   .foodCard {
-      width: 100%;
-      margin: 5px 0 5px 0;
-   }
+  .restaurantCard,
+  .foodCard {
+    width: 100%;
+    margin: 5px 0 5px 0;
+  }
 
-   .addressForm input,
-   .checkoutForm input,
-   .contactForm input,
-   .loginForm input {
-      min-width: 35%;
-   }
+  .addressForm input,
+  .checkoutForm input,
+  .contactForm input,
+  .loginForm input {
+    min-width: 35%;
+  }
 }
 
 @media screen and (min-width: 840px) {
-   .restaurantCard,
-   .foodCard {
-      width: 48%;
-      margin: 5px;
-   }
+  .restaurantCard,
+  .foodCard {
+    width: 49%;
+    margin: 5px 0 5px 0;
+  }
 
-   .addressForm input,
-   .checkoutForm input {
-      min-width: 45%;
-   }
+  .addressForm input,
+  .checkoutForm input {
+    min-width: 45%;
+  }
+
+  body {
+    width: 90%;
+    margin: auto;
+  }
 }
 
 @media screen and (min-width: 1280px) {
-   .restaurantCard,
-   .foodCard {
-      width: 32%;
-      margin: 5px;
-   }
+  body {
+    width: 80%;
+    margin: auto;
+  }
 }
 
 input {
-   border-radius: 6px;
-   border: solid 1px lightgray;
-   line-height: 1.8em;
-   padding: 4px;
+  border-radius: 6px;
+  border: solid 1px lightgray;
+  line-height: 1.8em;
+  padding: 4px;
 }
 
 #foodTypeListInput {
-   width: 90%;
+  width: 90%;
 }
 
 #foodTypeListInput:hover,
 #cityDeliveryListInput:hover {
-   border: solid 1px greenyellow;
+  border: solid 1px greenyellow;
 }
 
 .foodList {
-   margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .addressForm,
 .total {
-   border: gray solid 1px;
-   border-radius: 10px;
-   background-color: #f1f1f1;
+  border: gray solid 1px;
+  border-radius: 10px;
+  background-color: #f1f1f1;
 }
 
 .addressForm {
-   margin: 10px 0 10px 0;
-   width: 100%;
+  margin: 10px 0 10px 0;
+  width: 100%;
 }
 
 .addressForm i,
 .checkoutForm i {
-   float: left;
-   line-height: 50px;
-   font-size: 28px;
-   margin: 0 10px 0 10px;
+  float: left;
+  line-height: 50px;
+  font-size: 28px;
+  margin: 0 10px 0 10px;
 }
 
 .addressForm i:hover,
 .checkoutAddress i:hover {
-   transform: scale(1.3);
-   transition: 0.3s;
+  transform: scale(1.3);
+  transition: 0.3s;
 }
 
 .addressForm label {
-   min-width: 30%;
-   max-width: 90%;
-   margin: 14px 5px 4px 10px;
-   float: left;
-   line-height: 36px;
-   padding-top: 6px;
+  min-width: 30%;
+  max-width: 90%;
+  margin: 14px 5px 4px 10px;
+  float: left;
+  line-height: 36px;
+  padding-top: 6px;
 }
 .addressForm textarea {
-   min-width: 70%;
-   max-width: 95%;
-   margin: 10px 5px 10px 10px;
-   float: left;
+  min-width: 70%;
+  max-width: 95%;
+  margin: 10px 5px 10px 10px;
+  float: left;
 }
 
 .addressForm button {
-   min-width: 30%;
-   max-width: 180px;
-   margin: 10px 5px 10px 10px;
-   text-align: center;
+  min-width: 30%;
+  max-width: 180px;
+  margin: 10px 5px 10px 10px;
+  text-align: center;
 }
 
 #detectedPlace,
 #detectedDeliveryPlace {
-   margin: 4px 8px 0 2px;
-   float: left;
-   text-align: center;
+  margin: 4px 8px 0 2px;
+  float: left;
+  text-align: center;
 }
 
 .quickSearchGrid {
-   background-color: #f1f1f1;
-   /* background-color: beige; */
-   border-bottom-left-radius: 10px;
-   border-bottom-right-radius: 10px;
-   padding: 5px;
-   border-bottom: gray solid 1px;
-   border-left: gray solid 1px;
-   border-right: gray solid 1px;
-   margin-bottom: 5px;
+  background-color: #f1f1f1;
+  /* background-color: beige; */
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 5px;
+  border-bottom: gray solid 1px;
+  border-left: gray solid 1px;
+  border-right: gray solid 1px;
+  margin-bottom: 5px;
 }
 
 .quickSearchGrid a {
-   background-color: white;
+  background-color: white;
 }
 
 .quickSearchGrid a:active .foodTitle,
 .quickSearchGrid a.active .foodTitle {
-   background-color: navy;
+  background-color: navy;
 }
 
 #selectedFoodSearchFilter {
-   margin: 5px 0 5px 0;
-   border-bottom: gray solid 1px;
-   border-bottom-left-radius: 10px;
-   border-bottom-right-radius: 10px;
+  margin: 5px 0 5px 0;
+  border-bottom: gray solid 1px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 #selectedFoodSearchFilter input {
-   width: 90%;
+  width: 90%;
 }
 
 /* always show up/down arrows for input "number" field */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-   opacity: 1;
-   height: 32px;
-   width: 14px;
+  opacity: 1;
+  height: 32px;
+  width: 14px;
 }
 
 .priceForm button {
-   height: 42px;
-   max-width: 65px;
+  height: 42px;
+  max-width: 65px;
 }
 
 .priceForm input[type="number"] {
-   height: 42px;
-   margin-top: 8px;
+  height: 42px;
+  margin-top: 8px;
 }
 
 .priceForm input[type="number"]:hover {
-   border: 1px solid greenyellow;
+  border: 1px solid greenyellow;
 }
 
 .priceForm input[type="button"] {
-   height: 42px;
-   margin-top: 8px;
-   background-color: tomato;
-   color: white;
-   min-width: 25px;
+  height: 42px;
+  margin-top: 8px;
+  background-color: tomato;
+  color: white;
+  min-width: 25px;
 }
 
 .priceForm input[type="button"]:hover {
-   background-color: red;
-   transform: scale(1.1);
-   transition: 0.3s;
+  background-color: red;
+  transform: scale(1.1);
+  transition: 0.3s;
 }
 
 .priceButton {
-   height: 30px;
-   margin-top: 8px;
-   background-color: #444;
-   color: white;
-   /* padding: 10px 20px; */
-   border: none;
-   border-radius: 6px;
-   cursor: pointer;
+  height: 30px;
+  margin-top: 8px;
+  background-color: #444;
+  color: white;
+  /* padding: 10px 20px; */
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .priceButton:hover {
-   background-color: black;
-   color: white;
-   transition: 0.3s;
+  background-color: black;
+  color: white;
+  transition: 0.3s;
 }
 
 .cartItems {
-   position: relative;
-   color: white;
-   left: -8px;
-   top: 8px;
-   opacity: 0.85;
+  position: relative;
+  color: white;
+  left: -8px;
+  top: 8px;
+  opacity: 0.85;
 }
 
 .checkout,
 .total {
-   text-align: center;
-   margin: 5px 0 5px 0;
+  text-align: center;
+  margin: 5px 0 5px 0;
 }
 
 .price {
-   height: 50px;
-   max-width: 66px;
-   line-height: 50px;
-   font-size: 14px;
-   margin-left: -18px;
+  height: 50px;
+  max-width: 66px;
+  line-height: 50px;
+  font-size: 14px;
+  margin-left: -18px;
 }
 
 .quantityInput {
-   max-width: 60px;
+  max-width: 60px;
 }
 
 .cartQuantityInput {
-   max-width: 44px;
+  max-width: 44px;
 }
 
-.contactForm, .loginForm {
-   border: gray solid 1px;
-   border-radius: 10px;
-   background-color: #f2f2f2;
-   padding: 15px;
-   margin-bottom: 10px;
+.contactForm,
+.loginForm {
+  border: gray solid 1px;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 15px;
+  margin-bottom: 10px;
 }
 
 .checkoutForm {
-   border: gray solid 1px;
-   border-radius: 10px;
-   background-color: #f2f2f2;
-   padding: 15px 15px 10px 15px;
-   margin: 10px 0 10px 0;
+  border: gray solid 1px;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 15px 15px 10px 15px;
+  margin: 10px 0 10px 0;
 }
 
 .checkoutForm input {
-   margin-top: 12px;
+  margin-top: 12px;
 }
 
 .contactForm input[type="text"],
@@ -600,52 +609,52 @@ input[type="number"]::-webkit-outer-spin-button {
 .checkoutForm input[type="time"],
 select,
 textarea {
-   width: 100%;
-   border-radius: 6px;
-   border: solid 1px lightgray;
-   line-height: 1.8em;
-   padding: 4px;
-   margin: 2px;
-   height: 34px;
+  width: 100%;
+  border-radius: 6px;
+  border: solid 1px lightgray;
+  line-height: 1.8em;
+  padding: 4px;
+  margin: 2px;
+  height: 34px;
 }
 
 .contactForm input[type="submit"],
 .checkoutForm input[type="submit"],
 .loginForm input[type="submit"] {
-   background-color: #444;
-   color: white;
-   padding: 10px 20px;
-   border: none;
-   border-radius: 6px;
-   cursor: pointer;
-   margin: 8px 0 8px 2px;
+  background-color: #444;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 8px 0 8px 2px;
 }
 
 .checkoutForm input[type="submit"]:hover {
-   background-color: black;
-   transform: scale(1.05);
-   transition: 0.2s;
+  background-color: black;
+  transform: scale(1.05);
+  transition: 0.2s;
 }
 
 .contactForm p,
 .checkoutForm p {
-   margin-top: 20px;
+  margin-top: 20px;
 }
 
-.contactForm  input[type="submit"]:hover,
+.contactForm input[type="submit"]:hover,
 .loginForm input[type="submit"]:hover {
-   background-color: darkblue;
+  background-color: darkblue;
 }
 
 .contactForm label,
 .checkoutForm label,
 .loginForm label {
-   margin: 10px 0 2px 2px;
-   float: left;
+  margin: 10px 0 2px 2px;
+  float: left;
 }
 
 .checkoutAddress {
-   min-height: 70px;
+  min-height: 70px;
 }
 
 #manualAddress:hover,
@@ -653,5 +662,5 @@ textarea {
 #clientPhone:hover,
 #deliveryTime:hover,
 #comments:hover {
-   border: solid 1px greenyellow;
+  border: solid 1px greenyellow;
 }
