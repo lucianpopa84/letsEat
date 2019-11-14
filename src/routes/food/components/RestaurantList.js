@@ -24,7 +24,7 @@ function RestaurantListItem({ restaurantData }) {
             <div className="col-3">
               <div className="card-image">
                 <img
-                  src={require(`../../../images/restaurants/${restaurantData.imageSrc}`)}
+                  src={`/images/restaurants/${restaurantData.imageSrc}`}
                   alt={restaurantData.imageAlt}
                 />
               </div>
@@ -71,7 +71,7 @@ function RestaurantList({ match }) {
     restaurants,
     setRestaurants,
     restaurantStatus,
-    setRestaurantStatus,
+    setRestaurantStatus
   } = useContext(AppContext);
 
   const pStyle = {

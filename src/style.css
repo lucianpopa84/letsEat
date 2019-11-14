@@ -149,7 +149,7 @@ header {
 /* hero style logo */
 .letsEatLogo {
   background-size: cover;
-  background-image: url("./images/LetsEatLogo.jpg");
+  background-image: url("/images/LetsEatLogo.jpg"); 
   height: 120px;
   background-position: center;
   background-repeat: no-repeat;
@@ -275,7 +275,7 @@ p {
   width: 100%;
 }
 
-.foodCard .card-image img {
+.foodCard .card-image img, .checkout img {
   object-fit: contain;
   max-height: 110px;
   width: 100%;

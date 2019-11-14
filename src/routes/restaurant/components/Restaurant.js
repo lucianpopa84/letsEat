@@ -8,7 +8,7 @@ function Restaurant({ match }) {
   );
 
   const [foodData, setFoodData] = useState([]);
-  const [restaurantName, setRestaurantName] = useState('');
+  const [restaurant, setRestaurant] = useState([]);
   const lastCartItemId = Math.max(...cartItems.map(cartItem => cartItem.id), 0); // compute greatest cartItem id
   const [cartItemId, setCartItemId] = useState(lastCartItemId + 1); // set next cartItem id
 
@@ -23,12 +23,12 @@ function Restaurant({ match }) {
   }
 
   // get restaurant name from json server
-  function getRestaurantName(restaurantId) {
+  function getRestaurant(restaurantId) {
     let url = `https://my-json-server.typicode.com/lucianpopa84/myjsonserver/restaurants/${restaurantId}`;
     fetch(url)
       .then(response => response.json())
       .then(restaurantData => {
-        setRestaurantName(restaurantData.name);
+        setRestaurant(restaurantData);
       });
   }
 
@@ -98,7 +98,7 @@ function Restaurant({ match }) {
 
   useEffect(() => {
     if (match.params.restaurantId) {
-      getRestaurantName(match.params.restaurantId);
+      getRestaurant(match.params.restaurantId);
       getFood(match.params.restaurantId, foodTypeId);
     }
   }, [match.params.restaurantId, foodTypeId, cityId]);
@@ -111,7 +111,11 @@ function Restaurant({ match }) {
   return (
     <div>
       <div className="checkout">
-        <h2>{restaurantName}</h2>
+        <img
+          src={`/images/restaurants/${restaurant.imageSrc}`}
+          alt={restaurant.imageAlt}
+        />
+        <h2>{restaurant.name} menu:</h2>
       </div>
       <div className="flex-container foodList">
         {foodData.map(foodItem => (
@@ -120,7 +124,7 @@ function Restaurant({ match }) {
               <div className="col-4">
                 <div className="card-image">
                   <img
-                    src={require(`../../../images/foodType/${foodItem.imageSrc}`)}
+                    src={`/images/foodType/${foodItem.imageSrc}`}
                     alt={foodItem.imageAlt}
                   />
                 </div>

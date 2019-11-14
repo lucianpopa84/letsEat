@@ -1,11 +1,5 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import imgPizza from '../../images/foodType/pizza.png';
-import imgDailyMenu from '../../images/foodType/dailyMenu.png';
-import imgRomanian from '../../images/foodType/romanian.png';
-import imgFastFood from '../../images/foodType/fastFood.png';
-import imgSalads from '../../images/foodType/salads.png';
-import imgDesert from '../../images/foodType/desert.png';
 
 function QuickSearchGrid() {
   return (
@@ -19,7 +13,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Pizza</p>
           </div>
-          <img src={imgPizza} alt="Pizza" />
+          <img src="/images/foodType/pizza.png" alt="Pizza" />
         </NavLink>
         <NavLink
           to="/food/dailymenu"
@@ -29,7 +23,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Daily menu</p>
           </div>
-          <img src={imgDailyMenu} alt="Daily menu" />
+          <img src="/images/foodType/dailyMenu.png" alt="Daily menu" />
         </NavLink>
         <NavLink
           to="/food/romanian"
@@ -39,7 +33,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Romanian</p>
           </div>
-          <img src={imgRomanian} alt="Romanian" />
+          <img src="/images/foodType/romanian.png" alt="Romanian" />
         </NavLink>
         <NavLink
           to="/food/fastfood"
@@ -49,7 +43,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Fast-food</p>
           </div>
-          <img src={imgFastFood} alt="Fast-food" />
+          <img src="/images/foodType/fastFood.png" alt="Fast-food" />
         </NavLink>
         <NavLink
           to="/food/salads"
@@ -59,7 +53,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Salads</p>
           </div>
-          <img src={imgSalads} alt="Salads" />
+          <img src="/images/foodType/salads.png" alt="Salads" />
         </NavLink>
         <NavLink
           to="/food/desert"
@@ -69,7 +63,7 @@ function QuickSearchGrid() {
           <div className="foodTitle">
             <p>Desert</p>
           </div>
-          <img src={imgDesert} alt="Desert" />
+          <img src="/images/foodType/desert.png" alt="Desert" />
         </NavLink>
       </div>
     </div>
