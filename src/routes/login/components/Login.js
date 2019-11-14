@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../../../AppContext';
 import { createBrowserHistory } from 'history';
 const history = createBrowserHistory();
 

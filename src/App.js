@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Topnav from './components/Topnav';
-import Footer from './components/Footer';
-import Cart from './components/Cart';
-import About from './components/About';
-import Contact from './components/Contact';
+import Topnav from './routes/home/components/Topnav';
+import Footer from './routes/home/components/Footer';
+import Cart from './routes/cart/components/Cart';
+import About from './routes/about/components/About';
+import Contact from './routes/contact/components/Contact';
 import FoodSearchFilter from './components/FoodSearchFilter';
-import Restaurant from './components/Restaurant';
-import Login from './components/Login';
-import useCartItems from './useCartItems.js';
-import useGeocoder from './useGeocoder';
+import Restaurant from './routes/restaurant/components/Restaurant';
+import Login from './routes/login/components/Login';
+import useCartItems from './services/session/useCartItems.js';
+import useGeocoder from './services/geolocation/useGeocoder';
 import { AppContext } from './AppContext';
 
 function App() {

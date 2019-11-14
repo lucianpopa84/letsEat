@@ -1,11 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import imgPizza from '../images/foodType/pizza.png';
-import imgDailyMenu from '../images/foodType/dailyMenu.png';
-import imgRomanian from '../images/foodType/romanian.png';
-import imgFastFood from '../images/foodType/fastFood.png';
-import imgSalads from '../images/foodType/salads.png';
-import imgDesert from '../images/foodType/desert.png';
+import imgPizza from '../../images/foodType/pizza.png';
+import imgDailyMenu from '../../images/foodType/dailyMenu.png';
+import imgRomanian from '../../images/foodType/romanian.png';
+import imgFastFood from '../../images/foodType/fastFood.png';
+import imgSalads from '../../images/foodType/salads.png';
+import imgDesert from '../../images/foodType/desert.png';
 
 function QuickSearchGrid() {
   return (

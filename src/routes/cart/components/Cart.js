@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../../../AppContext';
 
 function Cart() {
   const {
@@ -85,7 +85,7 @@ function Cart() {
                 <div className="col-3">
                   <div className="card-image">
                     <img
-                      src={require(`../images/foodType/${cartItem.imageSrc}`)}
+                      src={require(`../../../images/foodType/${cartItem.imageSrc}`)}
                       alt={cartItem.imageAlt}
                     />
                   </div>

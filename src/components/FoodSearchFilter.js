@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Address from './Address';
-import FoodTypeList from './FoodTypeList';
-import QuickSearchGrid from './QuickSearchGrid';
-import RestaurantList from './RestaurantList';
+import Address from './FoodSearchFilter/Address';
+import FoodTypeList from './FoodSearchFilter/FoodTypeList';
+import QuickSearchGrid from './FoodSearchFilter/QuickSearchGrid';
+import RestaurantList from '../routes/food/components/RestaurantList';
 
 function FoodSearchFilter() {
   return (

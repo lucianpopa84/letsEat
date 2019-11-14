@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import CardRating from './CardRating';
-import { AppContext } from '../AppContext';
+import CardRating from '../../../components/CardRating';
+import { AppContext } from '../../../AppContext';
 
 function Restaurant({ match }) {
   const { cartItems, setCartItems, cityId, foodTypeId } = useContext(
@@ -120,7 +120,7 @@ function Restaurant({ match }) {
               <div className="col-4">
                 <div className="card-image">
                   <img
-                    src={require(`../images/foodType/${foodItem.imageSrc}`)}
+                    src={require(`../../../images/foodType/${foodItem.imageSrc}`)}
                     alt={foodItem.imageAlt}
                   />
                 </div>

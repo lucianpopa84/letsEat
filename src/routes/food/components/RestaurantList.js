@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Route } from 'react-router-dom';
-import CardRating from './CardRating';
-import { AppContext } from '../AppContext';
+import CardRating from '../../../components/CardRating';
+import { AppContext } from '../../../AppContext';
 
 function RestaurantListItem({ restaurantData }) {
   let currentDate = new Date();
@@ -24,7 +24,7 @@ function RestaurantListItem({ restaurantData }) {
             <div className="col-3">
               <div className="card-image">
                 <img
-                  src={require(`../images/restaurants/${restaurantData.imageSrc}`)}
+                  src={require(`../../../images/restaurants/${restaurantData.imageSrc}`)}
                   alt={restaurantData.imageAlt}
                 />
               </div>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AppContext } from '../AppContext';
+import { AppContext } from '../../../AppContext';
 
 function Topnav() {
   const { cartItemsNumber, userData } = useContext(AppContext);
