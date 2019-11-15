@@ -47,8 +47,12 @@ function Cart() {
   }
 
   function onDeliveryAddressChange(e) {
-    setAddress(e.target.value);
-    setLocationStatus('Selected address:');
+    if (locationStatus === 'Delivery not available for your area') {
+      setAddress(`Selected delivery address: ${e.target.value}`);
+    } else {
+      setAddress(e.target.value);
+      setLocationStatus('Selected delivery address:');
+    }
   }
 
   function submitOrder(e) {
