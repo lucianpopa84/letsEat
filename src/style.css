@@ -409,6 +409,8 @@ input {
 
 .foodList {
   margin-bottom: 5px;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .addressForm,
