@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import CardRating from '../../../components/CardRating';
 import { AppContext } from '../../../AppContext';
+import { useSelector, useDispatch } from 'react-redux';
+import { addCartItem } from '../../../services/actions/actions'; // REDUX ACTIONS
 
 function Restaurant({ match }) {
-  const { cartItems, setCartItems, cityId, foodTypeId } = useContext(
-    AppContext
-  );
+  const { cityId, foodTypeId } = useContext(AppContext);
+
+  const cartItems = useSelector(state => state.cartItems);
+  const dispatch = useDispatch();
 
   const [foodData, setFoodData] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
@@ -64,9 +67,8 @@ function Restaurant({ match }) {
           if (existingCartItem !== -1) {
             alert('Food already added in cart!');
           } else {
-            setCartItems([
-              ...cartItems,
-              {
+            dispatch(
+              addCartItem({
                 foodName: foodItem.name,
                 restaurantId: foodItem.restaurantId,
                 itemPrice: foodItem.price,
@@ -74,14 +76,15 @@ function Restaurant({ match }) {
                 imageAlt: foodItem.imageAlt,
                 quantity: foodItem.quantity || 1,
                 id: cartItemId
-              }
-            ]);
+              })
+            );
+
             setCartItemId(cartItemId + 1); // increment cartItem id
           }
         }
       } else {
-        setCartItems([
-          {
+        dispatch(
+          addCartItem({
             foodName: foodItem.name,
             restaurantId: foodItem.restaurantId,
             itemPrice: foodItem.price,
@@ -89,8 +92,9 @@ function Restaurant({ match }) {
             imageAlt: foodItem.imageAlt,
             quantity: foodItem.quantity || 1,
             id: cartItemId
-          }
-        ]);
+          })
+        );
+
         setCartItemId(cartItemId + 1); // increment cartItem id
       }
     }

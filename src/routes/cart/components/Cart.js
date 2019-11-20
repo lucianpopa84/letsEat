@@ -1,10 +1,13 @@
 import React, { useEffect, useContext } from 'react';
 import { AppContext } from '../../../AppContext';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  removeCartItem,
+  updateCartItem
+} from '../../../services/actions/actions'; // REDUX ACTIONS
 
 function Cart() {
   const {
-    cartItems,
-    setCartItems,
     address,
     setAddress,
     setDetectionEnabled,
@@ -12,7 +15,10 @@ function Cart() {
     setLocationStatus,
     geoFindMe
   } = useContext(AppContext);
-  
+
+  const cartItems = useSelector(state => state.cartItems);
+  const dispatch = useDispatch();
+
   // compute total price
   let totalPrice = 0;
   if (cartItems.length >= 1) {
@@ -27,24 +33,6 @@ function Cart() {
     // update cart items in localstorage
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }, [cartItems]);
-
-  function removeCartItem(cartItemId) {
-    const newCartItems = [...cartItems];
-    const index = newCartItems.findIndex(
-      cartItem => cartItem.id === cartItemId
-    );
-    newCartItems.splice(index, 1);
-    setCartItems(newCartItems);
-  }
-
-  function updateCart(e, cartItemId) {
-    const newCartItems = [...cartItems];
-    const index = newCartItems.findIndex(
-      cartItem => cartItem.id === cartItemId
-    );
-    newCartItems[index].quantity = e.target.value;
-    setCartItems(newCartItems);
-  }
 
   function onDeliveryAddressChange(e) {
     if (locationStatus === 'Delivery not available for your area') {
@@ -109,12 +97,12 @@ function Cart() {
                         max="10"
                         value={cartItem.quantity}
                         className="cartQuantityInput"
-                        onChange={e => updateCart(e, cartItem.id)}
+                        onChange={e => dispatch(updateCartItem(e, cartItem))}
                       />
                       <input
                         type="button"
                         value={deleteCharacter}
-                        onClick={() => removeCartItem(cartItem.id)}
+                        onClick={() => dispatch(removeCartItem(cartItem))}
                       />
                     </form>
                   </div>

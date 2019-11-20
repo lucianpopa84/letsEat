@@ -8,12 +8,10 @@ import Contact from './routes/contact/components/Contact';
 import FoodSearchFilter from './components/FoodSearchFilter';
 import Restaurant from './routes/restaurant/components/Restaurant';
 import Login from './routes/login/components/Login';
-import useCartItems from './services/session/useCartItems.js';
 import useGeocoder from './services/geolocation/useGeocoder';
 import { AppContext } from './AppContext';
 
 function App() {
-  const { cartItems, setCartItems, cartItemsNumber } = useCartItems();
   const {
     address,
     setAddress,
@@ -67,9 +65,6 @@ function App() {
       <Router>
         <AppContext.Provider
           value={{
-            cartItemsNumber,
-            cartItems,
-            setCartItems,
             address,
             setAddress,
             setDetectionEnabled,

@@ -1,9 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AppContext } from '../../../AppContext';
+import { useSelector } from 'react-redux';
 
 function Topnav() {
-  const { cartItemsNumber, userData } = useContext(AppContext);
+  const { userData } = useContext(AppContext);
+
+  const cartItems = useSelector(state => state.cartItems);
+  const [cartItemsNumber, setCartItemsNumber] = useState(
+    cartItems.reduce((total, cartItem) => {
+      return total + parseFloat(cartItem.quantity);
+    }, 0)
+  );
+
   const userImgStyle = {
     height: '22px',
     textAlign: 'center',
@@ -34,6 +43,14 @@ function Topnav() {
       }
     }
   }
+
+  useEffect(() => {
+    setCartItemsNumber(
+      cartItems.reduce((total, cartItem) => {
+        return total + parseFloat(cartItem.quantity);
+      }, 0)
+    );
+  }, [cartItems]);
 
   return (
     <div>
