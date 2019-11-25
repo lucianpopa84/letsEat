@@ -7,8 +7,9 @@ const initialState = JSON.parse(localStorage.getItem('cartItems')) || [];
 const cartItemsReducer = (state = initialState, action) => {
   switch (action.type) {
     case REMOVE_CART_ITEM: {
+      const { cartItemId } = action.payload;
       const cartItemIndex = [...state].findIndex(
-        cartItem => cartItem.id === action.cartItemId
+        cartItem => cartItem.id === cartItemId
       );
       return [
         ...state.slice(0, cartItemIndex),
@@ -17,10 +18,10 @@ const cartItemsReducer = (state = initialState, action) => {
     }
 
     case UPDATE_CART_ITEM: {
+      const { cartItemId, newQuantity } = action.payload;
       const cartItemIndex = [...state].findIndex(
-        cartItem => cartItem.id === action.cartItemId
+        cartItem => cartItem.id === cartItemId
       );
-      const newQuantity = action.newQuantity;
       return [
         ...state.slice(0, cartItemIndex),
         { ...state[cartItemIndex], quantity: newQuantity },
@@ -29,7 +30,7 @@ const cartItemsReducer = (state = initialState, action) => {
     }
 
     case ADD_CART_ITEM: {
-      const newCartItem = action.newCartItem;
+      const { newCartItem } = action.payload;
       return [...state, newCartItem];
     }
 

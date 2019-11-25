@@ -1,10 +1,18 @@
 import React, { useEffect, useContext } from 'react';
 import { AppContext } from '../../../AppContext';
 import { useSelector, useDispatch } from 'react-redux';
+
+// IMPORT REDUX ACTIONS
+// import {
+//   removeCartItem,
+//   updateCartItem
+// } from '../../../services/actions/actions';  
+
+// IMPORT REDUX ACTIONS VIA TOOLKIT
 import {
-  removeCartItem,
-  updateCartItem
-} from '../../../services/actions/actions'; // REDUX ACTIONS
+  updateCartItem,
+  removeCartItem
+} from '../../../services/reducers/cartItemsReducerToolkit';
 
 function Cart() {
   const {
@@ -97,12 +105,21 @@ function Cart() {
                         max="10"
                         value={cartItem.quantity}
                         className="cartQuantityInput"
-                        onChange={e => dispatch(updateCartItem(e, cartItem))}
+                        // onChange={e => dispatch(updateCartItem(e, cartItem))}
+                        onChange={e => {
+                          let newQuantity = e.target.value;
+                          let cartItemId = cartItem.id;
+                          dispatch(updateCartItem({ cartItemId, newQuantity }));
+                        }}
                       />
                       <input
                         type="button"
                         value={deleteCharacter}
-                        onClick={() => dispatch(removeCartItem(cartItem))}
+                        // onClick={() => dispatch(removeCartItem(cartItem))}
+                        onClick={() => {
+                          let cartItemId = cartItem.id;
+                          dispatch(removeCartItem({ cartItemId }));
+                        }}
                       />
                     </form>
                   </div>

@@ -2,7 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import CardRating from '../../../components/CardRating';
 import { AppContext } from '../../../AppContext';
 import { useSelector, useDispatch } from 'react-redux';
-import { addCartItem } from '../../../services/actions/actions'; // REDUX ACTIONS
+
+// IMPORT REDUX ACTIONS
+// import { addCartItem } from '../../../services/actions/actions'; // REDUX ACTIONS
+
+// IMPORT REDUX ACTIONS VIA TOOLKIT
+import { addCartItem } from '../../../services/reducers/cartItemsReducerToolkit'; // REDUX ACTIONS FROM TOOLKIT
 
 function Restaurant({ match }) {
   const { cityId, foodTypeId } = useContext(AppContext);
@@ -49,6 +54,17 @@ function Restaurant({ match }) {
 
   function addToCart(e, foodItem, restaurantId) {
     e.preventDefault();
+
+    let newCartItem = {
+      foodName: foodItem.name,
+      restaurantId: foodItem.restaurantId,
+      itemPrice: foodItem.price,
+      imageSrc: foodItem.imageSrc,
+      imageAlt: foodItem.imageAlt,
+      quantity: foodItem.quantity || 1,
+      id: cartItemId
+    };
+
     if (foodItem) {
       if (cartItems.length >= 1) {
         // check if item is from different restaurant
@@ -66,35 +82,13 @@ function Restaurant({ match }) {
           );
           if (existingCartItem !== -1) {
             alert('Food already added in cart!');
-          } else {
-            dispatch(
-              addCartItem({
-                foodName: foodItem.name,
-                restaurantId: foodItem.restaurantId,
-                itemPrice: foodItem.price,
-                imageSrc: foodItem.imageSrc,
-                imageAlt: foodItem.imageAlt,
-                quantity: foodItem.quantity || 1,
-                id: cartItemId
-              })
-            );
-
+          } else { 
+            dispatch(addCartItem({ newCartItem }));
             setCartItemId(cartItemId + 1); // increment cartItem id
           }
         }
       } else {
-        dispatch(
-          addCartItem({
-            foodName: foodItem.name,
-            restaurantId: foodItem.restaurantId,
-            itemPrice: foodItem.price,
-            imageSrc: foodItem.imageSrc,
-            imageAlt: foodItem.imageAlt,
-            quantity: foodItem.quantity || 1,
-            id: cartItemId
-          })
-        );
-
+        dispatch(addCartItem({ newCartItem }));
         setCartItemId(cartItemId + 1); // increment cartItem id
       }
     }
