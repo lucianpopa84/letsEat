@@ -92,13 +92,13 @@ button:hover {
 }
 
 .row::after {
-  content: "";
+  content: '';
   clear: both;
   display: table;
 }
 
 /* set padding and floating of columns */
-[class*="col-"] {
+[class*='col-'] {
   float: left;
   padding: 5px;
 }
@@ -149,7 +149,7 @@ header {
 /* hero style logo */
 .letsEatLogo {
   background-size: cover;
-  background-image: url("/images/LetsEatLogo.jpg"); 
+  background-image: url('/images/LetsEatLogo.jpg');
   height: 120px;
   background-position: center;
   background-repeat: no-repeat;
@@ -275,7 +275,8 @@ p {
   width: 100%;
 }
 
-.foodCard .card-image img, .checkout img {
+.foodCard .card-image img,
+.checkout img {
   object-fit: contain;
   max-height: 110px;
   width: 100%;
@@ -400,11 +401,21 @@ input {
 
 #foodTypeListInput {
   width: 90%;
+  background: url(https://image.flaticon.com/icons/svg/25/25313.svg);
+  background-size: 1em, 1em, contain;
+  background-repeat: no-repeat;
+  background-position: 98%;
+  background-color: white;
 }
 
 #foodTypeListInput:hover,
 #cityDeliveryListInput:hover {
   border: solid 1px greenyellow;
+  background-image: none;
+}
+
+#foodTypeListInput:focus {
+  background-image: none;
 }
 
 .foodList {
@@ -500,8 +511,8 @@ input {
 }
 
 /* always show up/down arrows for input "number" field */
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
   opacity: 1;
   height: 32px;
   width: 14px;
@@ -512,16 +523,16 @@ input[type="number"]::-webkit-outer-spin-button {
   max-width: 65px;
 }
 
-.priceForm input[type="number"] {
+.priceForm input[type='number'] {
   height: 42px;
   margin-top: 8px;
 }
 
-.priceForm input[type="number"]:hover {
+.priceForm input[type='number']:hover {
   border: 1px solid greenyellow;
 }
 
-.priceForm input[type="button"] {
+.priceForm input[type='button'] {
   height: 42px;
   margin-top: 8px;
   background-color: tomato;
@@ -529,7 +540,7 @@ input[type="number"]::-webkit-outer-spin-button {
   min-width: 25px;
 }
 
-.priceForm input[type="button"]:hover {
+.priceForm input[type='button']:hover {
   background-color: red;
   transform: scale(1.1);
   transition: 0.3s;
@@ -603,12 +614,12 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-top: 12px;
 }
 
-.contactForm input[type="text"],
-.checkoutForm input[type="text"],
-.loginForm input[type="text"],
-.loginForm input[type="password"],
-.checkoutForm input[type="tel"],
-.checkoutForm input[type="time"],
+.contactForm input[type='text'],
+.checkoutForm input[type='text'],
+.loginForm input[type='text'],
+.loginForm input[type='password'],
+.checkoutForm input[type='tel'],
+.checkoutForm input[type='time'],
 select,
 textarea {
   width: 100%;
@@ -620,9 +631,9 @@ textarea {
   height: 34px;
 }
 
-.contactForm input[type="submit"],
-.checkoutForm input[type="submit"],
-.loginForm input[type="submit"] {
+.contactForm input[type='submit'],
+.checkoutForm input[type='submit'],
+.loginForm input[type='submit'] {
   background-color: #444;
   color: white;
   padding: 10px 20px;
@@ -632,7 +643,7 @@ textarea {
   margin: 8px 0 8px 2px;
 }
 
-.checkoutForm input[type="submit"]:hover {
+.checkoutForm input[type='submit']:hover {
   background-color: black;
   transform: scale(1.05);
   transition: 0.2s;
@@ -643,8 +654,8 @@ textarea {
   margin-top: 20px;
 }
 
-.contactForm input[type="submit"]:hover,
-.loginForm input[type="submit"]:hover {
+.contactForm input[type='submit']:hover,
+.loginForm input[type='submit']:hover {
   background-color: darkblue;
 }
 
