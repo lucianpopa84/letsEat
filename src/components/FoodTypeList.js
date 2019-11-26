@@ -32,7 +32,6 @@ function FoodTypeList() {
               <option value={foodType} key={index} />
             ))}
           </datalist>
-          <i className="fas fa-search" />
         </div>
       )}
     />
