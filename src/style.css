@@ -400,11 +400,21 @@ input {
 
 #foodTypeListInput {
   width: 90%;
+  background: url(https://image.flaticon.com/icons/svg/25/25313.svg);
+  background-size: 1em, 1em, contain;
+  background-repeat: no-repeat;
+  background-position: 98%;
+  background-color: white;
 }
 
 #foodTypeListInput:hover,
 #cityDeliveryListInput:hover {
   border: solid 1px greenyellow;
+  background-image: none;
+}
+
+#foodTypeListInput:focus {
+  background-image: none;
 }
 
 .foodList {
