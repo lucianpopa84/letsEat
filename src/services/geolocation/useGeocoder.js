@@ -128,9 +128,6 @@ function useGeocoder() {
             } else {
               setLocationStatus('No results found');
             }
-          },
-          error => {
-            setLocationStatus(error);
           }
         );
       }
