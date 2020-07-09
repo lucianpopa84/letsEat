@@ -20,7 +20,6 @@ function Login() {
       console.log('GAPI response error: ', response.error);
       console.log('GAPI response error details: ', response.details);
     } else {
-      console.log('GAPI response: ', response);
       setUserData({
         name: response.profileObj.name,
         imgUrl: response.profileObj.imageUrl
