@@ -1,9 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Netlify live links
+## Live links
 
-[Live](https://heuristic-northcutt-cec71a.netlify.com/)<br>
-[Deploy history](https://app.netlify.com/sites/heuristic-northcutt-cec71a/deploys/)
+[Live](https://lets-eat-react.herokuapp.com/)<br>
 
 ## Available Scripts
 
