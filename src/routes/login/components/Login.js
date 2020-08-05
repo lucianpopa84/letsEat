@@ -47,7 +47,7 @@ function Login() {
         <h4>Login with Social Media</h4>
         {userData.name ? (
           <GoogleLogout
-            clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+            clientId={process.env.GOOGLE_LOGIN_CLIENT_ID}
             buttonText="Logout"
             onLogoutSuccess={() => {
               alert(`${userData.name} logged out!`);
@@ -62,7 +62,7 @@ function Login() {
           ></GoogleLogout>
         ) : (
           <GoogleLogin
-            clientId="941236697401-027e46fhlkvteugjumbt3r7al90pnvv5.apps.googleusercontent.com"
+            clientId={process.env.GOOGLE_LOGIN_CLIENT_ID}
             buttonText="Login with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}

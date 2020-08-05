@@ -4,7 +4,7 @@ import {
   ADD_CART_ITEM
 } from '../reducers/cartItemsReducer';
 
-const removeCartItem = cartItem => {
+const removeCartItem = (cartItem) => {
   return {
     type: REMOVE_CART_ITEM,
     payload: {
@@ -23,7 +23,7 @@ const updateCartItem = (e, cartItem) => {
   };
 };
 
-const addCartItem = cartItem => {
+const addCartItem = (cartItem) => {
   return {
     type: ADD_CART_ITEM,
     payload: {

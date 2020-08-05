@@ -8,7 +8,7 @@ let locality = '';
 let street = '';
 
 function useGeocoder() {
-  Geocode.setApiKey('AIzaSyBa5UGUhMpxL9uRc2Hqot8sceXi5A5ohsM');
+  Geocode.setApiKey(process.env.GEOCODE_API_KEY);
 
   const [address, setAddress] = useState(null); // current address
   const [detectedAddress, setDetectedAddress] = useState(null); // detected geocoder address
