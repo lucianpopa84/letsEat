@@ -47,7 +47,7 @@ function Login() {
         <h4>Login with Social Media</h4>
         {userData.name ? (
           <GoogleLogout
-            clientId={process.env.GOOGLE_LOGIN_CLIENT_ID}
+            clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
             buttonText="Logout"
             onLogoutSuccess={() => {
               alert(`${userData.name} logged out!`);
@@ -62,7 +62,7 @@ function Login() {
           ></GoogleLogout>
         ) : (
           <GoogleLogin
-            clientId={process.env.GOOGLE_LOGIN_CLIENT_ID}
+            clientId={process.env.REACT_APP_GOOGLE_LOGIN_CLIENT_ID}
             buttonText="Login with Google"
             onSuccess={responseGoogle}
             onFailure={responseGoogle}
