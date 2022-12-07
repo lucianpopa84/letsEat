@@ -1,8 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Live links
-
-[Live](https://lets-eat-react.herokuapp.com/)<br>
+https://lets-eat-react.herokuapp.com/
 
 ## Available Scripts
 
